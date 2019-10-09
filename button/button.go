@@ -46,6 +46,8 @@ func (b *Button) Render() vecty.ComponentOrHTML {
 		event.MouseEnter(b.MouseEnter),
 		event.MouseLeave(b.MouseLeave),
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
+		vecty.MarkupIf(!b.hovering, vecty.Style("background", b.Background)),
+		vecty.MarkupIf(b.hovering, vecty.Style("background", b.HoverBackground)),
 	}
 	markups = append(markups, b.Extra...)
 
@@ -94,6 +96,8 @@ func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
 		event.MouseEnter(b.MouseEnter),
 		event.MouseLeave(b.MouseLeave),
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
+		vecty.MarkupIf(!b.hovering, vecty.Style("background", b.Background)),
+		vecty.MarkupIf(b.hovering, vecty.Style("background", b.HoverBackground)),
 	}
 	markups = append(markups, b.Extra...)
 
