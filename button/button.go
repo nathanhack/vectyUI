@@ -49,9 +49,7 @@ type ButtonDiv struct {
 	Background      string               `vecty:"prop"`
 	Padding         padding.Weights      `vecty:"prop"`
 	Margin          margin.Weights       `vecty:"prop"`
-	BorderColor     border.Color         `vecty:"prop"`
-	BorderStyle     border.Style         `vecty:"prop"`
-	BorderWidth     border.Width         `vecty:"prop"`
+	Border          border.Border        `vecty:"prop"`
 	HoverBackground string               `vecty:"prop"`
 	Click           func(i *vecty.Event) `vecty:"prop"`
 	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
