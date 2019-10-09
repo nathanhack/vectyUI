@@ -24,14 +24,28 @@ type Button struct {
 	hovering        bool
 }
 
+func (b *Button) mouseEnter(i *vecty.Event) {
+	b.hovering = true
+	if b.MouseEnter != nil {
+		b.MouseEnter(i)
+	}
+}
+
+func (b *Button) mouseLeave(i *vecty.Event) {
+	b.hovering = false
+	if b.MouseLeave != nil {
+		b.MouseLeave(i)
+	}
+}
+
 func (b *Button) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
 		b.Padding,
 		b.Margin,
 		b.Border,
+		event.MouseEnter(b.MouseEnter),
+		event.MouseLeave(b.MouseLeave),
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
-		vecty.MarkupIf(b.MouseEnter != nil, event.MouseEnter(b.MouseEnter)),
-		vecty.MarkupIf(b.MouseLeave != nil, event.MouseLeave(b.MouseLeave)),
 	}
 	markups = append(markups, b.Extra...)
 
@@ -58,14 +72,28 @@ type ButtonDiv struct {
 	hovering        bool
 }
 
+func (b *ButtonDiv) mouseEnter(i *vecty.Event) {
+	b.hovering = true
+	if b.MouseEnter != nil {
+		b.MouseEnter(i)
+	}
+}
+
+func (b *ButtonDiv) mouseLeave(i *vecty.Event) {
+	b.hovering = false
+	if b.MouseLeave != nil {
+		b.MouseLeave(i)
+	}
+}
+
 func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
 		b.Padding,
 		b.Margin,
 		b.Border,
+		event.MouseEnter(b.MouseEnter),
+		event.MouseLeave(b.MouseLeave),
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
-		vecty.MarkupIf(b.MouseEnter != nil, event.MouseEnter(b.MouseEnter)),
-		vecty.MarkupIf(b.MouseLeave != nil, event.MouseLeave(b.MouseLeave)),
 	}
 	markups = append(markups, b.Extra...)
 
