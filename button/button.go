@@ -29,6 +29,7 @@ func (b *Button) mouseEnter(i *vecty.Event) {
 	if b.MouseEnter != nil {
 		b.MouseEnter(i)
 	}
+	vecty.Rerender(b)
 }
 
 func (b *Button) mouseLeave(i *vecty.Event) {
@@ -36,6 +37,7 @@ func (b *Button) mouseLeave(i *vecty.Event) {
 	if b.MouseLeave != nil {
 		b.MouseLeave(i)
 	}
+	vecty.Rerender(b)
 }
 
 func (b *Button) Render() vecty.ComponentOrHTML {
@@ -79,6 +81,7 @@ func (b *ButtonDiv) mouseEnter(i *vecty.Event) {
 	if b.MouseEnter != nil {
 		b.MouseEnter(i)
 	}
+	vecty.Rerender(b)
 }
 
 func (b *ButtonDiv) mouseLeave(i *vecty.Event) {
@@ -86,6 +89,7 @@ func (b *ButtonDiv) mouseLeave(i *vecty.Event) {
 	if b.MouseLeave != nil {
 		b.MouseLeave(i)
 	}
+	vecty.Rerender(b)
 }
 
 func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
