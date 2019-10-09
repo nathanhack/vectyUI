@@ -1,6 +1,9 @@
 package border
 
-import "github.com/gopherjs/vecty"
+import (
+	"github.com/gopherjs/vecty"
+	"strconv"
+)
 
 type StyleType string
 
@@ -21,54 +24,50 @@ type Style struct {
 	Top, Bottom, Right, Left, All StyleType
 }
 
-func (s *Style) StyleName() string {
-	return "border-style"
-}
-
-//ToString is the javascript version
-// of tostring to be used in css
-func (s *Style) ToString() string {
-	if s.All != "" {
-		return string(s.All)
-	}
-	return string(s.Top) + " " + string(s.Right) + " " + string(s.Bottom) + " " + string(s.Left)
-}
-
 func (s Style) Apply(h *vecty.HTML) {
-	vecty.Style("border-style", s.ToString()).Apply(h)
+	sa := string(s.All)
+	if sa != "" {
+		sa = string(s.Top) + " " + string(s.Right) + " " + string(s.Bottom) + " " + string(s.Left)
+	}
+	vecty.Style("border-style", sa).Apply(h)
 }
 
-type Color string
-
-func (c *Color) StyleName() string {
-	return "border-color"
-}
-
-func (c *Color) ToString() string {
-	return string(*c)
-}
-
-func (c Color) Apply(h *vecty.HTML) {
-	vecty.Style("border-color", c.ToString()).Apply(h)
-}
-
-type Width struct {
+type Color struct {
 	Top, Bottom, Right, Left, All string
 }
 
-func (b *Width) StyleName() string {
-	return "border-width"
+func (c Color) Apply(h *vecty.HTML) {
+	ca := c.All
+	if ca != "" {
+		ca = c.Top + " " + c.Right + " " + c.Bottom + " " + c.Left
+	}
+
+	vecty.Style("border-color", ca).Apply(h)
 }
 
-//ToString is the javascript version
-// of tostring to be used in css
-func (b *Width) ToString() string {
-	if b.All != "" {
-		return string(b.All)
-	}
-	return b.Top + " " + b.Right + " " + b.Bottom + " " + b.Left
+type Width struct {
+	Top, Bottom, Right, Left, All int
 }
 
 func (w Width) Apply(h *vecty.HTML) {
-	vecty.Style("border-width", w.ToString()).Apply(h)
+	if w.Top > 0 || w.Right > 0 || w.Bottom > 0 || w.Left > 0 {
+		top := strconv.FormatInt(int64(w.Top), 10)
+		right := strconv.FormatInt(int64(w.Right), 10)
+		bottom := strconv.FormatInt(int64(w.Bottom), 10)
+		left := strconv.FormatInt(int64(w.Left), 10)
+
+		vecty.Style("border-width", top+"px "+right+"px "+bottom+"px "+left+"px").Apply(h)
+	} else {
+		vecty.Style("border-width", strconv.FormatInt(int64(w.All), 10)+"px ").Apply(h)
+	}
+}
+
+type Border struct {
+	Width int
+	Style StyleType
+	Color string
+}
+
+func (b Border) Apply(h *vecty.HTML) {
+	vecty.Style("border", strconv.FormatInt(int64(b.Width), 10)+"px "+string(b.Style)+" "+b.Color).Apply(h)
 }
