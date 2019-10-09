@@ -15,9 +15,7 @@ type Button struct {
 	Background      string               `vecty:"prop"`
 	Padding         padding.Weights      `vecty:"prop"`
 	Margin          margin.Weights       `vecty:"prop"`
-	BorderColor     border.Color         `vecty:"prop"`
-	BorderStyle     border.Style         `vecty:"prop"`
-	BorderWidth     border.Width         `vecty:"prop"`
+	Border          border.Border        `vecty:"prop"`
 	HoverBackground string               `vecty:"prop"`
 	Click           func(i *vecty.Event) `vecty:"prop"`
 	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
@@ -30,9 +28,7 @@ func (b *Button) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
 		b.Padding,
 		b.Margin,
-		b.BorderColor,
-		b.BorderStyle,
-		b.BorderWidth,
+		b.Border,
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
 		vecty.MarkupIf(b.MouseEnter != nil, event.MouseEnter(b.MouseEnter)),
 		vecty.MarkupIf(b.MouseLeave != nil, event.MouseLeave(b.MouseLeave)),
