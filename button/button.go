@@ -62,9 +62,7 @@ func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
 		b.Padding,
 		b.Margin,
-		b.BorderColor,
-		b.BorderStyle,
-		b.BorderWidth,
+		b.Border,
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
 		vecty.MarkupIf(b.MouseEnter != nil, event.MouseEnter(b.MouseEnter)),
 		vecty.MarkupIf(b.MouseLeave != nil, event.MouseLeave(b.MouseLeave)),
