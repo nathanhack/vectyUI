@@ -23,10 +23,10 @@ func New(top, right, bottom, left int) Weights {
 	}
 }
 
-func NewAll(padding int) Weights {
+func NewAll(margin int) Weights {
 	return Weights{
-		All: padding,
-		all: strconv.FormatInt(int64(padding), 10) + "px",
+		All: margin,
+		all: strconv.FormatInt(int64(margin), 10) + "px",
 	}
 }
 
