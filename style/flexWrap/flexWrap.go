@@ -10,7 +10,7 @@ const (
 	WrapReverse Type = "wrap-reverse"
 )
 
-func (fwt Type) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-flex-wrap", string(fwt)).Apply(h)
-	vecty.Style("flex-wrap", string(fwt)).Apply(h)
+func (t Type) Apply(h *vecty.HTML) {
+	vecty.Style("-webkit-flex-wrap", string(t)).Apply(h)
+	vecty.Style("flex-wrap", string(t)).Apply(h)
 }

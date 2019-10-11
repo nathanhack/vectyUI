@@ -12,6 +12,6 @@ type Value struct {
 	Color string
 }
 
-func (b Value) Apply(h *vecty.HTML) {
-	vecty.Style("border", strconv.FormatInt(int64(b.Width), 10)+"px "+string(b.Style)+" "+b.Color).Apply(h)
+func (v Value) Apply(h *vecty.HTML) {
+	vecty.Style("border", strconv.FormatInt(int64(v.Width), 10)+"px "+string(v.Style)+" "+v.Color).Apply(h)
 }

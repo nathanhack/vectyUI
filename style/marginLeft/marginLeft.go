@@ -1,9 +1,9 @@
-package background
+package marginLeft
 
 import "github.com/gopherjs/vecty"
 
 type Value string
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("background", string(v)).Apply(h)
+	vecty.Style("margin-left", string(v)).Apply(h)
 }

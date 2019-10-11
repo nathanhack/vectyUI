@@ -12,9 +12,9 @@ import (
 // case 4( c1 c2 c3 c4 ) : top = c1, right = c2, bottom = c3, left = c4
 type Value []string
 
-func (color Value) Apply(h *vecty.HTML) {
+func (v Value) Apply(h *vecty.HTML) {
 	sb := strings.Builder{}
-	for _, c := range color {
+	for _, c := range v {
 		sb.WriteString(c + " ")
 	}
 	vecty.Style("border-color", sb.String()).Apply(h)

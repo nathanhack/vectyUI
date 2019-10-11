@@ -28,6 +28,6 @@ const (
 	None             Type = "none"
 )
 
-func (dt Type) Apply(h *vecty.HTML) {
-	vecty.Style("display", string(dt)).Apply(h)
+func (t Type) Apply(h *vecty.HTML) {
+	vecty.Style("display", string(t)).Apply(h)
 }

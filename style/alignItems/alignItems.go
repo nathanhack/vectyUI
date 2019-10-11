@@ -12,7 +12,7 @@ const (
 	Baseline  Type = "baseline"
 )
 
-func (ai Type) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-align-items", string(ai)).Apply(h)
-	vecty.Style("align-items", string(ai)).Apply(h)
+func (t Type) Apply(h *vecty.HTML) {
+	vecty.Style("-webkit-align-items", string(t)).Apply(h)
+	vecty.Style("align-items", string(t)).Apply(h)
 }

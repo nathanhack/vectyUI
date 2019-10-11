@@ -11,6 +11,6 @@ const (
 	Auto    Type = "auto"
 )
 
-func (ot Type) Apply(h *vecty.HTML) {
-	vecty.Style("overflow", string(ot)).Apply(h)
+func (t Type) Apply(h *vecty.HTML) {
+	vecty.Style("overflow", string(t)).Apply(h)
 }

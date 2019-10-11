@@ -7,11 +7,11 @@ import (
 
 type Value []string
 
-func (fft Value) Apply(h *vecty.HTML) {
+func (v Value) Apply(h *vecty.HTML) {
 	sb := strings.Builder{}
-	for i, c := range fft {
+	for i, c := range v {
 		sb.WriteString(c)
-		if i < len(fft)-1 {
+		if i < len(v)-1 {
 			sb.WriteString(",")
 		}
 	}

@@ -11,7 +11,7 @@ const (
 	ColumnReverse Type = "column-reverse"
 )
 
-func (fdt Type) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-flex-direction", string(fdt)).Apply(h)
-	vecty.Style("flex-direction", string(fdt)).Apply(h)
+func (t Type) Apply(h *vecty.HTML) {
+	vecty.Style("-webkit-flex-direction", string(t)).Apply(h)
+	vecty.Style("flex-direction", string(t)).Apply(h)
 }

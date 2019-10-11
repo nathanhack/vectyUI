@@ -12,9 +12,9 @@ import (
 // case 4( w1 w2 w3 w4 ) : top = w1, right = w2, bottom = w3, left = w4
 type Value []string
 
-func (wdith Value) Apply(h *vecty.HTML) {
+func (v Value) Apply(h *vecty.HTML) {
 	sb := strings.Builder{}
-	for _, w := range wdith {
+	for _, w := range v {
 		sb.WriteString(w + " ")
 	}
 	vecty.Style("border-width", sb.String()).Apply(h)

@@ -13,6 +13,6 @@ const (
 	Initial  Type = "initial"
 )
 
-func (pt Type) Apply(h *vecty.HTML) {
-	vecty.Style("position", string(pt)).Apply(h)
+func (t Type) Apply(h *vecty.HTML) {
+	vecty.Style("position", string(t)).Apply(h)
 }
