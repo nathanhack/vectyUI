@@ -39,6 +39,7 @@ func Margin(lengths ...interface{}) margin.Value {
 }
 
 func Padding(lengths ...interface{}) padding.Value {
+	println("Padding")
 	println(lengths)
 	return stringify("px", lengths)
 }
