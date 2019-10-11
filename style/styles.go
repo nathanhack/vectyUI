@@ -36,9 +36,9 @@ func BorderWidth(widths ...interface{}) borderWidth.Width {
 		v := reflect.TypeOf(w)
 		switch v.Kind() {
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			borderWidth = append(borderWidth, strconv.FormatInt(reflect.ValueOf(w).Int(), 10))
+			borderWidth = append(borderWidth, strconv.FormatInt(reflect.ValueOf(w).Int(), 10)+"px")
 		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			borderWidth = append(borderWidth, strconv.FormatUint(reflect.ValueOf(w).Uint(), 10))
+			borderWidth = append(borderWidth, strconv.FormatUint(reflect.ValueOf(w).Uint(), 10)+"px")
 		case reflect.String:
 			borderWidth = append(borderWidth, reflect.ValueOf(w).String())
 		}
