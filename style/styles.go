@@ -39,6 +39,7 @@ func Margin(lengths ...interface{}) margin.Value {
 }
 
 func Padding(lengths ...interface{}) padding.Value {
+	println(lengths)
 	return stringify("px", lengths)
 }
 
@@ -53,7 +54,9 @@ func FontFamily(fontNames ...string) fontFamily.Value {
 func stringify(postfix string, values ...interface{}) []string {
 	stringValues := make([]string, 0)
 	for _, l := range values {
+		println(l)
 		v := reflect.TypeOf(l)
+		println(v)
 		switch v.Kind() {
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 			stringValues = append(stringValues, strconv.FormatInt(reflect.ValueOf(l).Int(), 10)+postfix)
