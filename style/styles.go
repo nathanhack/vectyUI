@@ -9,6 +9,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/color"
 	"github.com/nathanhack/vectyUI/style/fontFamily"
 	"github.com/nathanhack/vectyUI/style/fontName"
+	"github.com/nathanhack/vectyUI/style/margin"
 	"reflect"
 	"strconv"
 	"strings"
@@ -44,6 +45,22 @@ func BorderWidth(widths ...interface{}) borderWidth.Width {
 		}
 	}
 	return borderWidth
+}
+
+func Margin(lengths ...interface{}) margin.Value {
+	marginLengths := make([]string, 0)
+	for _, l := range lengths {
+		v := reflect.TypeOf(l)
+		switch v.Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			marginLengths = append(marginLengths, strconv.FormatInt(reflect.ValueOf(l).Int(), 10)+"px")
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			marginLengths = append(marginLengths, strconv.FormatUint(reflect.ValueOf(l).Uint(), 10)+"px")
+		case reflect.String:
+			marginLengths = append(marginLengths, reflect.ValueOf(l).String())
+		}
+	}
+	return marginLengths
 }
 
 func Color(c string) color.Type {

@@ -15,7 +15,7 @@ type Button struct {
 	Text            string               `vecty:"prop"`
 	Background      string               `vecty:"prop"`
 	Padding         padding.Weights      `vecty:"prop"`
-	Margin          margin.Weights       `vecty:"prop"`
+	Margin          margin.Value         `vecty:"prop"`
 	Border          border.Border        `vecty:"prop"`
 	HoverBackground string               `vecty:"prop"`
 	Click           func(i *vecty.Event) `vecty:"prop"`
@@ -68,7 +68,7 @@ type ButtonDiv struct {
 	Text            string               `vecty:"prop"`
 	Background      string               `vecty:"prop"`
 	Padding         padding.Weights      `vecty:"prop"`
-	Margin          margin.Weights       `vecty:"prop"`
+	Margin          margin.Value         `vecty:"prop"`
 	Border          border.Border        `vecty:"prop"`
 	HoverBackground string               `vecty:"prop"`
 	Click           func(i *vecty.Event) `vecty:"prop"`
