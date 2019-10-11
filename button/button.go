@@ -1,12 +1,14 @@
 package button
 
 import (
+	"fmt"
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/event"
-	"github.com/nathanhack/vectyUI/border"
-	"github.com/nathanhack/vectyUI/margin"
-	"github.com/nathanhack/vectyUI/padding"
+	"github.com/nathanhack/vectyUI/style/border"
+	"github.com/nathanhack/vectyUI/style/margin"
+	"github.com/nathanhack/vectyUI/style/padding"
+	"github.com/nathanhack/vectyUI/style/userSelect"
 )
 
 type Button struct {
@@ -45,12 +47,7 @@ func (b *Button) Render() vecty.ComponentOrHTML {
 		b.Padding,
 		b.Margin,
 		b.Border,
-		vecty.Style("-webkit-touch-callout", "none"),
-		vecty.Style("-webkit-user-select", "none"),
-		vecty.Style("-khtml-user-select", "none"),
-		vecty.Style("-moz-user-select", "none"),
-		vecty.Style("-ms-user-select", "none"),
-		vecty.Style("user-select", "none"),
+		userSelect.None,
 		event.MouseEnter(b.mouseEnter),
 		event.MouseLeave(b.mouseLeave),
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
@@ -103,12 +100,7 @@ func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
 		b.Padding,
 		b.Margin,
 		b.Border,
-		vecty.Style("-webkit-touch-callout", "none"),
-		vecty.Style("-webkit-user-select", "none"),
-		vecty.Style("-khtml-user-select", "none"),
-		vecty.Style("-moz-user-select", "none"),
-		vecty.Style("-ms-user-select", "none"),
-		vecty.Style("user-select", "none"),
+		userSelect.None,
 		event.MouseEnter(b.mouseEnter),
 		event.MouseLeave(b.mouseLeave),
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
@@ -122,5 +114,70 @@ func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
 			markups...,
 		),
 		vecty.Text(b.Text),
+	)
+}
+
+type Generic struct {
+	vecty.Core
+	Div        func() *vecty.HTML                    `vecty:"prop"`
+	HoverDiv   func() *vecty.HTML                    `vecty:"prop"`
+	Click      func(i *vecty.Event, button *Generic) `vecty:"prop"`
+	MouseEnter func(i *vecty.Event, button *Generic) `vecty:"prop"`
+	MouseLeave func(i *vecty.Event, button *Generic) `vecty:"prop"`
+	Extra      []vecty.Applyer                       `vecty:"prop"`
+	hovering   bool
+}
+
+func (b *Generic) click(i *vecty.Event) {
+	if b.Click != nil {
+		b.Click(i, b)
+	}
+}
+
+func (b *Generic) mouseEnter(i *vecty.Event) {
+	fmt.Println("hovering")
+	b.hovering = true
+	if b.MouseEnter != nil {
+		b.MouseEnter(i, b)
+	}
+	vecty.Rerender(b)
+}
+
+func (b *Generic) mouseLeave(i *vecty.Event) {
+	b.hovering = false
+	if b.MouseLeave != nil {
+		b.MouseLeave(i, b)
+	}
+	vecty.Rerender(b)
+}
+
+func (b *Generic) Render() vecty.ComponentOrHTML {
+	markups := []vecty.Applyer{
+		event.MouseEnter(b.mouseEnter),
+		event.MouseLeave(b.mouseLeave),
+		event.Click(b.click),
+	}
+	markups = append(markups, b.Extra...)
+
+	if b.hovering && b.HoverDiv != nil {
+		return elem.Div(
+			vecty.Markup(
+				markups...,
+			),
+			b.HoverDiv(),
+		)
+	}
+	if b.Div != nil {
+		return elem.Div(
+			vecty.Markup(
+				markups...,
+			),
+			b.Div(),
+		)
+	}
+	return elem.Div(
+		vecty.Markup(
+			markups...,
+		),
 	)
 }
