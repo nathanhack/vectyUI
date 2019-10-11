@@ -1,9 +1,19 @@
 package fontFamily
 
-import "github.com/gopherjs/vecty"
+import (
+	"github.com/gopherjs/vecty"
+	"strings"
+)
 
-type FontFamilyType string
+type Value []string
 
-func (fft FontFamilyType) Apply(h *vecty.HTML) {
-	vecty.Style("font-family", string(fft)).Apply(h)
+func (fft Value) Apply(h *vecty.HTML) {
+	sb := strings.Builder{}
+	for i, c := range fft {
+		sb.WriteString(c)
+		if i < len(fft)-1 {
+			sb.WriteString(",")
+		}
+	}
+	vecty.Style("font-family", sb.String()).Apply(h)
 }

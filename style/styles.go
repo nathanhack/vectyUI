@@ -8,72 +8,62 @@ import (
 	"github.com/nathanhack/vectyUI/style/borderWidth"
 	"github.com/nathanhack/vectyUI/style/color"
 	"github.com/nathanhack/vectyUI/style/fontFamily"
-	"github.com/nathanhack/vectyUI/style/fontName"
 	"github.com/nathanhack/vectyUI/style/margin"
+	"github.com/nathanhack/vectyUI/style/padding"
 	"reflect"
 	"strconv"
-	"strings"
 )
 
-func Background(color string) background.Type {
-	return background.Type(color)
+func Background(color string) background.Value {
+	return background.Value(color)
 }
 
-func Border(width int, style borderStyle.Type, color string) border.Border {
-	return border.Border{
+func Border(width int, style borderStyle.Type, color string) border.Value {
+	return border.Value{
 		Width: width,
 		Style: style,
 		Color: color,
 	}
 }
 
-func BorderColor(colors ...string) borderColor.Color {
+func BorderColor(colors ...string) borderColor.Value {
 	return colors
 }
 
-func BorderWidth(widths ...interface{}) borderWidth.Width {
-	borderWidth := make([]string, 0)
-	for _, w := range widths {
-		v := reflect.TypeOf(w)
-		switch v.Kind() {
-		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			borderWidth = append(borderWidth, strconv.FormatInt(reflect.ValueOf(w).Int(), 10)+"px")
-		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			borderWidth = append(borderWidth, strconv.FormatUint(reflect.ValueOf(w).Uint(), 10)+"px")
-		case reflect.String:
-			borderWidth = append(borderWidth, reflect.ValueOf(w).String())
-		}
-	}
-	return borderWidth
+func BorderWidth(widths ...interface{}) borderWidth.Value {
+	return stringify("px", widths)
 }
 
 func Margin(lengths ...interface{}) margin.Value {
-	marginLengths := make([]string, 0)
-	for _, l := range lengths {
+	return stringify("px", lengths)
+}
+
+func Padding(lengths ...interface{}) padding.Value {
+	return stringify("px", lengths)
+}
+
+func Color(c string) color.Value {
+	return color.Value(c)
+}
+
+func FontFamily(fontNames ...string) fontFamily.Value {
+	return fontNames
+}
+
+func stringify(postfix string, values ...interface{}) []string {
+	stringValues := make([]string, 0)
+	for _, l := range values {
 		v := reflect.TypeOf(l)
 		switch v.Kind() {
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			marginLengths = append(marginLengths, strconv.FormatInt(reflect.ValueOf(l).Int(), 10)+"px")
+			stringValues = append(stringValues, strconv.FormatInt(reflect.ValueOf(l).Int(), 10)+postfix)
 		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			marginLengths = append(marginLengths, strconv.FormatUint(reflect.ValueOf(l).Uint(), 10)+"px")
+			stringValues = append(stringValues, strconv.FormatUint(reflect.ValueOf(l).Uint(), 10)+postfix)
+		case reflect.Float32, reflect.Float64:
+			stringValues = append(stringValues, strconv.FormatFloat(reflect.ValueOf(l).Float(), 'f', -1, 64)+postfix)
 		case reflect.String:
-			marginLengths = append(marginLengths, reflect.ValueOf(l).String())
+			stringValues = append(stringValues, reflect.ValueOf(l).String())
 		}
 	}
-	return marginLengths
-}
-
-func Color(c string) color.Type {
-	return color.Type(c)
-}
-
-func FontFamily(fonts ...fontName.Type) fontFamily.FontFamilyType {
-	sb := strings.Builder{}
-	for i, f := range fonts {
-		sb.WriteString(string(f))
-		if i < len(fonts)-1 {
-			sb.WriteString(",")
-		}
-	}
-	return fontFamily.FontFamilyType(sb.String())
+	return stringValues
 }

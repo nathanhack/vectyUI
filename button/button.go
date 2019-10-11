@@ -14,9 +14,9 @@ type Button struct {
 	vecty.Core
 	Text            string               `vecty:"prop"`
 	Background      string               `vecty:"prop"`
-	Padding         padding.Weights      `vecty:"prop"`
+	Padding         padding.Value        `vecty:"prop"`
 	Margin          margin.Value         `vecty:"prop"`
-	Border          border.Border        `vecty:"prop"`
+	Border          border.Value         `vecty:"prop"`
 	HoverBackground string               `vecty:"prop"`
 	Click           func(i *vecty.Event) `vecty:"prop"`
 	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
@@ -67,9 +67,9 @@ type ButtonDiv struct {
 	vecty.Core
 	Text            string               `vecty:"prop"`
 	Background      string               `vecty:"prop"`
-	Padding         padding.Weights      `vecty:"prop"`
+	Padding         padding.Value        `vecty:"prop"`
 	Margin          margin.Value         `vecty:"prop"`
-	Border          border.Border        `vecty:"prop"`
+	Border          border.Value         `vecty:"prop"`
 	HoverBackground string               `vecty:"prop"`
 	Click           func(i *vecty.Event) `vecty:"prop"`
 	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
