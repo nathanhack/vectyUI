@@ -2,32 +2,32 @@ package display
 
 import "github.com/gopherjs/vecty"
 
-type DisplayType string
+type Type string
 
 const (
-	Inline           DisplayType = "inline"
-	Block            DisplayType = "block"
-	Contents         DisplayType = "contents"
-	Flex             DisplayType = "flex"
-	Grid             DisplayType = "grid"
-	InlineBlock      DisplayType = "inline-block"
-	InlineFlex       DisplayType = "inline-flex"
-	InlineGrid       DisplayType = "inline-grid"
-	InlineTable      DisplayType = "inline-table"
-	ListItem         DisplayType = "list-item"
-	RunIn            DisplayType = "run-in"
-	Table            DisplayType = "table"
-	TableCaption     DisplayType = "table-caption"
-	TableColumnGroup DisplayType = "table-column-group"
-	TableHeaderGroup DisplayType = "table-header-group"
-	TableFooterGroup DisplayType = "table-footer-group"
-	TableRowGroup    DisplayType = "table-row-group"
-	TableCell        DisplayType = "table-cell"
-	TableColumn      DisplayType = "table-column"
-	TableRow         DisplayType = "table-row"
-	None             DisplayType = "none"
+	Inline           Type = "inline"
+	Block            Type = "block"
+	Contents         Type = "contents"
+	Flex             Type = "flex"
+	Grid             Type = "grid"
+	InlineBlock      Type = "inline-block"
+	InlineFlex       Type = "inline-flex"
+	InlineGrid       Type = "inline-grid"
+	InlineTable      Type = "inline-table"
+	ListItem         Type = "list-item"
+	RunIn            Type = "run-in"
+	Table            Type = "table"
+	TableCaption     Type = "table-caption"
+	TableColumnGroup Type = "table-column-group"
+	TableHeaderGroup Type = "table-header-group"
+	TableFooterGroup Type = "table-footer-group"
+	TableRowGroup    Type = "table-row-group"
+	TableCell        Type = "table-cell"
+	TableColumn      Type = "table-column"
+	TableRow         Type = "table-row"
+	None             Type = "none"
 )
 
-func (dt DisplayType) Apply(h *vecty.HTML) {
+func (dt Type) Apply(h *vecty.HTML) {
 	vecty.Style("display", string(dt)).Apply(h)
 }

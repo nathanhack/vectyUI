@@ -2,15 +2,15 @@ package flexWrap
 
 import "github.com/gopherjs/vecty"
 
-type FlexWrapType string
+type Type string
 
 const (
-	Nowrap      FlexWrapType = "nowrap"
-	Wrap        FlexWrapType = "wrap"
-	WrapReverse FlexWrapType = "wrap-reverse"
+	Nowrap      Type = "nowrap"
+	Wrap        Type = "wrap"
+	WrapReverse Type = "wrap-reverse"
 )
 
-func (fwt FlexWrapType) Apply(h *vecty.HTML) {
+func (fwt Type) Apply(h *vecty.HTML) {
 	vecty.Style("-webkit-flex-wrap", string(fwt)).Apply(h)
 	vecty.Style("flex-wrap", string(fwt)).Apply(h)
 }

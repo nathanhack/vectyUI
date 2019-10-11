@@ -2,16 +2,16 @@ package userSelect
 
 import "github.com/gopherjs/vecty"
 
-type UserSelectType string
+type Type string
 
 const (
-	None UserSelectType = "none"
-	All  UserSelectType = "all"
-	Auto UserSelectType = "auto"
-	Text UserSelectType = "text"
+	None Type = "none"
+	All  Type = "all"
+	Auto Type = "auto"
+	Text Type = "text"
 )
 
-func (us UserSelectType) Apply(h *vecty.HTML) {
+func (us Type) Apply(h *vecty.HTML) {
 	vecty.Style("-webkit-touch-callout", string(us)).Apply(h)
 	vecty.Style("-webkit-user-select", string(string(us))).Apply(h)
 	vecty.Style("-khtml-user-select", string(string(us))).Apply(h)

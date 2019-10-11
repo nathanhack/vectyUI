@@ -2,16 +2,16 @@ package flexDirection
 
 import "github.com/gopherjs/vecty"
 
-type FlexDirectionType string
+type Type string
 
 const (
-	Row           FlexDirectionType = "row"
-	RowReverse    FlexDirectionType = "row-reverse"
-	Column        FlexDirectionType = "column"
-	ColumnReverse FlexDirectionType = "column-reverse"
+	Row           Type = "row"
+	RowReverse    Type = "row-reverse"
+	Column        Type = "column"
+	ColumnReverse Type = "column-reverse"
 )
 
-func (fdt FlexDirectionType) Apply(h *vecty.HTML) {
+func (fdt Type) Apply(h *vecty.HTML) {
 	vecty.Style("-webkit-flex-direction", string(fdt)).Apply(h)
 	vecty.Style("flex-direction", string(fdt)).Apply(h)
 }

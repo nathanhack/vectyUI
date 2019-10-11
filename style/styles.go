@@ -50,7 +50,7 @@ func Color(c string) color.Type {
 	return color.Type(c)
 }
 
-func FontFamily(fonts ...fontName.FontNameType) fontFamily.FontFamilyType {
+func FontFamily(fonts ...fontName.Type) fontFamily.FontFamilyType {
 	sb := strings.Builder{}
 	for i, f := range fonts {
 		sb.WriteString(string(f))

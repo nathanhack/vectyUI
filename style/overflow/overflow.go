@@ -2,15 +2,15 @@ package overflow
 
 import "github.com/gopherjs/vecty"
 
-type OverflowType string
+type Type string
 
 const (
-	Visible OverflowType = "visible"
-	Hidden  OverflowType = "hidden"
-	Scroll  OverflowType = "scroll"
-	Auto    OverflowType = "auto"
+	Visible Type = "visible"
+	Hidden  Type = "hidden"
+	Scroll  Type = "scroll"
+	Auto    Type = "auto"
 )
 
-func (ot OverflowType) Apply(h *vecty.HTML) {
+func (ot Type) Apply(h *vecty.HTML) {
 	vecty.Style("overflow", string(ot)).Apply(h)
 }

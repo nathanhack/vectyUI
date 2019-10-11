@@ -2,17 +2,17 @@ package position
 
 import "github.com/gopherjs/vecty"
 
-type PositionType string
+type Type string
 
 const (
-	Static   PositionType = "static"
-	Absolute PositionType = "absolute"
-	Fixed    PositionType = "fixed"
-	Relative PositionType = "relative"
-	Sticky   PositionType = "sticky"
-	Initial  PositionType = "initial"
+	Static   Type = "static"
+	Absolute Type = "absolute"
+	Fixed    Type = "fixed"
+	Relative Type = "relative"
+	Sticky   Type = "sticky"
+	Initial  Type = "initial"
 )
 
-func (pt PositionType) Apply(h *vecty.HTML) {
+func (pt Type) Apply(h *vecty.HTML) {
 	vecty.Style("position", string(pt)).Apply(h)
 }
