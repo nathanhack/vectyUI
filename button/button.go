@@ -1,7 +1,6 @@
 package button
 
 import (
-	"fmt"
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/event"
@@ -128,51 +127,60 @@ type Generic struct {
 	hovering   bool
 }
 
-func (b *Generic) click(i *vecty.Event) {
-	if b.Click != nil {
-		b.Click(i, b)
+func (g *Generic) click(i *vecty.Event) {
+	if g.Click != nil {
+		g.Click(i, g)
 	}
 }
 
-func (b *Generic) mouseEnter(i *vecty.Event) {
-	fmt.Println("hovering")
-	b.hovering = true
-	if b.MouseEnter != nil {
-		b.MouseEnter(i, b)
+func (g *Generic) mouseEnter(i *vecty.Event) {
+	if g.MouseEnter != nil {
+		g.MouseEnter(i, g)
+	} else {
+		g.hovering = true
+		vecty.Rerender(g)
 	}
-	vecty.Rerender(b)
 }
 
-func (b *Generic) mouseLeave(i *vecty.Event) {
-	b.hovering = false
-	if b.MouseLeave != nil {
-		b.MouseLeave(i, b)
+func (g *Generic) mouseLeave(i *vecty.Event) {
+	if g.MouseLeave != nil {
+		g.MouseLeave(i, g)
+	} else {
+		g.hovering = false
+		vecty.Rerender(g)
 	}
-	vecty.Rerender(b)
 }
 
-func (b *Generic) Render() vecty.ComponentOrHTML {
+func (g *Generic) Hovering() bool {
+	return g.hovering
+}
+
+func (g *Generic) SetHover(hovering bool) {
+	g.hovering = hovering
+}
+
+func (g *Generic) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
-		event.MouseEnter(b.mouseEnter),
-		event.MouseLeave(b.mouseLeave),
-		event.Click(b.click),
+		event.MouseEnter(g.mouseEnter),
+		event.MouseLeave(g.mouseLeave),
+		event.Click(g.click),
 	}
-	markups = append(markups, b.Extra...)
+	markups = append(markups, g.Extra...)
 
-	if b.hovering && b.HoverDiv != nil {
+	if g.hovering && g.HoverDiv != nil {
 		return elem.Div(
 			vecty.Markup(
 				markups...,
 			),
-			b.HoverDiv(),
+			g.HoverDiv(),
 		)
 	}
-	if b.Div != nil {
+	if g.Div != nil {
 		return elem.Div(
 			vecty.Markup(
 				markups...,
 			),
-			b.Div(),
+			g.Div(),
 		)
 	}
 	return elem.Div(
