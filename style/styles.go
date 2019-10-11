@@ -31,16 +31,17 @@ func BorderColor(colors ...string) borderColor.Value {
 }
 
 func BorderWidth(widths ...interface{}) borderWidth.Value {
+	println("BorderWidth")
 	return stringify("px", widths)
 }
 
 func Margin(lengths ...interface{}) margin.Value {
+	println("Margin")
 	return stringify("px", lengths)
 }
 
 func Padding(lengths ...interface{}) padding.Value {
 	println("Padding")
-	println(lengths)
 	return stringify("px", lengths)
 }
 
@@ -55,9 +56,7 @@ func FontFamily(fontNames ...string) fontFamily.Value {
 func stringify(postfix string, values ...interface{}) []string {
 	stringValues := make([]string, 0)
 	for _, l := range values {
-		println(l)
 		v := reflect.TypeOf(l)
-		println(v)
 		switch v.Kind() {
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 			stringValues = append(stringValues, strconv.FormatInt(reflect.ValueOf(l).Int(), 10)+postfix)
@@ -69,5 +68,6 @@ func stringify(postfix string, values ...interface{}) []string {
 			stringValues = append(stringValues, reflect.ValueOf(l).String())
 		}
 	}
+	println(stringValues)
 	return stringValues
 }
