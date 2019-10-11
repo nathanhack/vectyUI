@@ -57,6 +57,7 @@ func stringify(postfix string, values ...interface{}) []string {
 	stringValues := make([]string, 0)
 	for _, l := range values {
 		v := reflect.TypeOf(l)
+		println(v.Kind())
 		switch v.Kind() {
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 			stringValues = append(stringValues, strconv.FormatInt(reflect.ValueOf(l).Int(), 10)+postfix)
