@@ -5,6 +5,18 @@ import (
 	"strings"
 )
 
+type Type string
+
+const (
+	Medium Type = "medium"
+	Thin   Type = "thin"
+	Thick  Type = "thick"
+)
+
+func (t Type) Apply(h *vecty.HTML) {
+	vecty.Style("border-width", string(t)).Apply(h)
+}
+
 //Value is slice of string widths, CSS supports 1 to 4
 // case 1( width ): top bottom right left = width
 // case 2( w1 w2 ): top bottom = w1, right left = w2

@@ -53,9 +53,9 @@ func Background(color string) background.Value {
 	return background.Value(color)
 }
 
-func Border(width int, style borderStyle.Type, color string) border.Value {
+func Border(width interface{}, style borderStyle.Type, color string) border.Value {
 	return border.Value{
-		Width: width,
+		Width: stringifyInterface("px", width),
 		Style: style,
 		Color: color,
 	}
