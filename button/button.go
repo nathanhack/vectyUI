@@ -4,6 +4,7 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/event"
+	"github.com/nathanhack/vectyUI/style/background"
 	"github.com/nathanhack/vectyUI/style/border"
 	"github.com/nathanhack/vectyUI/style/margin"
 	"github.com/nathanhack/vectyUI/style/padding"
@@ -13,11 +14,11 @@ import (
 type Button struct {
 	vecty.Core
 	Text            string               `vecty:"prop"`
-	Background      string               `vecty:"prop"`
+	Background      background.Value     `vecty:"prop"`
 	Padding         padding.Value        `vecty:"prop"`
 	Margin          margin.Value         `vecty:"prop"`
 	Border          border.Value         `vecty:"prop"`
-	HoverBackground string               `vecty:"prop"`
+	HoverBackground background.Value     `vecty:"prop"`
 	Click           func(i *vecty.Event) `vecty:"prop"`
 	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
 	MouseLeave      func(i *vecty.Event) `vecty:"prop"`
@@ -50,8 +51,8 @@ func (b *Button) Render() vecty.ComponentOrHTML {
 		event.MouseEnter(b.mouseEnter),
 		event.MouseLeave(b.mouseLeave),
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
-		vecty.MarkupIf(!b.hovering, vecty.Style("background", b.Background)),
-		vecty.MarkupIf(b.hovering, vecty.Style("background", b.HoverBackground)),
+		vecty.MarkupIf(!b.hovering, b.Background),
+		vecty.MarkupIf(b.hovering, b.HoverBackground),
 	}
 	markups = append(markups, b.Extra...)
 
@@ -66,11 +67,11 @@ func (b *Button) Render() vecty.ComponentOrHTML {
 type ButtonDiv struct {
 	vecty.Core
 	Text            string               `vecty:"prop"`
-	Background      string               `vecty:"prop"`
+	Background      background.Value     `vecty:"prop"`
 	Padding         padding.Value        `vecty:"prop"`
 	Margin          margin.Value         `vecty:"prop"`
 	Border          border.Value         `vecty:"prop"`
-	HoverBackground string               `vecty:"prop"`
+	HoverBackground background.Value     `vecty:"prop"`
 	Click           func(i *vecty.Event) `vecty:"prop"`
 	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
 	MouseLeave      func(i *vecty.Event) `vecty:"prop"`
@@ -103,8 +104,8 @@ func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
 		event.MouseEnter(b.mouseEnter),
 		event.MouseLeave(b.mouseLeave),
 		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
-		vecty.MarkupIf(!b.hovering, vecty.Style("background", b.Background)),
-		vecty.MarkupIf(b.hovering, vecty.Style("background", b.HoverBackground)),
+		vecty.MarkupIf(!b.hovering, b.Background),
+		vecty.MarkupIf(b.hovering, b.HoverBackground),
 	}
 	markups = append(markups, b.Extra...)
 

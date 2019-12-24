@@ -1,6 +1,8 @@
 package background
 
-import "github.com/gopherjs/vecty"
+import (
+	"github.com/gopherjs/vecty"
+)
 
 type Value string
 

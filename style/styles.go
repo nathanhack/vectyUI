@@ -1,7 +1,18 @@
 package style
 
 import (
+	color2 "github.com/nathanhack/vectyUI/color"
+	"github.com/nathanhack/vectyUI/internal"
+	"github.com/nathanhack/vectyUI/position"
 	"github.com/nathanhack/vectyUI/style/background"
+	"github.com/nathanhack/vectyUI/style/backgroundAttachment"
+	"github.com/nathanhack/vectyUI/style/backgroundClip"
+	"github.com/nathanhack/vectyUI/style/backgroundColor"
+	"github.com/nathanhack/vectyUI/style/backgroundImage"
+	"github.com/nathanhack/vectyUI/style/backgroundOrigin"
+	"github.com/nathanhack/vectyUI/style/backgroundPosition"
+	"github.com/nathanhack/vectyUI/style/backgroundRepeat"
+	"github.com/nathanhack/vectyUI/style/backgroundSize"
 	"github.com/nathanhack/vectyUI/style/border"
 	"github.com/nathanhack/vectyUI/style/borderColor"
 	"github.com/nathanhack/vectyUI/style/borderStyle"
@@ -21,47 +32,76 @@ import (
 	"github.com/nathanhack/vectyUI/style/top"
 	"github.com/nathanhack/vectyUI/style/width"
 	"github.com/nathanhack/vectyUI/style/zIndex"
-	"reflect"
-	"strconv"
+	"strings"
 )
 
-func stringify(postfix string, values ...interface{}) []string {
-	stringValues := make([]string, 0)
-	for _, l := range values {
-		stringValues = append(stringValues, stringifyInterface(postfix, l))
+//Background is used for weird case not handled by Background.
+// Expects either strings or something that casts to a string. Then basically concatenates the strings.
+// NOTE items are not ordered. Also the size value must be prefixed by "/"
+func Background(nonRepeatingBackgroundValues ...interface{}) background.Value {
+	sb := strings.Builder{}
+	for _, bv := range nonRepeatingBackgroundValues {
+		sb.WriteString(internal.Stringify(bv))
+		sb.WriteString(" ")
+
 	}
-	return stringValues
+	return background.Value(sb.String())
 }
 
-func stringifyInterface(postfix string, value interface{}) string {
-	v := reflect.TypeOf(value)
-	switch v.Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		return strconv.FormatInt(reflect.ValueOf(value).Int(), 10) + postfix
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		return strconv.FormatUint(reflect.ValueOf(value).Uint(), 10) + postfix
-	case reflect.Float32, reflect.Float64:
-		return strconv.FormatFloat(reflect.ValueOf(value).Float(), 'f', -1, 64) + postfix
-	case reflect.String:
-		return reflect.ValueOf(value).String()
-	default:
-		return ""
+//Backgrounds
+// NOTE only the last layer can include background-color
+func Backgrounds(backgrounds ...background.Value) background.Value {
+	sb := strings.Builder{}
+	for i, bv := range backgrounds {
+		sb.WriteString(internal.Stringify(bv))
+		if i < len(backgrounds)-1 {
+			sb.WriteString(",")
+		}
 	}
+	return background.Value(sb.String())
 }
 
-func Background(color string) background.Value {
-	return background.Value(color)
+func BackgroundColor(color color2.Type) backgroundColor.Value {
+	return backgroundColor.Value(color)
 }
 
-func Border(width interface{}, style borderStyle.Type, color string) border.Value {
+func BackgroundClip(clipping backgroundClip.Type) backgroundClip.Value {
+	return backgroundClip.Value(clipping)
+}
+
+func BackgroundImage(backgrounds ...backgroundImage.Type) backgroundImage.Value {
+	return backgrounds
+}
+
+func BackgroundOrigin(orgin backgroundOrigin.Type) backgroundOrigin.Value {
+	return backgroundOrigin.Value(orgin)
+}
+
+func BackgroundRepeat(repeats ...backgroundRepeat.Type) backgroundRepeat.Value {
+	return repeats
+}
+
+func BackgroundAttachment(attaches backgroundAttachment.Type) backgroundAttachment.Value {
+	return backgroundAttachment.Value(attaches)
+}
+
+func BackgroundPosition(positions ...position.Type) backgroundPosition.Value {
+	return positions
+}
+
+func BackgroundSize(sizes ...backgroundSize.Type) backgroundSize.Value {
+	return sizes
+}
+
+func Border(width interface{}, style borderStyle.Type, color color2.Type) border.Value {
 	return border.Value{
-		Width: stringifyInterface("px", width),
+		Width: internal.Stringify(width) + "px",
 		Style: style,
 		Color: color,
 	}
 }
 
-func BorderColor(colors ...string) borderColor.Value {
+func BorderColor(colors ...color2.Type) borderColor.Value {
 	return colors
 }
 
@@ -70,7 +110,7 @@ func BorderStyle(styles ...borderStyle.Type) borderStyle.Value {
 }
 
 func BorderWidth(widths ...interface{}) borderWidth.Value {
-	return stringify("px", widths...)
+	return internal.StringifyPost("px", widths...)
 }
 
 func Color(c string) color.Value {
@@ -82,53 +122,53 @@ func FontFamily(fontNames ...string) fontFamily.Value {
 }
 
 func FontSize(size interface{}) fontSize.Value {
-	return fontSize.Value(stringifyInterface("px", size))
+	return fontSize.Value(internal.Stringify(size) + "px")
 }
 
 func Height(length interface{}) height.Value {
-	return height.Value(stringifyInterface("px", length))
+	return height.Value(internal.Stringify(length) + "px")
 }
 
 func Left(length interface{}) left.Value {
-	return left.Value(stringifyInterface("px", length))
+	return left.Value(internal.Stringify(length) + "px")
 }
 
 func Margin(lengths ...interface{}) margin.Value {
-	return stringify("px", lengths...)
+	return internal.StringifyPost("px", lengths...)
 }
 
 func MarginBottom(length interface{}) marginBottom.Value {
-	return marginBottom.Value(stringifyInterface("px", length))
+	return marginBottom.Value(internal.Stringify(length) + "px")
 }
 
 func MarginLeft(length interface{}) marginLeft.Value {
-	return marginLeft.Value(stringifyInterface("px", length))
+	return marginLeft.Value(internal.Stringify(length) + "px")
 }
 
 func MarginRight(length interface{}) marginRight.Value {
-	return marginRight.Value(stringifyInterface("px", length))
+	return marginRight.Value(internal.Stringify(length) + "px")
 }
 
 func MarginTop(length interface{}) marginTop.Value {
-	return marginTop.Value(stringifyInterface("px", length))
+	return marginTop.Value(internal.Stringify(length) + "px")
 }
 
 func Padding(lengths ...interface{}) padding.Value {
-	return stringify("px", lengths...)
+	return internal.StringifyPost("px", lengths...)
 }
 
 func Right(length interface{}) right.Value {
-	return right.Value(stringifyInterface("px", length))
+	return right.Value(internal.Stringify(length) + "px")
 }
 
 func Top(length interface{}) top.Value {
-	return top.Value(stringifyInterface("px", length))
+	return top.Value(internal.Stringify(length) + "px")
 }
 
 func Width(length interface{}) width.Value {
-	return width.Value(stringifyInterface("px", length))
+	return width.Value(internal.Stringify(length) + "px")
 }
 
 func ZIndex(typeOrNumber interface{}) zIndex.Value {
-	return zIndex.Value(stringifyInterface("", typeOrNumber))
+	return zIndex.Value(internal.Stringify(typeOrNumber))
 }

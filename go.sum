@@ -1,2 +1,4 @@
 github.com/gopherjs/vecty v0.0.0-20190701174234-2b6fc20f8913 h1:h5R2K5Wqn5av3i4xHkyVgI2qCSbpJHAqqAkKpMPh0eE=
 github.com/gopherjs/vecty v0.0.0-20190701174234-2b6fc20f8913/go.mod h1:Yd9AOfl6lN1BWnVnvaSBwKiTCAcnlIGGvdsODOOZ9RY=
+github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
+github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
