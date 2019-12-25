@@ -14,11 +14,12 @@ type HorzBar struct {
 	Height     height.Type           `vecty:"prop"`
 	Divs       []vecty.MarkupOrChild `vecty:"prop"`
 	Extra      []vecty.Applyer       `vecty:"prop"`
+	ID         string                `vecty:"prop"`
 }
 
 func (hb *HorzBar) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
-		prop.ID("horzbar"),
+		vecty.MarkupIf(hb.ID != "", prop.ID(hb.ID), nil),
 		hb.Height,
 		hb.Background,
 	}
