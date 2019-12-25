@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
-	materialDesignColor "github.com/nathanhack/vectyUI/materialdesign"
+	"github.com/nathanhack/vectyUI/materialdesign"
 	"github.com/nathanhack/vectyUI/style"
 	"github.com/nathanhack/vectyUI/style/backgroundImage"
 	"github.com/nathanhack/vectyUI/style/backgroundImage/colorStop"
@@ -28,8 +28,8 @@ func (b Body) Render() vecty.ComponentOrHTML {
 				style.Height(100),
 				style.Width(100),
 				backgroundImage.LinearGradient(backgroundImage.ToBottom,
-					colorStop.Type(materialDesignColor.Amber900),
-					colorStop.From(materialDesignColor.Blue200),
+					colorStop.Type(materialdesign.Amber900),
+					colorStop.From(materialdesign.Blue200),
 					"green",
 				),
 			),
@@ -52,8 +52,8 @@ func (b Body) Render() vecty.ComponentOrHTML {
 				style.Height(100),
 				style.Width(100),
 				backgroundImage.LinearGradient(backgroundImage.Degree(20),
-					colorStop.From(materialDesignColor.Amber200),
-					colorStop.From(materialDesignColor.Blue900),
+					colorStop.From(materialdesign.Amber200),
+					colorStop.From(materialdesign.Blue900),
 				),
 			),
 		),

@@ -1,4 +1,4 @@
-package materialDesignColor
+package materialdesign
 
 import "github.com/nathanhack/vectyUI/style/color"
 

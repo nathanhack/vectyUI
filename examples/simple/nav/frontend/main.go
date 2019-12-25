@@ -4,7 +4,7 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/nathanhack/vectyUI/button"
-	materialDesignColor "github.com/nathanhack/vectyUI/materialdesign"
+	"github.com/nathanhack/vectyUI/materialdesign"
 	"github.com/nathanhack/vectyUI/nav"
 	"github.com/nathanhack/vectyUI/style"
 	"github.com/nathanhack/vectyUI/style/backgroundImage"
@@ -26,8 +26,8 @@ func (b Body) Render() vecty.ComponentOrHTML {
 	return elem.Body(
 		vecty.Markup(
 			backgroundImage.LinearGradient(backgroundImage.ToBottom,
-				colorStop.From(materialDesignColor.Amber50),
-				colorStop.From(materialDesignColor.Blue50),
+				colorStop.From(materialdesign.Amber50),
+				colorStop.From(materialdesign.Blue50),
 			),
 		),
 		&nav.HorzBar{
