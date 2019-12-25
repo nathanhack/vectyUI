@@ -2,8 +2,8 @@ package border
 
 import (
 	"github.com/gopherjs/vecty"
-	"github.com/nathanhack/vectyUI/color"
 	"github.com/nathanhack/vectyUI/style/borderStyle"
+	"github.com/nathanhack/vectyUI/style/color"
 )
 
 type Value struct {

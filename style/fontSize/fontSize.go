@@ -20,7 +20,7 @@ func (t Type) Apply(h *vecty.HTML) {
 	vecty.Style("font-size", string(t)).Apply(h)
 }
 
-type Value string
+type Value Type
 
 func (v Value) Apply(h *vecty.HTML) {
 	vecty.Style("font-size", string(v)).Apply(h)

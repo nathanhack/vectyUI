@@ -31,3 +31,9 @@ const (
 func (t Type) Apply(h *vecty.HTML) {
 	vecty.Style("display", string(t)).Apply(h)
 }
+
+type Value Type
+
+func (v Value) Apply(h *vecty.HTML) {
+	vecty.Style("display", string(v)).Apply(h)
+}

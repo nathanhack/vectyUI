@@ -2,7 +2,7 @@ package backgroundColor
 
 import (
 	"github.com/gopherjs/vecty"
-	"github.com/nathanhack/vectyUI/color"
+	"github.com/nathanhack/vectyUI/style/color"
 )
 
 type Value color.Type

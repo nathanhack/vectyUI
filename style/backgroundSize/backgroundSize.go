@@ -19,12 +19,12 @@ func (t Type) Apply(h *vecty.HTML) {
 }
 
 func Percent(percent interface{}) *Type {
-	tmp := Type(internal.Stringify(percent) + "%")
+	tmp := Type(internal.Stringify(percent, "%"))
 	return &tmp
 }
 
 func Length(length interface{}) Type {
-	return Type(internal.Stringify(length) + "px")
+	return Type(internal.Stringify(length, "px"))
 }
 
 type Value []Type

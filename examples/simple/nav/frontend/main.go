@@ -4,13 +4,14 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/nathanhack/vectyUI/button"
-	"github.com/nathanhack/vectyUI/colorStop"
 	materialDesignColor "github.com/nathanhack/vectyUI/materialdesign"
 	"github.com/nathanhack/vectyUI/nav"
 	"github.com/nathanhack/vectyUI/style"
 	"github.com/nathanhack/vectyUI/style/backgroundImage"
+	"github.com/nathanhack/vectyUI/style/backgroundImage/colorStop"
 	"github.com/nathanhack/vectyUI/style/display"
 	"github.com/nathanhack/vectyUI/style/float"
+	"github.com/nathanhack/vectyUI/style/fontFamily"
 	"github.com/nathanhack/vectyUI/style/marginLeft"
 	"syscall/js"
 )
@@ -51,6 +52,7 @@ func (b Body) Render() vecty.ComponentOrHTML {
 						marginLeft.Auto,
 						float.Right,
 						style.Padding(14, 16),
+						fontFamily.Arial,
 					),
 					vecty.Text("BRAND"),
 				),

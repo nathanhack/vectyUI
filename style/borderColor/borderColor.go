@@ -2,7 +2,7 @@ package borderColor
 
 import (
 	"github.com/gopherjs/vecty"
-	"github.com/nathanhack/vectyUI/color"
+	"github.com/nathanhack/vectyUI/style/color"
 	"strings"
 )
 

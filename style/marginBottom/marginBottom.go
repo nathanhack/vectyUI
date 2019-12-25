@@ -12,7 +12,7 @@ func (t Type) Apply(h *vecty.HTML) {
 	vecty.Style("margin-bottom", string(t)).Apply(h)
 }
 
-type Value string
+type Value Type
 
 func (v Value) Apply(h *vecty.HTML) {
 	vecty.Style("margin-bottom", string(v)).Apply(h)

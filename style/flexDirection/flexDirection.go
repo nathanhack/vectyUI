@@ -15,3 +15,10 @@ func (t Type) Apply(h *vecty.HTML) {
 	vecty.Style("-webkit-flex-direction", string(t)).Apply(h)
 	vecty.Style("flex-direction", string(t)).Apply(h)
 }
+
+type Value Type
+
+func (v Value) Apply(h *vecty.HTML) {
+	vecty.Style("-webkit-flex-direction", string(v)).Apply(h)
+	vecty.Style("flex-direction", string(v)).Apply(h)
+}

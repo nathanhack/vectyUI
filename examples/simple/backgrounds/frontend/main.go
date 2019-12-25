@@ -3,11 +3,11 @@ package main
 import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
-	"github.com/nathanhack/vectyUI/colorStop"
 	materialDesignColor "github.com/nathanhack/vectyUI/materialdesign"
-	"github.com/nathanhack/vectyUI/position"
 	"github.com/nathanhack/vectyUI/style"
 	"github.com/nathanhack/vectyUI/style/backgroundImage"
+	"github.com/nathanhack/vectyUI/style/backgroundImage/colorStop"
+	"github.com/nathanhack/vectyUI/style/backgroundPosition"
 	"github.com/nathanhack/vectyUI/style/backgroundRepeat"
 	"github.com/nathanhack/vectyUI/style/backgroundSize"
 )
@@ -44,7 +44,7 @@ func (b Body) Render() vecty.ComponentOrHTML {
 					backgroundImage.LinearGradient(backgroundImage.ToBottom, "grey", "20%", "red", colorStop.Percent("blue", 30), colorStop.HintPercent(60), "green"),
 				),
 				style.BackgroundRepeat(backgroundRepeat.NoRepeat, backgroundRepeat.NoRepeat),
-				style.BackgroundPosition(position.Center, position.Center),
+				style.BackgroundPosition(backgroundPosition.Center, backgroundPosition.Center),
 			),
 		),
 		elem.Div(
@@ -63,7 +63,7 @@ func (b Body) Render() vecty.ComponentOrHTML {
 				style.Width(100),
 				style.Backgrounds(
 					style.Background(
-						position.Center,            //note order matters
+						backgroundPosition.Center,  //note order matters
 						"/",                        // //note order matters and this is required
 						backgroundSize.Percent(75), //note order matters
 						backgroundImage.URL("image1.png"),
@@ -88,7 +88,7 @@ func (b Body) Render() vecty.ComponentOrHTML {
 				backgroundImage.URL("image1.png"),
 				backgroundSize.Percent(50),
 				backgroundRepeat.NoRepeat,
-				style.BackgroundPosition(position.Center),
+				style.BackgroundPosition(backgroundPosition.Center),
 				style.BackgroundColor("grey"),
 			),
 		),

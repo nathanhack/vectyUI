@@ -12,7 +12,7 @@ func (t Type) Apply(h *vecty.HTML) {
 	vecty.Style("left", string(t)).Apply(h)
 }
 
-type Value string
+type Value Type
 
 func (v Value) Apply(h *vecty.HTML) {
 	vecty.Style("left", string(v)).Apply(h)

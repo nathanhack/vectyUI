@@ -2,9 +2,9 @@ package backgroundImage
 
 import (
 	"github.com/gopherjs/vecty"
-	"github.com/nathanhack/vectyUI/colorStop"
 	"github.com/nathanhack/vectyUI/internal"
-	"github.com/nathanhack/vectyUI/position"
+	"github.com/nathanhack/vectyUI/style/backgroundImage/colorStop"
+	"github.com/nathanhack/vectyUI/style/position"
 	"strings"
 )
 
@@ -40,7 +40,7 @@ var ToBottom Dir = "to bottom"
 var ToTop Dir = "to top"
 
 func Degree(angle interface{}) Dir {
-	return Dir(internal.Stringify(angle) + "deg")
+	return Dir(internal.Stringify(angle, "deg"))
 }
 
 //LinearGradient
@@ -74,11 +74,11 @@ var FarthestCorner SizeOrExtent = "farthest-corner"
 var FarthestSide SizeOrExtent = "farthest-side"
 
 func Length(len interface{}) SizeOrExtent {
-	return SizeOrExtent(internal.Stringify(len) + "px")
+	return SizeOrExtent(internal.Stringify(len, "px"))
 }
 
 func Percent(percent interface{}) SizeOrExtent {
-	return SizeOrExtent(internal.Stringify(percent) + "%")
+	return SizeOrExtent(internal.Stringify(percent, "%"))
 }
 
 //RadialGradientCircle

@@ -1,9 +1,7 @@
 package style
 
 import (
-	color2 "github.com/nathanhack/vectyUI/color"
 	"github.com/nathanhack/vectyUI/internal"
-	"github.com/nathanhack/vectyUI/position"
 	"github.com/nathanhack/vectyUI/style/background"
 	"github.com/nathanhack/vectyUI/style/backgroundAttachment"
 	"github.com/nathanhack/vectyUI/style/backgroundClip"
@@ -18,6 +16,10 @@ import (
 	"github.com/nathanhack/vectyUI/style/borderStyle"
 	"github.com/nathanhack/vectyUI/style/borderWidth"
 	"github.com/nathanhack/vectyUI/style/color"
+	"github.com/nathanhack/vectyUI/style/display"
+	"github.com/nathanhack/vectyUI/style/flexDirection"
+	"github.com/nathanhack/vectyUI/style/flexWrap"
+	"github.com/nathanhack/vectyUI/style/float"
 	"github.com/nathanhack/vectyUI/style/fontFamily"
 	"github.com/nathanhack/vectyUI/style/fontSize"
 	"github.com/nathanhack/vectyUI/style/height"
@@ -27,9 +29,12 @@ import (
 	"github.com/nathanhack/vectyUI/style/marginLeft"
 	"github.com/nathanhack/vectyUI/style/marginRight"
 	"github.com/nathanhack/vectyUI/style/marginTop"
+	"github.com/nathanhack/vectyUI/style/overflow"
 	"github.com/nathanhack/vectyUI/style/padding"
+	"github.com/nathanhack/vectyUI/style/position"
 	"github.com/nathanhack/vectyUI/style/right"
 	"github.com/nathanhack/vectyUI/style/top"
+	"github.com/nathanhack/vectyUI/style/userSelect"
 	"github.com/nathanhack/vectyUI/style/width"
 	"github.com/nathanhack/vectyUI/style/zIndex"
 	"strings"
@@ -41,7 +46,7 @@ import (
 func Background(nonRepeatingBackgroundValues ...interface{}) background.Value {
 	sb := strings.Builder{}
 	for _, bv := range nonRepeatingBackgroundValues {
-		sb.WriteString(internal.Stringify(bv))
+		sb.WriteString(internal.Stringify(bv, ""))
 		sb.WriteString(" ")
 
 	}
@@ -53,7 +58,7 @@ func Background(nonRepeatingBackgroundValues ...interface{}) background.Value {
 func Backgrounds(backgrounds ...background.Value) background.Value {
 	sb := strings.Builder{}
 	for i, bv := range backgrounds {
-		sb.WriteString(internal.Stringify(bv))
+		sb.WriteString(internal.Stringify(bv, ""))
 		if i < len(backgrounds)-1 {
 			sb.WriteString(",")
 		}
@@ -61,7 +66,7 @@ func Backgrounds(backgrounds ...background.Value) background.Value {
 	return background.Value(sb.String())
 }
 
-func BackgroundColor(color color2.Type) backgroundColor.Value {
+func BackgroundColor(color color.Type) backgroundColor.Value {
 	return backgroundColor.Value(color)
 }
 
@@ -85,7 +90,7 @@ func BackgroundAttachment(attaches backgroundAttachment.Type) backgroundAttachme
 	return backgroundAttachment.Value(attaches)
 }
 
-func BackgroundPosition(positions ...position.Type) backgroundPosition.Value {
+func BackgroundPosition(positions ...backgroundPosition.Type) backgroundPosition.Value {
 	return positions
 }
 
@@ -93,15 +98,15 @@ func BackgroundSize(sizes ...backgroundSize.Type) backgroundSize.Value {
 	return sizes
 }
 
-func Border(width interface{}, style borderStyle.Type, color color2.Type) border.Value {
+func Border(width interface{}, style borderStyle.Type, color color.Type) border.Value {
 	return border.Value{
-		Width: internal.Stringify(width) + "px",
+		Width: internal.Stringify(width, "px"),
 		Style: style,
 		Color: color,
 	}
 }
 
-func BorderColor(colors ...color2.Type) borderColor.Value {
+func BorderColor(colors ...color.Type) borderColor.Value {
 	return colors
 }
 
@@ -110,11 +115,27 @@ func BorderStyle(styles ...borderStyle.Type) borderStyle.Value {
 }
 
 func BorderWidth(widths ...interface{}) borderWidth.Value {
-	return internal.StringifyPost("px", widths...)
+	return internal.StringifyList("px", widths...)
 }
 
-func Color(c string) color.Value {
+func Color(c color.Type) color.Value {
 	return color.Value(c)
+}
+
+func Display(value display.Type) display.Value {
+	return display.Value(value)
+}
+
+func FlexDirection(dir flexDirection.Type) flexDirection.Value {
+	return flexDirection.Value(dir)
+}
+
+func FlexWrap(wrap flexWrap.Type) flexWrap.Value {
+	return flexWrap.Value(wrap)
+}
+
+func Float(fl float.Type) float.Value {
+	return float.Value(fl)
 }
 
 func FontFamily(fontNames ...string) fontFamily.Value {
@@ -122,53 +143,65 @@ func FontFamily(fontNames ...string) fontFamily.Value {
 }
 
 func FontSize(size interface{}) fontSize.Value {
-	return fontSize.Value(internal.Stringify(size) + "px")
+	return fontSize.Value(internal.Stringify(size, "px"))
 }
 
 func Height(length interface{}) height.Value {
-	return height.Value(internal.Stringify(length) + "px")
+	return height.Value(internal.Stringify(length, "px"))
 }
 
 func Left(length interface{}) left.Value {
-	return left.Value(internal.Stringify(length) + "px")
+	return left.Value(internal.Stringify(length, "px"))
 }
 
 func Margin(lengths ...interface{}) margin.Value {
-	return internal.StringifyPost("px", lengths...)
+	return internal.StringifyList("px", lengths...)
 }
 
 func MarginBottom(length interface{}) marginBottom.Value {
-	return marginBottom.Value(internal.Stringify(length) + "px")
+	return marginBottom.Value(internal.Stringify(length, "px"))
 }
 
 func MarginLeft(length interface{}) marginLeft.Value {
-	return marginLeft.Value(internal.Stringify(length) + "px")
+	return marginLeft.Value(internal.Stringify(length, "px"))
 }
 
 func MarginRight(length interface{}) marginRight.Value {
-	return marginRight.Value(internal.Stringify(length) + "px")
+	return marginRight.Value(internal.Stringify(length, "px"))
 }
 
 func MarginTop(length interface{}) marginTop.Value {
-	return marginTop.Value(internal.Stringify(length) + "px")
+	return marginTop.Value(internal.Stringify(length, "px"))
+}
+
+func Overflow(p overflow.Type) overflow.Value {
+	return overflow.Value(p)
 }
 
 func Padding(lengths ...interface{}) padding.Value {
-	return internal.StringifyPost("px", lengths...)
+	return internal.StringifyList("px", lengths...)
+}
+
+func Position(pos position.Type) position.Value {
+	return position.Value(pos)
 }
 
 func Right(length interface{}) right.Value {
-	return right.Value(internal.Stringify(length) + "px")
+	return right.Value(internal.Stringify(length, "px"))
 }
 
 func Top(length interface{}) top.Value {
-	return top.Value(internal.Stringify(length) + "px")
+	return top.Value(internal.Stringify(length, "px"))
+}
+
+func UserSelect(value userSelect.Type) userSelect.Value {
+	return userSelect.Value(value)
 }
 
 func Width(length interface{}) width.Value {
-	return width.Value(internal.Stringify(length) + "px")
+	return width.Value(internal.Stringify(length, "px"))
 }
 
 func ZIndex(typeOrNumber interface{}) zIndex.Value {
-	return zIndex.Value(internal.Stringify(typeOrNumber))
+	return zIndex.Value(internal.Stringify(typeOrNumber, ""))
 }

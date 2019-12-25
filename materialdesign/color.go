@@ -1,6 +1,6 @@
 package materialDesignColor
 
-import "github.com/nathanhack/vectyUI/color"
+import "github.com/nathanhack/vectyUI/style/color"
 
 //From google's material.io
 const (
