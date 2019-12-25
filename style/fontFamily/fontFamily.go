@@ -62,6 +62,9 @@ const (
 	StencilStd  Type = "Stencil Std"
 	MarkerFelt  Type = "Marker Felt"
 	Trattatello Type = "Trattatello"
+
+	Initial Type = "initial"
+	Inherit Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

@@ -9,6 +9,8 @@ const (
 	RowReverse    Type = "row-reverse"
 	Column        Type = "column"
 	ColumnReverse Type = "column-reverse"
+	Initial       Type = "initial"
+	Inherit       Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

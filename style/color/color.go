@@ -7,6 +7,15 @@ import (
 
 type Type string
 
+const (
+	Initial Type = "initial"
+	Inherit Type = "inherit"
+)
+
+func (t Type) Apply(h *vecty.HTML) {
+	vecty.Style("color", string(t)).Apply(h)
+}
+
 //HSL creates a Type using the Hue-Saturation-Lightness-Alpha model.
 //	h		Defines a degree on the color circle (from 0 to 360) - 0 (or 360) is red, 120 is green, 240 is blue
 //	s		Defines the saturation; 0% is a shade of gray and 100% is the full color (full saturation)
@@ -39,10 +48,6 @@ func RGB(r, g, b interface{}) Type {
 //	a		values must be in range [0.0, 1.0]
 func RGBA(r, g, b, a interface{}) Type {
 	return Type("rgba(" + internal.Stringify(r, "") + "," + internal.Stringify(g, "") + "," + internal.Stringify(b, "") + "," + internal.Stringify(a, "") + ")")
-}
-
-func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("color", string(t)).Apply(h)
 }
 
 type Value Type

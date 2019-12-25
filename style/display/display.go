@@ -26,6 +26,8 @@ const (
 	TableColumn      Type = "table-column"
 	TableRow         Type = "table-row"
 	None             Type = "none"
+	Initial          Type = "initial"
+	Inherit          Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

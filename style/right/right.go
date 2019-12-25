@@ -5,7 +5,9 @@ import "github.com/gopherjs/vecty"
 type Type string
 
 const (
-	Auto Type = "auto"
+	Auto    Type = "auto"
+	Initial Type = "initial"
+	Inherit Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

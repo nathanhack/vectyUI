@@ -1,20 +1,20 @@
-package padding
+package lineHeight
 
 import (
 	"github.com/gopherjs/vecty"
 	"github.com/nathanhack/vectyUI/internal"
-	"strings"
 )
 
 type Type string
 
 const (
+	Normal  Type = "normal"
 	Initial Type = "initial"
 	Inherit Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("padding", string(t)).Apply(h)
+	vecty.Style("line-height", string(t)).Apply(h)
 }
 
 func Percent(percent interface{}) Type {
@@ -25,12 +25,13 @@ func Length(length interface{}) Type {
 	return Type(internal.Stringify(length, "px"))
 }
 
-type Value []string
+//Number - A number that will be multiplied with the current font-size to set the line height
+func Number(number interface{}) Type {
+	return Type(internal.Stringify(number, ""))
+}
+
+type Value Type
 
 func (v Value) Apply(h *vecty.HTML) {
-	sb := strings.Builder{}
-	for _, l := range v {
-		sb.WriteString(l + " ")
-	}
-	vecty.Style("padding", sb.String()).Apply(h)
+	vecty.Style("line-height", string(v)).Apply(h)
 }

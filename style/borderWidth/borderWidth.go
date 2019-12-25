@@ -8,9 +8,11 @@ import (
 type Type string
 
 const (
-	Medium Type = "medium"
-	Thin   Type = "thin"
-	Thick  Type = "thick"
+	Medium  Type = "medium"
+	Thin    Type = "thin"
+	Thick   Type = "thick"
+	Initial Type = "initial"
+	Inherit Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

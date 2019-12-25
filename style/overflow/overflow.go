@@ -9,6 +9,8 @@ const (
 	Hidden  Type = "hidden"
 	Scroll  Type = "scroll"
 	Auto    Type = "auto"
+	Initial Type = "initial"
+	Inherit Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

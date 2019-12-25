@@ -8,16 +8,18 @@ import (
 type Type string
 
 const (
-	Dashed Type = "dashed"
-	Dotted Type = "dotted"
-	Double Type = "double"
-	Groove Type = "groove"
-	Hidden Type = "hidden"
-	Inset  Type = "inset"
-	None   Type = "none"
-	Outset Type = "outset"
-	Ridge  Type = "ridge"
-	Solid  Type = "solid"
+	Dashed  Type = "dashed"
+	Dotted  Type = "dotted"
+	Double  Type = "double"
+	Groove  Type = "groove"
+	Hidden  Type = "hidden"
+	Inset   Type = "inset"
+	None    Type = "none"
+	Outset  Type = "outset"
+	Ridge   Type = "ridge"
+	Solid   Type = "solid"
+	Initial Type = "initial"
+	Inherit Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

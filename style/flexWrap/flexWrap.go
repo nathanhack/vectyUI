@@ -8,6 +8,8 @@ const (
 	Nowrap      Type = "nowrap"
 	Wrap        Type = "wrap"
 	WrapReverse Type = "wrap-reverse"
+	Initial     Type = "initial"
+	Inherit     Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

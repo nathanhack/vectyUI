@@ -11,6 +11,7 @@ const (
 	Relative Type = "relative"
 	Sticky   Type = "sticky"
 	Initial  Type = "initial"
+	Inherit  Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

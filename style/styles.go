@@ -1,6 +1,7 @@
 package style
 
 import (
+	"fmt"
 	"github.com/nathanhack/vectyUI/internal"
 	"github.com/nathanhack/vectyUI/style/background"
 	"github.com/nathanhack/vectyUI/style/backgroundAttachment"
@@ -24,6 +25,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/fontSize"
 	"github.com/nathanhack/vectyUI/style/height"
 	"github.com/nathanhack/vectyUI/style/left"
+	"github.com/nathanhack/vectyUI/style/lineHeight"
 	"github.com/nathanhack/vectyUI/style/margin"
 	"github.com/nathanhack/vectyUI/style/marginBottom"
 	"github.com/nathanhack/vectyUI/style/marginLeft"
@@ -33,8 +35,10 @@ import (
 	"github.com/nathanhack/vectyUI/style/padding"
 	"github.com/nathanhack/vectyUI/style/position"
 	"github.com/nathanhack/vectyUI/style/right"
+	"github.com/nathanhack/vectyUI/style/textAlign"
 	"github.com/nathanhack/vectyUI/style/top"
 	"github.com/nathanhack/vectyUI/style/userSelect"
+	"github.com/nathanhack/vectyUI/style/verticalAlign"
 	"github.com/nathanhack/vectyUI/style/width"
 	"github.com/nathanhack/vectyUI/style/zIndex"
 	"strings"
@@ -66,6 +70,10 @@ func Backgrounds(backgrounds ...background.Value) background.Value {
 	return background.Value(sb.String())
 }
 
+func BackgroundAttachment(attaches backgroundAttachment.Type) backgroundAttachment.Value {
+	return backgroundAttachment.Value(attaches)
+}
+
 func BackgroundColor(color color.Type) backgroundColor.Value {
 	return backgroundColor.Value(color)
 }
@@ -86,10 +94,6 @@ func BackgroundRepeat(repeats ...backgroundRepeat.Type) backgroundRepeat.Value {
 	return repeats
 }
 
-func BackgroundAttachment(attaches backgroundAttachment.Type) backgroundAttachment.Value {
-	return backgroundAttachment.Value(attaches)
-}
-
 func BackgroundPosition(positions ...backgroundPosition.Type) backgroundPosition.Value {
 	return positions
 }
@@ -106,12 +110,25 @@ func Border(width interface{}, style borderStyle.Type, color color.Type) border.
 	}
 }
 
-func BorderColor(colors ...color.Type) borderColor.Value {
-	return colors
+func BorderColor(colors ...interface{}) borderColor.Value {
+	values := make([]borderColor.Type, 0)
+	for _, c := range colors {
+		switch c.(type) {
+		case borderColor.Type:
+			values = append(values, c.(borderColor.Type))
+		case color.Type:
+			values = append(values, borderColor.Type(c.(color.Type)))
+		case string:
+			values = append(values, borderColor.Type(c.(string)))
+		default:
+			panic(fmt.Sprintf("unsupported color type %T with value: %v", c, c))
+		}
+	}
+	return values
 }
 
 func BorderStyle(styles ...borderStyle.Type) borderStyle.Value {
-	return borderStyle.Value(styles)
+	return styles
 }
 
 func BorderWidth(widths ...interface{}) borderWidth.Value {
@@ -150,8 +167,12 @@ func Height(length interface{}) height.Value {
 	return height.Value(internal.Stringify(length, "px"))
 }
 
-func Left(length interface{}) left.Value {
-	return left.Value(internal.Stringify(length, "px"))
+func Left(value left.Type) left.Value {
+	return left.Value(value)
+}
+
+func LineHeight(value lineHeight.Type) lineHeight.Value {
+	return lineHeight.Value(value)
 }
 
 func Margin(lengths ...interface{}) margin.Value {
@@ -190,12 +211,20 @@ func Right(length interface{}) right.Value {
 	return right.Value(internal.Stringify(length, "px"))
 }
 
+func TextAlign(value textAlign.Type) textAlign.Value {
+	return textAlign.Value(value)
+}
+
 func Top(length interface{}) top.Value {
 	return top.Value(internal.Stringify(length, "px"))
 }
 
 func UserSelect(value userSelect.Type) userSelect.Value {
 	return userSelect.Value(value)
+}
+
+func VerticalAlign(value verticalAlign.Type) verticalAlign.Value {
+	return verticalAlign.Value(value)
 }
 
 func Width(length interface{}) width.Value {

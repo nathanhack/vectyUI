@@ -12,15 +12,16 @@ const (
 	Cover   Type = "cover"
 	Contain Type = "contain"
 	Auto    Type = "auto"
+	Initial Type = "initial"
+	Inherit Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {
 	vecty.Style("background-size", string(t)).Apply(h)
 }
 
-func Percent(percent interface{}) *Type {
-	tmp := Type(internal.Stringify(percent, "%"))
-	return &tmp
+func Percent(percent interface{}) Type {
+	return Type(internal.Stringify(percent, "%"))
 }
 
 func Length(length interface{}) Type {

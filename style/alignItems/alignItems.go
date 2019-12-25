@@ -10,6 +10,8 @@ const (
 	FlexStart Type = "flex-start"
 	FlexEnd   Type = "flex-end"
 	Baseline  Type = "baseline"
+	Initial   Type = "initial"
+	Inherit   Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

@@ -1,21 +1,24 @@
-package marginTop
+package textAlign
 
 import "github.com/gopherjs/vecty"
 
 type Type string
 
 const (
-	Auto    Type = "auto"
+	Left    Type = "left"
+	Right   Type = "right"
+	Center  Type = "center"
+	Justify Type = "justify"
 	Initial Type = "initial"
 	Inherit Type = "inherit"
 )
 
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("margin-top", string(t)).Apply(h)
+	vecty.Style("text-align", string(t)).Apply(h)
 }
 
 type Value Type
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("margin-top", string(v)).Apply(h)
+	vecty.Style("text-align", string(v)).Apply(h)
 }

@@ -28,6 +28,25 @@ func (b Body) Render() vecty.ComponentOrHTML {
 			Size:  style.FontSize(fontSize.XXLarge),
 			Color: style.Color(color.RGBA(30, 30, 30, 255)),
 		},
+
+		&fontawesome.FontAwesomeStack{
+			Fonts: []fontawesome.FontAwesome{
+				{
+					Style: fontawesome.Fas,
+					Text:  "\uf030",
+					Color: "black",
+					Extra: fontawesome.Stack1X,
+				},
+				{
+					Style: fontawesome.Fas,
+					Text:  "\uf05e",
+					Color: "red",
+					Extra: fontawesome.Stack2X,
+				},
+			},
+			Size:  style.FontSize(48),
+			Extra: nil,
+		},
 	)
 }
 
