@@ -71,12 +71,12 @@ func (t Type) Apply(h *vecty.HTML) {
 	vecty.Style("font-family", string(t)).Apply(h)
 }
 
-type Value []string
+type Value []Type
 
 func (v Value) Apply(h *vecty.HTML) {
 	sb := strings.Builder{}
 	for i, c := range v {
-		sb.WriteString(c)
+		sb.WriteString(string(c))
 		if i < len(v)-1 {
 			sb.WriteString(",")
 		}

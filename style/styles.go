@@ -16,6 +16,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/borderColor"
 	"github.com/nathanhack/vectyUI/style/borderStyle"
 	"github.com/nathanhack/vectyUI/style/borderWidth"
+	"github.com/nathanhack/vectyUI/style/bottom"
 	"github.com/nathanhack/vectyUI/style/color"
 	"github.com/nathanhack/vectyUI/style/display"
 	"github.com/nathanhack/vectyUI/style/flexDirection"
@@ -135,6 +136,11 @@ func BorderWidth(widths ...interface{}) borderWidth.Value {
 	return internal.StringifyList("px", widths...)
 }
 
+//Bottom defaults to pixels if a number is passed in, otherwise it accepts as is
+func Bottom(value interface{}) bottom.Value {
+	return bottom.Value(internal.Stringify(value, "px"))
+}
+
 func Color(c color.Type) color.Value {
 	return color.Value(c)
 }
@@ -155,24 +161,28 @@ func Float(fl float.Type) float.Value {
 	return float.Value(fl)
 }
 
-func FontFamily(fontNames ...string) fontFamily.Value {
+func FontFamily(fontNames ...fontFamily.Type) fontFamily.Value {
 	return fontNames
 }
 
+//FontSize defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func FontSize(size interface{}) fontSize.Value {
 	return fontSize.Value(internal.Stringify(size, "px"))
 }
 
+//Height defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func Height(length interface{}) height.Value {
 	return height.Value(internal.Stringify(length, "px"))
 }
 
-func Left(value left.Type) left.Value {
-	return left.Value(value)
+//Left defaults to pixels if a number is passed in, otherwise it accepts as is
+func Left(value interface{}) left.Value {
+	return left.Value(internal.Stringify(value, "px"))
 }
 
-func LineHeight(value lineHeight.Type) lineHeight.Value {
-	return lineHeight.Value(value)
+//LineHeight defaults to pixels if a numbers are passed in, otherwise it accepts as is
+func LineHeight(value interface{}) lineHeight.Value {
+	return lineHeight.Value(internal.Stringify(value, "px"))
 }
 
 func Margin(lengths ...interface{}) margin.Value {
@@ -187,10 +197,12 @@ func MarginLeft(length interface{}) marginLeft.Value {
 	return marginLeft.Value(internal.Stringify(length, "px"))
 }
 
+//MarginRight defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func MarginRight(length interface{}) marginRight.Value {
 	return marginRight.Value(internal.Stringify(length, "px"))
 }
 
+//MarginTop defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func MarginTop(length interface{}) marginTop.Value {
 	return marginTop.Value(internal.Stringify(length, "px"))
 }
@@ -199,6 +211,7 @@ func Overflow(p overflow.Type) overflow.Value {
 	return overflow.Value(p)
 }
 
+//Padding defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func Padding(lengths ...interface{}) padding.Value {
 	return internal.StringifyList("px", lengths...)
 }
@@ -207,6 +220,7 @@ func Position(pos position.Type) position.Value {
 	return position.Value(pos)
 }
 
+//Right defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func Right(length interface{}) right.Value {
 	return right.Value(internal.Stringify(length, "px"))
 }
