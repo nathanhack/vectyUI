@@ -78,8 +78,8 @@ func BackgroundImage(backgrounds ...backgroundImage.Type) backgroundImage.Value 
 	return backgrounds
 }
 
-func BackgroundOrigin(orgin backgroundOrigin.Type) backgroundOrigin.Value {
-	return backgroundOrigin.Value(orgin)
+func BackgroundOrigin(origin backgroundOrigin.Type) backgroundOrigin.Value {
+	return backgroundOrigin.Value(origin)
 }
 
 func BackgroundRepeat(repeats ...backgroundRepeat.Type) backgroundRepeat.Value {
