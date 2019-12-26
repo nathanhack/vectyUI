@@ -25,6 +25,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/fontFamily"
 	"github.com/nathanhack/vectyUI/style/fontSize"
 	"github.com/nathanhack/vectyUI/style/height"
+	"github.com/nathanhack/vectyUI/style/justifycontent"
 	"github.com/nathanhack/vectyUI/style/left"
 	"github.com/nathanhack/vectyUI/style/lineHeight"
 	"github.com/nathanhack/vectyUI/style/margin"
@@ -173,6 +174,10 @@ func FontSize(size interface{}) fontSize.Value {
 //Height defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func Height(length interface{}) height.Value {
 	return height.Value(internal.Stringify(length, "px"))
+}
+
+func JustifyContent(value justifycontent.Type) justifycontent.Value {
+	return justifycontent.Value(value)
 }
 
 //Left defaults to pixels if a number is passed in, otherwise it accepts as is
