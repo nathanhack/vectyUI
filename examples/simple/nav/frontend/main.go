@@ -35,7 +35,7 @@ func (b Body) Render() vecty.ComponentOrHTML {
 				backgroundImage.LinearGradient(backgroundImage.ToRight, "blue", "Red"),
 			),
 			Divs: []vecty.MarkupOrChild{
-				&button.ButtonDiv{
+				&button.Div{
 					Text:            "click me",
 					Padding:         style.Padding(14, 16),
 					HoverBackground: "green",

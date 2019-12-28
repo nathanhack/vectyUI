@@ -11,7 +11,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/userSelect"
 )
 
-type Button struct {
+type Simple struct {
 	vecty.Core
 	Text            string               `vecty:"prop"`
 	Background      background.Value     `vecty:"prop"`
@@ -23,10 +23,11 @@ type Button struct {
 	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
 	MouseLeave      func(i *vecty.Event) `vecty:"prop"`
 	Extra           []vecty.Applyer      `vecty:"prop"`
+	Disabled        bool                 `vecty:"prop"`
 	hovering        bool
 }
 
-func (b *Button) mouseEnter(i *vecty.Event) {
+func (b *Simple) mouseEnter(i *vecty.Event) {
 	b.hovering = true
 	if b.MouseEnter != nil {
 		b.MouseEnter(i)
@@ -34,7 +35,7 @@ func (b *Button) mouseEnter(i *vecty.Event) {
 	vecty.Rerender(b)
 }
 
-func (b *Button) mouseLeave(i *vecty.Event) {
+func (b *Simple) mouseLeave(i *vecty.Event) {
 	b.hovering = false
 	if b.MouseLeave != nil {
 		b.MouseLeave(i)
@@ -42,7 +43,7 @@ func (b *Button) mouseLeave(i *vecty.Event) {
 	vecty.Rerender(b)
 }
 
-func (b *Button) Render() vecty.ComponentOrHTML {
+func (b *Simple) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
 		b.Padding,
 		b.Margin,
@@ -64,7 +65,7 @@ func (b *Button) Render() vecty.ComponentOrHTML {
 	)
 }
 
-type ButtonDiv struct {
+type Div struct {
 	vecty.Core
 	Text            string               `vecty:"prop"`
 	Background      background.Value     `vecty:"prop"`
@@ -79,7 +80,7 @@ type ButtonDiv struct {
 	hovering        bool
 }
 
-func (b *ButtonDiv) mouseEnter(i *vecty.Event) {
+func (b *Div) mouseEnter(i *vecty.Event) {
 	b.hovering = true
 	if b.MouseEnter != nil {
 		b.MouseEnter(i)
@@ -87,7 +88,7 @@ func (b *ButtonDiv) mouseEnter(i *vecty.Event) {
 	vecty.Rerender(b)
 }
 
-func (b *ButtonDiv) mouseLeave(i *vecty.Event) {
+func (b *Div) mouseLeave(i *vecty.Event) {
 	b.hovering = false
 	if b.MouseLeave != nil {
 		b.MouseLeave(i)
@@ -95,7 +96,7 @@ func (b *ButtonDiv) mouseLeave(i *vecty.Event) {
 	vecty.Rerender(b)
 }
 
-func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
+func (b *Div) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
 		b.Padding,
 		b.Margin,
@@ -119,12 +120,13 @@ func (b *ButtonDiv) Render() vecty.ComponentOrHTML {
 
 type Generic struct {
 	vecty.Core
-	Div        func() *vecty.HTML                    `vecty:"prop"`
-	HoverDiv   func() *vecty.HTML                    `vecty:"prop"`
+	Div        func() vecty.ComponentOrHTML          `vecty:"prop"`
+	HoverDiv   func() vecty.ComponentOrHTML          `vecty:"prop"`
 	Click      func(i *vecty.Event, button *Generic) `vecty:"prop"`
 	MouseEnter func(i *vecty.Event, button *Generic) `vecty:"prop"`
 	MouseLeave func(i *vecty.Event, button *Generic) `vecty:"prop"`
 	Extra      []vecty.Applyer                       `vecty:"prop"`
+	Disabled   bool                                  `vecty:"prop"`
 	hovering   bool
 }
 

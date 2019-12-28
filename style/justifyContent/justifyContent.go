@@ -1,4 +1,4 @@
-package justifycontent
+package justifyContent
 
 import (
 	"github.com/gopherjs/vecty"

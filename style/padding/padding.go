@@ -28,9 +28,5 @@ func Length(length interface{}) Type {
 type Value []string
 
 func (v Value) Apply(h *vecty.HTML) {
-	sb := strings.Builder{}
-	for _, l := range v {
-		sb.WriteString(l + " ")
-	}
-	vecty.Style("padding", sb.String()).Apply(h)
+	vecty.Style("padding", strings.Join(v, " ")).Apply(h)
 }

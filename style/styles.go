@@ -14,10 +14,13 @@ import (
 	"github.com/nathanhack/vectyUI/style/backgroundSize"
 	"github.com/nathanhack/vectyUI/style/border"
 	"github.com/nathanhack/vectyUI/style/borderColor"
+	"github.com/nathanhack/vectyUI/style/borderRadius"
 	"github.com/nathanhack/vectyUI/style/borderStyle"
 	"github.com/nathanhack/vectyUI/style/borderWidth"
 	"github.com/nathanhack/vectyUI/style/bottom"
+	"github.com/nathanhack/vectyUI/style/boxShadow"
 	"github.com/nathanhack/vectyUI/style/color"
+	"github.com/nathanhack/vectyUI/style/cursor"
 	"github.com/nathanhack/vectyUI/style/display"
 	"github.com/nathanhack/vectyUI/style/flexDirection"
 	"github.com/nathanhack/vectyUI/style/flexWrap"
@@ -25,7 +28,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/fontFamily"
 	"github.com/nathanhack/vectyUI/style/fontSize"
 	"github.com/nathanhack/vectyUI/style/height"
-	"github.com/nathanhack/vectyUI/style/justifycontent"
+	"github.com/nathanhack/vectyUI/style/justifyContent"
 	"github.com/nathanhack/vectyUI/style/left"
 	"github.com/nathanhack/vectyUI/style/lineHeight"
 	"github.com/nathanhack/vectyUI/style/margin"
@@ -33,6 +36,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/marginLeft"
 	"github.com/nathanhack/vectyUI/style/marginRight"
 	"github.com/nathanhack/vectyUI/style/marginTop"
+	"github.com/nathanhack/vectyUI/style/opacity"
 	"github.com/nathanhack/vectyUI/style/overflow"
 	"github.com/nathanhack/vectyUI/style/padding"
 	"github.com/nathanhack/vectyUI/style/position"
@@ -41,6 +45,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/top"
 	"github.com/nathanhack/vectyUI/style/userSelect"
 	"github.com/nathanhack/vectyUI/style/verticalAlign"
+	"github.com/nathanhack/vectyUI/style/visibility"
 	"github.com/nathanhack/vectyUI/style/width"
 	"github.com/nathanhack/vectyUI/style/zIndex"
 	"strings"
@@ -129,6 +134,14 @@ func BorderColor(colors ...interface{}) borderColor.Value {
 	return values
 }
 
+//BorderRadius
+// For the case of ellipses just pass in "/" ex:
+// style.BorderRadius("10px","/","40px")
+// style.BorderRadius("10% / 40em")
+func BorderRadius(values ...borderRadius.Type) borderRadius.Value {
+	return values
+}
+
 func BorderStyle(styles ...borderStyle.Type) borderStyle.Value {
 	return styles
 }
@@ -142,8 +155,26 @@ func Bottom(value interface{}) bottom.Value {
 	return bottom.Value(internal.Stringify(value, "px"))
 }
 
+func BoxShadow(offsetsBlurSpreadColorAndInset ...interface{}) boxShadow.Value {
+	return boxShadow.Value([]string{strings.Join(internal.StringifyList("px", offsetsBlurSpreadColorAndInset...), " ")})
+}
+
+func BoxShadows(boxes ...boxShadow.Value) boxShadow.Value {
+	s := make([]string, 0)
+	for _, b := range boxes {
+		s = append(s, b...)
+	}
+	return s
+}
+
 func Color(c color.Type) color.Value {
 	return color.Value(c)
+}
+
+//Cursor sets mouse cursor
+// for URL() support pass in a string ex: "URL(..), URL(..), auto"
+func Cursor(value cursor.Type) cursor.Value {
+	return cursor.Value(value)
 }
 
 func Display(value display.Type) display.Value {
@@ -176,8 +207,8 @@ func Height(length interface{}) height.Value {
 	return height.Value(internal.Stringify(length, "px"))
 }
 
-func JustifyContent(value justifycontent.Type) justifycontent.Value {
-	return justifycontent.Value(value)
+func JustifyContent(value justifyContent.Type) justifyContent.Value {
+	return justifyContent.Value(value)
 }
 
 //Left defaults to pixels if a number is passed in, otherwise it accepts as is
@@ -212,6 +243,10 @@ func MarginTop(length interface{}) marginTop.Value {
 	return marginTop.Value(internal.Stringify(length, "px"))
 }
 
+func Opacity(value interface{}) opacity.Value {
+	return opacity.Value(opacity.Number(value))
+}
+
 func Overflow(p overflow.Type) overflow.Value {
 	return overflow.Value(p)
 }
@@ -244,6 +279,10 @@ func UserSelect(value userSelect.Type) userSelect.Value {
 
 func VerticalAlign(value verticalAlign.Type) verticalAlign.Value {
 	return verticalAlign.Value(value)
+}
+
+func Visibility(value visibility.Type) visibility.Value {
+	return visibility.Value(value)
 }
 
 func Width(length interface{}) width.Value {
