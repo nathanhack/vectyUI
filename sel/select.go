@@ -146,8 +146,9 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 			//we always take care of clicks not the user
 			event.Click(func(v *vecty.Event) {
 				//as soon as we
-				if g.SelectedPos == 0 {
+				if g.SelectedPos == 0 && len(g.Options) >= 1 {
 					g.SelectedPos++
+					g.Options[0].Hightlight = true
 				}
 
 				// We use a hidden select to help with focus awareness
@@ -166,7 +167,8 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 					grabFocus(g.selectID)
 				}()
 				vecty.Rerender(g)
-			}),
+			}).StopPropagation(),
+
 			event.MouseEnter(func(v *vecty.Event) {
 				g.mouseOver = true
 				vecty.Rerender(g)
@@ -347,12 +349,10 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 				if index != g.SelectedPos-1 {
 					if g.SelectedPos > 0 && len(g.Options) >= g.SelectedPos {
 						g.Options[g.SelectedPos-1].Hightlight = false
-						vecty.Rerender(g.Options[g.SelectedPos-1])
 					}
 
 					option.Hightlight = true
 					g.SelectedPos = index + 1
-					vecty.Rerender(option)
 					vecty.Rerender(g)
 
 					//lets update the hidden select too
@@ -375,11 +375,12 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 					g.SelectedEvent(index, g)
 				}
 				g.expanded = false
+				vecty.Rerender(g)
 				go func() {
 					grabFocus(g.selectID)
 				}()
-				vecty.Rerender(g)
-			}),
+
+			}).StopPropagation(),
 		)
 		optionsHolder = append(optionsHolder, elem.Div(
 			vecty.Markup(optionMarkups...),
@@ -402,6 +403,7 @@ func (g *Generic) setSelectIndex(id string, index int) {
 
 func grabFocus(id string) {
 	for i := 0; i < 6; i++ {
+		time.Sleep(10 * time.Duration(i) * time.Millisecond)
 		d := js.Global().Get("document").Call("getElementById", id)
 		if js.Null() != d.JSValue() {
 			d.Call("focus")
@@ -410,6 +412,5 @@ func grabFocus(id string) {
 		if active != js.Null() && d == active {
 			break
 		}
-		time.Sleep(10 * time.Duration(i) * time.Millisecond)
 	}
 }
