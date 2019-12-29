@@ -3,6 +3,8 @@ package style
 import (
 	"fmt"
 	"github.com/nathanhack/vectyUI/internal"
+	"github.com/nathanhack/vectyUI/style/alignItems"
+	"github.com/nathanhack/vectyUI/style/alignSelf"
 	"github.com/nathanhack/vectyUI/style/background"
 	"github.com/nathanhack/vectyUI/style/backgroundAttachment"
 	"github.com/nathanhack/vectyUI/style/backgroundClip"
@@ -50,6 +52,14 @@ import (
 	"github.com/nathanhack/vectyUI/style/zIndex"
 	"strings"
 )
+
+func AlignItems(value alignItems.Type) alignItems.Value {
+	return alignItems.Value(value)
+}
+
+func AlignSelf(value alignSelf.Type) alignSelf.Value {
+	return alignSelf.Value(value)
+}
 
 //Background is used for weird case not handled by Background.
 // Expects either strings or something that casts to a string. Then basically concatenates the strings.
