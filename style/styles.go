@@ -46,6 +46,11 @@ import (
 	"github.com/nathanhack/vectyUI/style/right"
 	"github.com/nathanhack/vectyUI/style/textAlign"
 	"github.com/nathanhack/vectyUI/style/top"
+	"github.com/nathanhack/vectyUI/style/transition"
+	"github.com/nathanhack/vectyUI/style/transitionDelay"
+	"github.com/nathanhack/vectyUI/style/transitionDuration"
+	"github.com/nathanhack/vectyUI/style/transitionProperty"
+	"github.com/nathanhack/vectyUI/style/transitionTimingFunction"
 	"github.com/nathanhack/vectyUI/style/userSelect"
 	"github.com/nathanhack/vectyUI/style/verticalAlign"
 	"github.com/nathanhack/vectyUI/style/visibility"
@@ -286,6 +291,90 @@ func TextAlign(value textAlign.Type) textAlign.Value {
 
 func Top(length interface{}) top.Value {
 	return top.Value(internal.Stringify(length, "px"))
+}
+
+//Background is used for weird case not handled by Background.
+// Expects either strings or something that casts to a string. Then basically concatenates the strings.
+func Transition(nonRepeatingTransitionValues ...interface{}) transition.Value {
+	sb := strings.Builder{}
+	for _, bv := range nonRepeatingTransitionValues {
+		sb.WriteString(internal.Stringify(bv, ""))
+		sb.WriteString(" ")
+
+	}
+	return transition.Value(sb.String())
+}
+
+//Transitions is used when specifying multiple transitions
+func Transitions(transitions ...transition.Value) transition.Value {
+	sb := strings.Builder{}
+	for i, bv := range transitions {
+		sb.WriteString(string(bv))
+		if i < len(transitions)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return transition.Value(sb.String())
+}
+
+func TransitionDelay(value transitionDelay.Type) transitionDelay.Value {
+	return transitionDelay.Value(value)
+}
+
+func TransitionDelays(delays ...transitionDelay.Type) transitionDelay.Value {
+	sb := strings.Builder{}
+	for i, bv := range delays {
+		sb.WriteString(string(bv))
+		if i < len(delays)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return transitionDelay.Value(sb.String())
+}
+
+func TransitionDuration(value transitionDuration.Type) transitionDuration.Value {
+	return transitionDuration.Value(value)
+}
+
+func TransitionDurations(delays ...transitionDuration.Type) transitionDuration.Value {
+	sb := strings.Builder{}
+	for i, bv := range delays {
+		sb.WriteString(string(bv))
+		if i < len(delays)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return transitionDuration.Value(sb.String())
+}
+
+func TransitionProperty(value transitionProperty.Type) transitionProperty.Value {
+	return transitionProperty.Value(value)
+}
+
+func TransitionProperties(delays ...transitionProperty.Type) transitionProperty.Value {
+	sb := strings.Builder{}
+	for i, bv := range delays {
+		sb.WriteString(string(bv))
+		if i < len(delays)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return transitionProperty.Value(sb.String())
+}
+
+func TransitionTimingFunction(value transitionTimingFunction.Type) transitionTimingFunction.Value {
+	return transitionTimingFunction.Value(value)
+}
+
+func TransitionTimingFunctions(delays ...transitionTimingFunction.Type) transitionTimingFunction.Value {
+	sb := strings.Builder{}
+	for i, bv := range delays {
+		sb.WriteString(string(bv))
+		if i < len(delays)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return transitionTimingFunction.Value(sb.String())
 }
 
 func UserSelect(value userSelect.Type) userSelect.Value {
