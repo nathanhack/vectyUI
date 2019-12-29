@@ -4,8 +4,10 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/event"
+	"github.com/gopherjs/vecty/prop"
 	"github.com/nathanhack/vectyUI/style/background"
 	"github.com/nathanhack/vectyUI/style/border"
+	"github.com/nathanhack/vectyUI/style/color"
 	"github.com/nathanhack/vectyUI/style/margin"
 	"github.com/nathanhack/vectyUI/style/padding"
 	"github.com/nathanhack/vectyUI/style/userSelect"
@@ -13,121 +15,164 @@ import (
 
 type Simple struct {
 	vecty.Core
-	Text            string               `vecty:"prop"`
-	Background      background.Value     `vecty:"prop"`
-	Padding         padding.Value        `vecty:"prop"`
-	Margin          margin.Value         `vecty:"prop"`
-	Border          border.Value         `vecty:"prop"`
-	HoverBackground background.Value     `vecty:"prop"`
-	Click           func(i *vecty.Event) `vecty:"prop"`
-	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
-	MouseLeave      func(i *vecty.Event) `vecty:"prop"`
-	Extra           []vecty.Applyer      `vecty:"prop"`
-	Disabled        bool                 `vecty:"prop"`
-	hovering        bool
+	Text               string               `vecty:"prop"`
+	Color              color.Value          `vecty:"prop"`
+	Background         background.Value     `vecty:"prop"`
+	Padding            padding.Value        `vecty:"prop"`
+	Margin             margin.Value         `vecty:"prop"`
+	Border             border.Value         `vecty:"prop"`
+	HoverColor         color.Value          `vecty:"prop"`
+	HoverBackground    background.Value     `vecty:"prop"`
+	DisabledColor      color.Value          `vecty:"prop"`
+	DisabledBackground background.Value     `vecty:"prop"`
+	Click              func(i *vecty.Event) `vecty:"prop"`
+	MouseEnter         func(i *vecty.Event) `vecty:"prop"`
+	MouseLeave         func(i *vecty.Event) `vecty:"prop"`
+	Extra              []vecty.Applyer      `vecty:"prop"`
+	Disabled           bool                 `vecty:"prop"`
+	hovering           bool
 }
 
-func (b *Simple) mouseEnter(i *vecty.Event) {
-	b.hovering = true
-	if b.MouseEnter != nil {
-		b.MouseEnter(i)
+func (s *Simple) mouseEnter(i *vecty.Event) {
+	s.hovering = true
+	if s.MouseEnter != nil {
+		s.MouseEnter(i)
 	}
-	vecty.Rerender(b)
+	vecty.Rerender(s)
 }
 
-func (b *Simple) mouseLeave(i *vecty.Event) {
-	b.hovering = false
-	if b.MouseLeave != nil {
-		b.MouseLeave(i)
+func (s *Simple) mouseLeave(i *vecty.Event) {
+	s.hovering = false
+	if s.MouseLeave != nil {
+		s.MouseLeave(i)
 	}
-	vecty.Rerender(b)
+	vecty.Rerender(s)
 }
 
-func (b *Simple) Render() vecty.ComponentOrHTML {
+func (s *Simple) Render() vecty.ComponentOrHTML {
+
+	background := s.Background
+	switch {
+	case s.Disabled && s.DisabledBackground != "":
+		background = s.DisabledBackground
+	case !s.Disabled && s.hovering && s.HoverBackground != "":
+		background = s.HoverBackground
+	}
+
+	col := s.Color
+	switch {
+	case s.Disabled && s.DisabledColor != "":
+		col = s.DisabledColor
+	case !s.Disabled && s.hovering && s.HoverBackground != "":
+		col = s.HoverColor
+	}
+
 	markups := []vecty.Applyer{
-		b.Padding,
-		b.Margin,
-		b.Border,
+		s.Padding,
+		s.Margin,
+		s.Border,
+		col,
+		background,
+		prop.Disabled(s.Disabled),
 		userSelect.None,
-		event.MouseEnter(b.mouseEnter),
-		event.MouseLeave(b.mouseLeave),
-		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
-		vecty.MarkupIf(!b.hovering, b.Background),
-		vecty.MarkupIf(b.hovering, b.HoverBackground),
+		event.MouseEnter(s.mouseEnter),
+		event.MouseLeave(s.mouseLeave),
+		vecty.MarkupIf(s.Click != nil, event.Click(s.Click)),
 	}
-	markups = append(markups, b.Extra...)
+	markups = append(markups, s.Extra...)
 
 	return elem.Button(
 		vecty.Markup(
 			markups...,
 		),
-		vecty.Text(b.Text),
+		vecty.Text(s.Text),
 	)
 }
 
 type Div struct {
 	vecty.Core
-	Text            string               `vecty:"prop"`
-	Background      background.Value     `vecty:"prop"`
-	Padding         padding.Value        `vecty:"prop"`
-	Margin          margin.Value         `vecty:"prop"`
-	Border          border.Value         `vecty:"prop"`
-	HoverBackground background.Value     `vecty:"prop"`
-	Click           func(i *vecty.Event) `vecty:"prop"`
-	MouseEnter      func(i *vecty.Event) `vecty:"prop"`
-	MouseLeave      func(i *vecty.Event) `vecty:"prop"`
-	Extra           []vecty.Applyer      `vecty:"prop"`
-	hovering        bool
+	Text               string               `vecty:"prop"`
+	Color              color.Value          `vecty:"prop"`
+	Background         background.Value     `vecty:"prop"`
+	Padding            padding.Value        `vecty:"prop"`
+	Margin             margin.Value         `vecty:"prop"`
+	Border             border.Value         `vecty:"prop"`
+	HoverColor         color.Value          `vecty:"prop"`
+	HoverBackground    background.Value     `vecty:"prop"`
+	DisabledColor      color.Value          `vecty:"prop"`
+	DisabledBackground background.Value     `vecty:"prop"`
+	Click              func(i *vecty.Event) `vecty:"prop"`
+	MouseEnter         func(i *vecty.Event) `vecty:"prop"`
+	MouseLeave         func(i *vecty.Event) `vecty:"prop"`
+	Extra              []vecty.Applyer      `vecty:"prop"`
+	Disabled           bool                 `vecty:"prop"`
+	hovering           bool
 }
 
-func (b *Div) mouseEnter(i *vecty.Event) {
-	b.hovering = true
-	if b.MouseEnter != nil {
-		b.MouseEnter(i)
+func (d *Div) mouseEnter(i *vecty.Event) {
+	d.hovering = true
+	if d.MouseEnter != nil {
+		d.MouseEnter(i)
 	}
-	vecty.Rerender(b)
+	vecty.Rerender(d)
 }
 
-func (b *Div) mouseLeave(i *vecty.Event) {
-	b.hovering = false
-	if b.MouseLeave != nil {
-		b.MouseLeave(i)
+func (d *Div) mouseLeave(i *vecty.Event) {
+	d.hovering = false
+	if d.MouseLeave != nil {
+		d.MouseLeave(i)
 	}
-	vecty.Rerender(b)
+	vecty.Rerender(d)
 }
 
-func (b *Div) Render() vecty.ComponentOrHTML {
+func (d *Div) Render() vecty.ComponentOrHTML {
+	background := d.Background
+	switch {
+	case d.Disabled && d.DisabledBackground != "":
+		background = d.DisabledBackground
+	case !d.Disabled && d.hovering && d.HoverBackground != "":
+		background = d.HoverBackground
+	}
+
+	col := d.Color
+	switch {
+	case d.Disabled && d.DisabledColor != "":
+		col = d.DisabledColor
+	case !d.Disabled && d.hovering && d.HoverBackground != "":
+		col = d.HoverColor
+	}
 	markups := []vecty.Applyer{
-		b.Padding,
-		b.Margin,
-		b.Border,
+		d.Padding,
+		d.Margin,
+		d.Border,
+		col,
+		background,
 		userSelect.None,
-		event.MouseEnter(b.mouseEnter),
-		event.MouseLeave(b.mouseLeave),
-		vecty.MarkupIf(b.Click != nil, event.Click(b.Click)),
-		vecty.MarkupIf(!b.hovering, b.Background),
-		vecty.MarkupIf(b.hovering, b.HoverBackground),
+		event.MouseEnter(d.mouseEnter),
+		event.MouseLeave(d.mouseLeave),
+		vecty.MarkupIf(!d.Disabled && d.Click != nil, event.Click(d.Click)),
 	}
-	markups = append(markups, b.Extra...)
+	markups = append(markups, d.Extra...)
 
 	return elem.Div(
 		vecty.Markup(
 			markups...,
 		),
-		vecty.Text(b.Text),
+		vecty.Text(d.Text),
 	)
 }
 
 type Generic struct {
 	vecty.Core
-	Div        func() vecty.ComponentOrHTML          `vecty:"prop"`
-	HoverDiv   func() vecty.ComponentOrHTML          `vecty:"prop"`
-	Click      func(i *vecty.Event, button *Generic) `vecty:"prop"`
-	MouseEnter func(i *vecty.Event, button *Generic) `vecty:"prop"`
-	MouseLeave func(i *vecty.Event, button *Generic) `vecty:"prop"`
-	Extra      []vecty.Applyer                       `vecty:"prop"`
-	Disabled   bool                                  `vecty:"prop"`
-	hovering   bool
+	Div         vecty.ComponentOrHTML                 `vecty:"prop"`
+	HoverDiv    vecty.ComponentOrHTML                 `vecty:"prop"`
+	DisabledDiv vecty.ComponentOrHTML                 `vecty:"prop"`
+	Click       func(i *vecty.Event, button *Generic) `vecty:"prop"`
+	MouseEnter  func(i *vecty.Event, button *Generic) `vecty:"prop"`
+	MouseLeave  func(i *vecty.Event, button *Generic) `vecty:"prop"`
+	Extra       []vecty.Applyer                       `vecty:"prop"`
+	Disabled    bool                                  `vecty:"prop"`
+	hovering    bool
 }
 
 func (g *Generic) click(i *vecty.Event) {
@@ -164,28 +209,36 @@ func (g *Generic) SetHover(hovering bool) {
 
 func (g *Generic) Render() vecty.ComponentOrHTML {
 	markups := []vecty.Applyer{
-		event.MouseEnter(g.mouseEnter),
-		event.MouseLeave(g.mouseLeave),
-		event.Click(g.click),
+		vecty.MarkupIf(!g.Disabled, event.MouseEnter(g.mouseEnter)),
+		vecty.MarkupIf(!g.Disabled, event.MouseLeave(g.mouseLeave)),
+		vecty.MarkupIf(!g.Disabled, event.Click(g.click)),
 	}
 	markups = append(markups, g.Extra...)
 
-	if g.hovering && g.HoverDiv != nil {
+	switch {
+	case g.Disabled && g.DisabledDiv != nil:
 		return elem.Div(
 			vecty.Markup(
 				markups...,
 			),
-			g.HoverDiv(),
+			g.DisabledDiv,
 		)
-	}
-	if g.Div != nil {
+	case g.hovering && g.HoverDiv != nil:
 		return elem.Div(
 			vecty.Markup(
 				markups...,
 			),
-			g.Div(),
+			g.HoverDiv,
+		)
+	case g.Div != nil:
+		return elem.Div(
+			vecty.Markup(
+				markups...,
+			),
+			g.Div,
 		)
 	}
+
 	return elem.Div(
 		vecty.Markup(
 			markups...,
