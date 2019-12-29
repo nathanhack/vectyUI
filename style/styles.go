@@ -29,6 +29,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/float"
 	"github.com/nathanhack/vectyUI/style/fontFamily"
 	"github.com/nathanhack/vectyUI/style/fontSize"
+	"github.com/nathanhack/vectyUI/style/fontWeight"
 	"github.com/nathanhack/vectyUI/style/height"
 	"github.com/nathanhack/vectyUI/style/justifyContent"
 	"github.com/nathanhack/vectyUI/style/left"
@@ -210,6 +211,10 @@ func FontFamily(fontNames ...fontFamily.Type) fontFamily.Value {
 //FontSize defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func FontSize(size interface{}) fontSize.Value {
 	return fontSize.Value(internal.Stringify(size, "px"))
+}
+
+func FontWeight(value fontWeight.Type) fontWeight.Value {
+	return fontWeight.Value(value)
 }
 
 //Height defaults to pixels if a numbers are passed in, otherwise it accepts as is
