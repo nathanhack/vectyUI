@@ -97,8 +97,10 @@ func BackgroundAttachment(attaches backgroundAttachment.Type) backgroundAttachme
 	return backgroundAttachment.Value(attaches)
 }
 
-func BackgroundColor(color color.Type) backgroundColor.Value {
-	return backgroundColor.Value(color)
+//BackgroundColor can take any string that is a color
+//like: color.Type, color.Value, backgroundColor.Type and backgroundColor.Value.
+func BackgroundColor(color interface{}) backgroundColor.Value {
+	return backgroundColor.Value(internal.Stringify(color, ""))
 }
 
 func BackgroundClip(clipping backgroundClip.Type) backgroundClip.Value {
