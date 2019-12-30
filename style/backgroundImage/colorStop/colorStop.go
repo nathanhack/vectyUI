@@ -31,7 +31,7 @@ func Percent(c color.Type, percents ...interface{}) Type {
 	return Type(sb.String())
 }
 
-func Length(c color.Type, lengths ...interface{}) Type {
+func Pixels(c color.Type, lengths ...interface{}) Type {
 	sb := strings.Builder{}
 	sb.WriteString(string(c))
 	sb.WriteString(" ")
@@ -46,6 +46,6 @@ func HintPercent(percent interface{}) Type {
 	return Type(internal.Stringify(percent, "%"))
 }
 
-func HintLength(len interface{}) Type {
+func HintPixels(len interface{}) Type {
 	return Type(internal.Stringify(len, "px"))
 }

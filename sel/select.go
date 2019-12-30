@@ -5,6 +5,7 @@ import (
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/event"
 	"github.com/gopherjs/vecty/prop"
+	"github.com/nathanhack/vectyUI/internal"
 	"github.com/nathanhack/vectyUI/style"
 	"github.com/nathanhack/vectyUI/style/alignItems"
 	"github.com/nathanhack/vectyUI/style/display"
@@ -99,8 +100,10 @@ func (g *Generic) Render() vecty.ComponentOrHTML {
 	// between our custom one and the hidden one
 	if g.ID == "" {
 		g.ID = genericSelectID + strconv.Itoa(genericSelectCount)
-		g.selectID = g.ID + "SelectHidden"
 		genericSelectCount++
+	}
+	if g.selectID == "" {
+		g.selectID = g.ID + "SelectHidden"
 	}
 
 	markups := make([]vecty.Applyer, 0)
@@ -164,7 +167,7 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 				g.expanded = !g.expanded
 				g.focused = true
 				go func() {
-					grabFocus(g.selectID)
+					internal.RequestFocusEvent(g.selectID)
 				}()
 				vecty.Rerender(g)
 			}).StopPropagation(),
@@ -292,7 +295,7 @@ func (g *Generic) makeHiddenSelect() vecty.ComponentOrHTML {
 							g.focused = true
 							go func() {
 								time.Sleep(100 * time.Millisecond)
-								grabFocus(g.selectID)
+								internal.RequestFocusEvent(g.selectID)
 							}()
 
 						}
@@ -377,7 +380,7 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 				g.expanded = false
 				vecty.Rerender(g)
 				go func() {
-					grabFocus(g.selectID)
+					internal.RequestFocusEvent(g.selectID)
 				}()
 
 			}).StopPropagation(),
@@ -398,19 +401,5 @@ func (g *Generic) setSelectIndex(id string, index int) {
 			d.Get("options").Index(index).Set("selected", true)
 		}
 		time.Sleep(10 * time.Duration(i) * time.Millisecond)
-	}
-}
-
-func grabFocus(id string) {
-	for i := 0; i < 6; i++ {
-		time.Sleep(10 * time.Duration(i) * time.Millisecond)
-		d := js.Global().Get("document").Call("getElementById", id)
-		if js.Null() != d.JSValue() {
-			d.Call("focus")
-		}
-		active := js.Global().Get("document").Get("activeElement")
-		if active != js.Null() && d == active {
-			break
-		}
 	}
 }

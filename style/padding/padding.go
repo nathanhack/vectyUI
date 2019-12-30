@@ -21,7 +21,7 @@ func Percent(percent interface{}) Type {
 	return Type(internal.Stringify(percent, "%"))
 }
 
-func Length(length interface{}) Type {
+func Pixels(length interface{}) Type {
 	return Type(internal.Stringify(length, "px"))
 }
 

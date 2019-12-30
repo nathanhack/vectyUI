@@ -73,7 +73,7 @@ var ClosestSide SizeOrExtent = "closest-side"
 var FarthestCorner SizeOrExtent = "farthest-corner"
 var FarthestSide SizeOrExtent = "farthest-side"
 
-func Length(len interface{}) SizeOrExtent {
+func Pixels(len interface{}) SizeOrExtent {
 	return SizeOrExtent(internal.Stringify(len, "px"))
 }
 
@@ -82,28 +82,28 @@ func Percent(percent interface{}) SizeOrExtent {
 }
 
 //RadialGradientCircle
-// sizeOrExtent is optional, only Length() or Extent const are allowed (Percent is NOT allowed)
+// sizeOrExtent is optional, only Pixels() or Extent const are allowed (Percent is NOT allowed)
 // position is optional
 func RadialGradientCircle(sizeOrExtent *SizeOrExtent, position *position.Value, colorStops ...colorStop.Type) Type {
 	return radial("radial-gradient", "circle", sizeOrExtent, position, colorStops...)
 }
 
 //RadialGradientEllipse
-// sizeOrExtent is optional, requires two Length()'s or Percent()'s (ex. 20% 20%), only one extent const
+// sizeOrExtent is optional, requires two Pixels()'s or Percent()'s (ex. 20% 20%), only one extent const
 // position is optional
 func RadialGradientEllipse(sizeOrExtent *SizeOrExtent, position *position.Value, colorStops ...colorStop.Type) Type {
 	return radial("radial-gradient", "ellipse", sizeOrExtent, position, colorStops...)
 }
 
 //RepeatingRadialGradientCircle
-// sizeOrExtent is optional, only Length() or Extent const are allowed (Percent is NOT allowed)
+// sizeOrExtent is optional, only Pixels() or Extent const are allowed (Percent is NOT allowed)
 // position is optional
 func RepeatingRadialGradientCircle(sizeOrExtent *SizeOrExtent, position *position.Value, colorStops ...colorStop.Type) Type {
 	return radial("repeating-radial-gradient", "circle", sizeOrExtent, position, colorStops...)
 }
 
 //RepeatingRadialGradientEllipse
-// sizeOrExtent is optional, requires two Length()'s or Percent()'s (ex. 20% 20%), only one extent const
+// sizeOrExtent is optional, requires two Pixels()'s or Percent()'s (ex. 20% 20%), only one extent const
 // position is optional
 func RepeatingRadialGradientEllipse(sizeOrExtent *SizeOrExtent, position *position.Value, colorStops ...colorStop.Type) Type {
 	return radial("repeating-radial-gradient", "ellipse", sizeOrExtent, position, colorStops...)

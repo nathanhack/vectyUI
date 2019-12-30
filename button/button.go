@@ -11,10 +11,24 @@ import (
 	"github.com/nathanhack/vectyUI/style/margin"
 	"github.com/nathanhack/vectyUI/style/padding"
 	"github.com/nathanhack/vectyUI/style/userSelect"
+	"strconv"
+)
+
+const (
+	defaultSimpleButtonID  = "simpleButtonID"
+	defaultDivButtonID     = "divButtonID"
+	defaultGenericButtonID = "genericButtonID"
+)
+
+var (
+	simpleButtonCount  = 0
+	divButtonCount     = 0
+	genericButtonCount = 0
 )
 
 type Simple struct {
 	vecty.Core
+	ID                 string               `vecty:"prop"`
 	Text               string               `vecty:"prop"`
 	Color              color.Value          `vecty:"prop"`
 	Background         background.Value     `vecty:"prop"`
@@ -50,13 +64,17 @@ func (s *Simple) mouseLeave(i *vecty.Event) {
 }
 
 func (s *Simple) Render() vecty.ComponentOrHTML {
+	if s.ID == "" {
+		s.ID = defaultSimpleButtonID + strconv.Itoa(simpleButtonCount)
+		simpleButtonCount++
+	}
 
-	background := s.Background
+	bg := s.Background
 	switch {
 	case s.Disabled && s.DisabledBackground != "":
-		background = s.DisabledBackground
+		bg = s.DisabledBackground
 	case !s.Disabled && s.hovering && s.HoverBackground != "":
-		background = s.HoverBackground
+		bg = s.HoverBackground
 	}
 
 	col := s.Color
@@ -68,11 +86,12 @@ func (s *Simple) Render() vecty.ComponentOrHTML {
 	}
 
 	markups := []vecty.Applyer{
+		prop.ID(s.ID),
 		s.Padding,
 		s.Margin,
 		s.Border,
 		col,
-		background,
+		bg,
 		prop.Disabled(s.Disabled),
 		userSelect.None,
 		event.MouseEnter(s.mouseEnter),
@@ -91,6 +110,7 @@ func (s *Simple) Render() vecty.ComponentOrHTML {
 
 type Div struct {
 	vecty.Core
+	ID                 string               `vecty:"prop"`
 	Text               string               `vecty:"prop"`
 	Color              color.Value          `vecty:"prop"`
 	Background         background.Value     `vecty:"prop"`
@@ -126,12 +146,17 @@ func (d *Div) mouseLeave(i *vecty.Event) {
 }
 
 func (d *Div) Render() vecty.ComponentOrHTML {
-	background := d.Background
+	if d.ID == "" {
+		d.ID = defaultDivButtonID + strconv.Itoa(divButtonCount)
+		divButtonCount++
+	}
+
+	bg := d.Background
 	switch {
 	case d.Disabled && d.DisabledBackground != "":
-		background = d.DisabledBackground
+		bg = d.DisabledBackground
 	case !d.Disabled && d.hovering && d.HoverBackground != "":
-		background = d.HoverBackground
+		bg = d.HoverBackground
 	}
 
 	col := d.Color
@@ -146,7 +171,7 @@ func (d *Div) Render() vecty.ComponentOrHTML {
 		d.Margin,
 		d.Border,
 		col,
-		background,
+		bg,
 		userSelect.None,
 		event.MouseEnter(d.mouseEnter),
 		event.MouseLeave(d.mouseLeave),
@@ -164,6 +189,7 @@ func (d *Div) Render() vecty.ComponentOrHTML {
 
 type Generic struct {
 	vecty.Core
+	ID          string                                `vecty:"prop"`
 	Div         vecty.ComponentOrHTML                 `vecty:"prop"`
 	HoverDiv    vecty.ComponentOrHTML                 `vecty:"prop"`
 	DisabledDiv vecty.ComponentOrHTML                 `vecty:"prop"`
@@ -208,7 +234,13 @@ func (g *Generic) SetHover(hovering bool) {
 }
 
 func (g *Generic) Render() vecty.ComponentOrHTML {
+	if g.ID == "" {
+		g.ID = defaultGenericButtonID + strconv.Itoa(genericButtonCount)
+		genericButtonCount++
+	}
+
 	markups := []vecty.Applyer{
+		prop.ID(g.ID),
 		vecty.MarkupIf(!g.Disabled, event.MouseEnter(g.mouseEnter)),
 		vecty.MarkupIf(!g.Disabled, event.MouseLeave(g.mouseLeave)),
 		vecty.MarkupIf(!g.Disabled, event.Click(g.click)),
