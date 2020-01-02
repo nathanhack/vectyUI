@@ -25,15 +25,14 @@ import (
 // 2) Each call to GenericOption.Option() should return a distinct vecty.ComponentOrHTML.
 type GenericOption struct {
 	vecty.Core
-	Option     func(disabled bool, highlight bool, selected bool) vecty.ComponentOrHTML `vecty:"prop"`
-	MouseMove  func(v *vecty.Event)                                                     `vecty:"prop"`
-	Disabled   bool                                                                     `vecty:"prop"`
-	Hightlight bool                                                                     `vecty:"prop"`
-	Position   int                                                                      `vecty:"prop"`
+	Option    func(disabled bool, highlight bool, selected bool) vecty.ComponentOrHTML `vecty:"prop"`
+	MouseMove func(v *vecty.Event)                                                     `vecty:"prop"`
+	Disabled  bool                                                                     `vecty:"prop"`
+	Highlight bool                                                                     `vecty:"prop"`
 }
 
 func (g *GenericOption) Render() vecty.ComponentOrHTML {
-	return g.Option(g.Disabled, g.Hightlight, false)
+	return g.Option(g.Disabled, g.Highlight, false)
 }
 
 const genericSelectID = "GenericSelectID"
@@ -151,7 +150,7 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 				//as soon as we
 				if g.SelectedPos == 0 && len(g.Options) >= 1 {
 					g.SelectedPos++
-					g.Options[0].Hightlight = true
+					g.Options[0].Highlight = true
 				}
 
 				// We use a hidden select to help with focus awareness
@@ -252,7 +251,7 @@ func (g *Generic) makeHiddenSelect() vecty.ComponentOrHTML {
 					x, _ := strconv.Atoi(v.Target.Get("value").String())
 					u := -1
 					for i := 0; i < len(g.Options); i++ {
-						if g.Options[i].Hightlight != false {
+						if g.Options[i].Highlight != false {
 							u = i
 							break
 						}
@@ -260,9 +259,9 @@ func (g *Generic) makeHiddenSelect() vecty.ComponentOrHTML {
 
 					if x != u && !g.Options[x].Disabled {
 						if u >= 0 {
-							g.Options[u].Hightlight = false
+							g.Options[u].Highlight = false
 						}
-						g.Options[x].Hightlight = true
+						g.Options[x].Highlight = true
 						g.SelectedPos = x + 1
 						vecty.Rerender(g)
 					}
@@ -351,10 +350,10 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 				//we need to clear previous highlight
 				if index != g.SelectedPos-1 {
 					if g.SelectedPos > 0 && len(g.Options) >= g.SelectedPos {
-						g.Options[g.SelectedPos-1].Hightlight = false
+						g.Options[g.SelectedPos-1].Highlight = false
 					}
 
-					option.Hightlight = true
+					option.Highlight = true
 					g.SelectedPos = index + 1
 					vecty.Rerender(g)
 
@@ -372,7 +371,7 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 					return
 				}
 
-				option.Hightlight = false
+				option.Highlight = false
 				g.SelectedPos = index + 1
 				if g.SelectedEvent != nil {
 					g.SelectedEvent(index, g)
