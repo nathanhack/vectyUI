@@ -12,14 +12,30 @@ const (
 	Inherit     Type = "inherit"
 )
 
+var styleNames = []string{"-webkit-flex-wrap", "flex-wrap"}
+
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-flex-wrap", string(t)).Apply(h)
-	vecty.Style("flex-wrap", string(t)).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(t)).Apply(h)
+	}
+}
+
+func (t Type) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(t)
+	}
 }
 
 type Value Type
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-flex-wrap", string(v)).Apply(h)
-	vecty.Style("flex-wrap", string(v)).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(v)).Apply(h)
+	}
+}
+
+func (v Value) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(v)
+	}
 }

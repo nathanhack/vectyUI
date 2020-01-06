@@ -19,10 +19,16 @@ const (
 	Larger  Type = "larger"
 	Initial Type = "initial"
 	Inherit Type = "inherit"
+
+	styleName = "font-size"
 )
 
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("font-size", string(t)).Apply(h)
+	vecty.Style(styleName, string(t)).Apply(h)
+}
+
+func (t Type) AddTo(m map[string]string) {
+	m[styleName] = string(t)
 }
 
 func Percent(percent interface{}) Type {
@@ -36,5 +42,9 @@ func Pixels(length interface{}) Type {
 type Value Type
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("font-size", string(v)).Apply(h)
+	vecty.Style(styleName, string(v)).Apply(h)
+}
+
+func (v Value) AddTo(m map[string]string) {
+	m[styleName] = string(v)
 }

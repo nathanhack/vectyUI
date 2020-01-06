@@ -23,9 +23,18 @@ const (
 	Unset     Type = "unset"
 )
 
+var styleNames = []string{"-webkit-transition-timing-function", "transition-timing-function"}
+
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-transition-timing-function", string(t)).Apply(h)
-	vecty.Style("transition-timing-function", string(t)).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(t)).Apply(h)
+	}
+}
+
+func (t Type) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(t)
+	}
 }
 
 func Steps(steps int, dir jumpTerm.Type) Type {
@@ -48,6 +57,13 @@ func CubicBezier(n0, n1, n2, n3 interface{}) Type {
 type Value string
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-transition-timing-function", string(v)).Apply(h)
-	vecty.Style("transition-timing-function", string(v)).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(v)).Apply(h)
+	}
+}
+
+func (v Value) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(v)
+	}
 }

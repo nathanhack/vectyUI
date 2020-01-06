@@ -20,18 +20,32 @@ const (
 	Solid   Type = "solid"
 	Initial Type = "initial"
 	Inherit Type = "inherit"
+
+	styleName = "border-style"
 )
 
+func (t Type) AddTo(m map[string]string) {
+	m[styleName] = string(t)
+}
+
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("border-style", string(t)).Apply(h)
+	vecty.Style(styleName, string(t)).Apply(h)
 }
 
 type Value []Type
+
+func (v Value) AddTo(m map[string]string) {
+	sb := strings.Builder{}
+	for _, l := range v {
+		sb.WriteString(string(l) + " ")
+	}
+	m[styleName] = sb.String()
+}
 
 func (v Value) Apply(h *vecty.HTML) {
 	sb := strings.Builder{}
 	for _, l := range v {
 		sb.WriteString(string(l) + " ")
 	}
-	vecty.Style("border-style", sb.String()).Apply(h)
+	vecty.Style(styleName, sb.String()).Apply(h)
 }

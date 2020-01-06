@@ -11,22 +11,36 @@ const (
 	Text Type = "text"
 )
 
+var styleNames = []string{
+	"-webkit-user-select",
+	"-khtml-user-select",
+	"-moz-user-select",
+	"-ms-user-select",
+	"user-select",
+}
+
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-touch-callout", string(t)).Apply(h)
-	vecty.Style("-webkit-user-select", string(string(t))).Apply(h)
-	vecty.Style("-khtml-user-select", string(string(t))).Apply(h)
-	vecty.Style("-moz-user-select", string(string(t))).Apply(h)
-	vecty.Style("-ms-user-select", string(string(t))).Apply(h)
-	vecty.Style("user-select", string(string(t))).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(t)).Apply(h)
+	}
+}
+
+func (t Type) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(t)
+	}
 }
 
 type Value Type
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-touch-callout", string(v)).Apply(h)
-	vecty.Style("-webkit-user-select", string(string(v))).Apply(h)
-	vecty.Style("-khtml-user-select", string(string(v))).Apply(h)
-	vecty.Style("-moz-user-select", string(string(v))).Apply(h)
-	vecty.Style("-ms-user-select", string(string(v))).Apply(h)
-	vecty.Style("user-select", string(string(v))).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(v)).Apply(h)
+	}
+}
+
+func (v Value) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(v)
+	}
 }

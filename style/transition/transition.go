@@ -11,14 +11,30 @@ const (
 	Inherit Type = "inherit"
 )
 
+var styleNames = []string{"transition", "-webkit-transition"}
+
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("transition", string(t)).Apply(h)
-	vecty.Style("-webkit-transition", string(t)).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(t)).Apply(h)
+	}
+}
+
+func (t Type) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(t)
+	}
 }
 
 type Value string
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("transition", string(v)).Apply(h)
-	vecty.Style("-webkit-transition", string(v)).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(v)).Apply(h)
+	}
+}
+
+func (v Value) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(v)
+	}
 }

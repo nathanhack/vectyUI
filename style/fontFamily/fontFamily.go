@@ -65,10 +65,16 @@ const (
 
 	Initial Type = "initial"
 	Inherit Type = "inherit"
+
+	styleName = "font-family"
 )
 
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("font-family", string(t)).Apply(h)
+	vecty.Style(styleName, string(t)).Apply(h)
+}
+
+func (t Type) AddTo(m map[string]string) {
+	m[styleName] = string(t)
 }
 
 type Value []Type
@@ -81,5 +87,16 @@ func (v Value) Apply(h *vecty.HTML) {
 			sb.WriteString(",")
 		}
 	}
-	vecty.Style("font-family", sb.String()).Apply(h)
+	vecty.Style(styleName, sb.String()).Apply(h)
+}
+
+func (v Value) AddTo(m map[string]string) {
+	sb := strings.Builder{}
+	for i, c := range v {
+		sb.WriteString(string(c))
+		if i < len(v)-1 {
+			sb.WriteString(",")
+		}
+	}
+	m[styleName] = sb.String()
 }

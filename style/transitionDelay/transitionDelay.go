@@ -13,9 +13,18 @@ const (
 	Unset   Type = "unset"
 )
 
+var styleNames = []string{"-webkit-transition-delay", "transition-delay"}
+
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-transition-delay", string(t)).Apply(h)
-	vecty.Style("transition-delay", string(t)).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(t)).Apply(h)
+	}
+}
+
+func (t Type) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(t)
+	}
 }
 
 func Seconds(timeInSeconds interface{}) Type {
@@ -29,6 +38,13 @@ func Milliseconds(timeInSeconds interface{}) Type {
 type Value string
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("-webkit-transition-delay", string(v)).Apply(h)
-	vecty.Style("transition-delay", string(v)).Apply(h)
+	for _, s := range styleNames {
+		vecty.Style(s, string(v)).Apply(h)
+	}
+}
+
+func (v Value) AddTo(m map[string]string) {
+	for _, s := range styleNames {
+		m[s] = string(v)
+	}
 }

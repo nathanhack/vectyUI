@@ -11,10 +11,16 @@ type Type string
 const (
 	Initial Type = "initial"
 	Inherit Type = "inherit"
+
+	styleName = "padding"
 )
 
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("padding", string(t)).Apply(h)
+	vecty.Style(styleName, string(t)).Apply(h)
+}
+
+func (t Type) AddTo(m map[string]string) {
+	m[styleName] = string(t)
 }
 
 func Percent(percent interface{}) Type {
@@ -28,5 +34,10 @@ func Pixels(length interface{}) Type {
 type Value []string
 
 func (v Value) Apply(h *vecty.HTML) {
-	vecty.Style("padding", strings.Join(v, " ")).Apply(h)
+	vecty.Style(styleName, strings.Join(v, " ")).Apply(h)
+}
+
+func (v Value) AddTo(m map[string]string) {
+	m[styleName] = strings.Join(v, " ")
+
 }

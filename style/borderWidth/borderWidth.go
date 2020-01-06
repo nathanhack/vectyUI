@@ -13,10 +13,16 @@ const (
 	Thick   Type = "thick"
 	Initial Type = "initial"
 	Inherit Type = "inherit"
+
+	styleName = "border-width"
 )
 
+func (t Type) AddTo(m map[string]string) {
+	m[styleName] = string(t)
+}
+
 func (t Type) Apply(h *vecty.HTML) {
-	vecty.Style("border-width", string(t)).Apply(h)
+	vecty.Style(styleName, string(t)).Apply(h)
 }
 
 //Value is slice of string widths, CSS supports 1 to 4
@@ -26,10 +32,18 @@ func (t Type) Apply(h *vecty.HTML) {
 // case 4( w1 w2 w3 w4 ) : top = w1, right = w2, bottom = w3, left = w4
 type Value []string
 
+func (v Value) AddTo(m map[string]string) {
+	sb := strings.Builder{}
+	for _, w := range v {
+		sb.WriteString(w + " ")
+	}
+	m[styleName] = sb.String()
+}
+
 func (v Value) Apply(h *vecty.HTML) {
 	sb := strings.Builder{}
 	for _, w := range v {
 		sb.WriteString(w + " ")
 	}
-	vecty.Style("border-width", sb.String()).Apply(h)
+	vecty.Style(styleName, sb.String()).Apply(h)
 }

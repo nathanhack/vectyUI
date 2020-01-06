@@ -5,6 +5,14 @@ import (
 	"github.com/nathanhack/vectyUI/internal"
 	"github.com/nathanhack/vectyUI/style/alignItems"
 	"github.com/nathanhack/vectyUI/style/alignSelf"
+	"github.com/nathanhack/vectyUI/style/animationDelay"
+	"github.com/nathanhack/vectyUI/style/animationDirection"
+	"github.com/nathanhack/vectyUI/style/animationDuration"
+	"github.com/nathanhack/vectyUI/style/animationFillMode"
+	"github.com/nathanhack/vectyUI/style/animationIterationCount"
+	"github.com/nathanhack/vectyUI/style/animationName"
+	"github.com/nathanhack/vectyUI/style/animationPlayState"
+	"github.com/nathanhack/vectyUI/style/animationTimingFunction"
 	"github.com/nathanhack/vectyUI/style/background"
 	"github.com/nathanhack/vectyUI/style/backgroundAttachment"
 	"github.com/nathanhack/vectyUI/style/backgroundClip"
@@ -65,6 +73,176 @@ func AlignItems(value alignItems.Type) alignItems.Value {
 
 func AlignSelf(value alignSelf.Type) alignSelf.Value {
 	return alignSelf.Value(value)
+}
+
+func AnimationDelay(value interface{}) animationDelay.Value {
+	return animationDelay.Value(internal.Stringify(value, "s"))
+}
+
+func AnimationDelays(values ...interface{}) animationDelay.Value {
+	sb := strings.Builder{}
+	for i, bv := range values {
+		sb.WriteString(internal.Stringify(bv, "s"))
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return animationDelay.Value(sb.String())
+}
+
+func AnimationDirection(value animationDirection.Type) animationDirection.Value {
+	return animationDirection.Value(value)
+}
+
+func AnimationDirections(values ...interface{}) animationDirection.Value {
+	sb := strings.Builder{}
+	for i, bv := range values {
+		switch bv.(type) {
+		case string:
+			sb.WriteString(bv.(string))
+		case animationDirection.Type:
+			sb.WriteString(string(bv.(animationDirection.Type)))
+		case animationDirection.Value:
+			sb.WriteString(string(bv.(animationDirection.Value)))
+		default:
+			panic(fmt.Sprintf("unsupported animationDirection type %T with value: %v", bv, bv))
+		}
+
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return animationDirection.Value(sb.String())
+}
+
+func AnimationDuration(value interface{}) animationDuration.Value {
+	return animationDuration.Value(internal.Stringify(value, "s"))
+}
+
+func AnimationDurations(values ...interface{}) animationDuration.Value {
+	sb := strings.Builder{}
+	for i, bv := range values {
+		sb.WriteString(internal.Stringify(bv, "s"))
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return animationDuration.Value(sb.String())
+}
+
+func AnimationFillMode(value animationFillMode.Type) animationFillMode.Value {
+	return animationFillMode.Value(value)
+}
+
+func AnimationFillModes(values ...interface{}) animationFillMode.Value {
+	sb := strings.Builder{}
+	for i, bv := range values {
+		switch bv.(type) {
+		case string:
+			sb.WriteString(bv.(string))
+		case animationFillMode.Type:
+			sb.WriteString(string(bv.(animationFillMode.Type)))
+		case animationFillMode.Value:
+			sb.WriteString(string(bv.(animationFillMode.Value)))
+		default:
+			panic(fmt.Sprintf("unsupported animationFillMode type %T with value: %v", bv, bv))
+		}
+
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return animationFillMode.Value(sb.String())
+}
+
+func AnimationIterationCount(value interface{}) animationIterationCount.Value {
+	return animationIterationCount.Value(internal.Stringify(value, ""))
+}
+
+func AnimationIterationCounts(values ...interface{}) animationIterationCount.Value {
+	sb := strings.Builder{}
+	for i, bv := range values {
+		sb.WriteString(internal.Stringify(bv, ""))
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return animationIterationCount.Value(sb.String())
+}
+
+func AnimationName(value animationName.Type) animationName.Value {
+	return animationName.Value(value)
+}
+
+func AnimationNames(values ...interface{}) animationName.Value {
+	sb := strings.Builder{}
+	for i, bv := range values {
+		switch bv.(type) {
+		case string:
+			sb.WriteString(bv.(string))
+		case animationName.Type:
+			sb.WriteString(string(bv.(animationName.Type)))
+		case animationName.Value:
+			sb.WriteString(string(bv.(animationName.Value)))
+		default:
+			panic(fmt.Sprintf("unsupported animationName type %T with value: %v", bv, bv))
+		}
+
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return animationName.Value(sb.String())
+}
+
+func AnimationPlayState(value animationPlayState.Type) animationPlayState.Value {
+	return animationPlayState.Value(value)
+}
+
+func AnimationPlayStates(values ...interface{}) animationPlayState.Value {
+	sb := strings.Builder{}
+	for i, bv := range values {
+		switch bv.(type) {
+		case string:
+			sb.WriteString(bv.(string))
+		case animationPlayState.Type:
+			sb.WriteString(string(bv.(animationPlayState.Type)))
+		case animationPlayState.Value:
+			sb.WriteString(string(bv.(animationPlayState.Value)))
+		default:
+			panic(fmt.Sprintf("unsupported animationPlayState type %T with value: %v", bv, bv))
+		}
+
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return animationPlayState.Value(sb.String())
+}
+
+func AnimationTimingFunction(value animationTimingFunction.Type) animationTimingFunction.Value {
+	return animationTimingFunction.Value(value)
+}
+
+func AnimationTimingFunctions(values ...interface{}) animationTimingFunction.Value {
+	sb := strings.Builder{}
+	for i, bv := range values {
+		switch bv.(type) {
+		case string:
+			sb.WriteString(bv.(string))
+		case animationTimingFunction.Type:
+			sb.WriteString(string(bv.(animationTimingFunction.Type)))
+		case animationTimingFunction.Value:
+			sb.WriteString(string(bv.(animationTimingFunction.Value)))
+		default:
+			panic(fmt.Sprintf("unsupported animationTimingFunction type %T with value: %v", bv, bv))
+		}
+
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return animationTimingFunction.Value(sb.String())
 }
 
 //Background is used for weird case not handled by Background.
