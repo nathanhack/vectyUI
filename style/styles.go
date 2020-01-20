@@ -497,14 +497,14 @@ func Transitions(transitions ...transition.Value) transition.Value {
 	return transition.Value(sb.String())
 }
 
-func TransitionDelay(value transitionDelay.Type) transitionDelay.Value {
-	return transitionDelay.Value(value)
+func TransitionDelay(value interface{}) transitionDelay.Value {
+	return transitionDelay.Value(internal.Stringify(value, "s"))
 }
 
-func TransitionDelays(delays ...transitionDelay.Type) transitionDelay.Value {
+func TransitionDelays(delays ...interface{}) transitionDelay.Value {
 	sb := strings.Builder{}
 	for i, bv := range delays {
-		sb.WriteString(string(bv))
+		sb.WriteString(internal.Stringify(bv, "s"))
 		if i < len(delays)-1 {
 			sb.WriteString(",")
 		}
@@ -512,14 +512,14 @@ func TransitionDelays(delays ...transitionDelay.Type) transitionDelay.Value {
 	return transitionDelay.Value(sb.String())
 }
 
-func TransitionDuration(value transitionDuration.Type) transitionDuration.Value {
-	return transitionDuration.Value(value)
+func TransitionDuration(value interface{}) transitionDuration.Value {
+	return transitionDuration.Value(internal.Stringify(value, "s"))
 }
 
-func TransitionDurations(delays ...transitionDuration.Type) transitionDuration.Value {
+func TransitionDurations(delays ...interface{}) transitionDuration.Value {
 	sb := strings.Builder{}
 	for i, bv := range delays {
-		sb.WriteString(string(bv))
+		sb.WriteString(internal.Stringify(bv, "s"))
 		if i < len(delays)-1 {
 			sb.WriteString(",")
 		}
