@@ -48,6 +48,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/marginRight"
 	"github.com/nathanhack/vectyUI/style/marginTop"
 	"github.com/nathanhack/vectyUI/style/opacity"
+	"github.com/nathanhack/vectyUI/style/outlineColor"
 	"github.com/nathanhack/vectyUI/style/overflow"
 	"github.com/nathanhack/vectyUI/style/padding"
 	"github.com/nathanhack/vectyUI/style/position"
@@ -445,6 +446,19 @@ func MarginTop(length interface{}) marginTop.Value {
 
 func Opacity(value interface{}) opacity.Value {
 	return opacity.Value(opacity.Number(value))
+}
+
+func OutlineColor(outColor interface{}) outlineColor.Value {
+	switch outColor.(type) {
+	case outlineColor.Type:
+		return outlineColor.Value(outColor.(outlineColor.Type))
+	case color.Type:
+		return outlineColor.Value(outColor.(color.Type))
+	case string:
+		return outlineColor.Value(outColor.(string))
+	default:
+		panic(fmt.Sprintf("unsupported color type %T with value: %v", outColor, outColor))
+	}
 }
 
 func Overflow(p overflow.Type) overflow.Value {
