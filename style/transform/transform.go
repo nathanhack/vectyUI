@@ -65,14 +65,14 @@ func Matrix(number0,
 	number3,
 	number4,
 	number5 interface{}) Type {
-	return "matrix(" +
+	return Type("matrix(" +
 		internal.Stringify(number0, "") + "," +
 		internal.Stringify(number1, "") + "," +
 		internal.Stringify(number2, "") + "," +
 		internal.Stringify(number3, "") + "," +
 		internal.Stringify(number4, "") + "," +
 		internal.Stringify(number5, "") + "," +
-		")"
+		")")
 }
 
 //<matrix3d()> = matrix3d( <number>#{16} )
@@ -92,7 +92,7 @@ func Matrix3d(number0,
 	number13,
 	number14,
 	number15 interface{}) Type {
-	return "matrix3d(" +
+	return Type("matrix3d(" +
 		internal.Stringify(number0, "") + "," +
 		internal.Stringify(number1, "") + "," +
 		internal.Stringify(number2, "") + "," +
@@ -109,7 +109,7 @@ func Matrix3d(number0,
 		internal.Stringify(number13, "") + "," +
 		internal.Stringify(number14, "") + "," +
 		internal.Stringify(number15, "") + "," +
-		")"
+		")")
 }
 
 //<translate()> = translate( <length-percentage> , <length-percentage>? )
@@ -120,30 +120,30 @@ func Translate(lengthOrPercentage ...interface{}) Type {
 	case 0:
 		return ""
 	case 1:
-		return "translate(" + internal.Stringify(lengthOrPercentage[0], "px") + ")"
+		return Type("translate(" + internal.Stringify(lengthOrPercentage[0], "px") + ")")
 	default:
-		return "translate(" + internal.Stringify(lengthOrPercentage[0], "px") + "," + internal.Stringify(lengthOrPercentage[1], "px") + ")"
+		return Type("translate(" + internal.Stringify(lengthOrPercentage[0], "px") + "," + internal.Stringify(lengthOrPercentage[1], "px") + ")")
 	}
 }
 
 //<translateX()> = translateX( <length-percentage> )
 func TranslateX(lengthOrPercentage interface{}) Type {
-	return "translateX(" + internal.Stringify(lengthOrPercentage, "px") + ")"
+	return Type("translateX(" + internal.Stringify(lengthOrPercentage, "px") + ")")
 }
 
 //<translateY()> = translateY( <length-percentage> )
 func TranslateY(lengthOrPercentage interface{}) Type {
-	return "translateY(" + internal.Stringify(lengthOrPercentage, "px") + ")"
+	return Type("translateY(" + internal.Stringify(lengthOrPercentage, "px") + ")")
 }
 
 //<translateZ()> = translateZ( <length> )
 func TranslateZ(length interface{}) Type {
-	return "translateZ(" + internal.Stringify(length, "px") + ")"
+	return Type("translateZ(" + internal.Stringify(length, "px") + ")")
 }
 
 //<translate3d()> = translate3d( <length-percentage> , <length-percentage> , <length> )
 func Translate3d(lenPercentX, lenPercentY, lenZ interface{}) Type {
-	return "translate3d(" + internal.Stringify(lenPercentX, "px") + "," + internal.Stringify(lenPercentY, "px") + "," + internal.Stringify(lenZ, "px") + ")"
+	return Type("translate3d(" + internal.Stringify(lenPercentX, "px") + "," + internal.Stringify(lenPercentY, "px") + "," + internal.Stringify(lenZ, "px") + ")")
 }
 
 //<scale()> = scale( <number> , <number>? )
@@ -153,31 +153,31 @@ func Scale(numbers ...interface{}) Type {
 	case 0:
 		return ""
 	case 1:
-		return "scale(" + internal.Stringify(numbers[0], "") + ")"
+		return Type("scale(" + internal.Stringify(numbers[0], "") + ")")
 	default:
 		//if equal to 2 or more we only take the first two
-		return "scale(" + internal.Stringify(numbers[0], "") + "," + internal.Stringify(numbers[1], "") + ")"
+		return Type("scale(" + internal.Stringify(numbers[0], "") + "," + internal.Stringify(numbers[1], "") + ")")
 	}
 }
 
 //<scaleX()> = scaleX( <number> )
 func ScaleX(number interface{}) Type {
-	return "scaleX(" + internal.Stringify(number, "") + ")"
+	return Type("scaleX(" + internal.Stringify(number, "") + ")")
 }
 
 //<scaleY()> = scaleY( <number> )
 func ScaleY(number interface{}) Type {
-	return "scaleY(" + internal.Stringify(number, "") + ")"
+	return Type("scaleY(" + internal.Stringify(number, "") + ")")
 }
 
 //<scaleZ()> = scaleZ( <number> )
 func ScaleZ(number interface{}) Type {
-	return "scaleZ(" + internal.Stringify(number, "") + ")"
+	return Type("scaleZ(" + internal.Stringify(number, "") + ")")
 }
 
 //<scale3d()> = scale3d( <number> , <number> , <number> )
 func Scale3d(numberX, numberY, numberZ interface{}) Type {
-	return "scale3d(" + internal.Stringify(numberX, "") + "," + internal.Stringify(numberY, "") + "," + internal.Stringify(numberZ, "") + ")"
+	return Type("scale3d(" + internal.Stringify(numberX, "") + "," + internal.Stringify(numberY, "") + "," + internal.Stringify(numberZ, "") + ")")
 }
 
 //<skew()> = skew( [ <angle> | <zero> ] , [ <angle> | <zero> ]? )
@@ -187,49 +187,49 @@ func Skew(angles ...interface{}) Type {
 	case 0:
 		return ""
 	case 1:
-		return "skew(" + internal.Stringify(angles[0], "deg") + ")"
+		return Type("skew(" + internal.Stringify(angles[0], "deg") + ")")
 	default:
 		//if equal to 2 or more we only take the first two
-		return "skew(" + internal.Stringify(angles[0], "deg") + "," + internal.Stringify(angles[1], "deg") + ")"
+		return Type("skew(" + internal.Stringify(angles[0], "deg") + "," + internal.Stringify(angles[1], "deg") + ")")
 	}
 }
 
 //<skewX()> = skewX( [ <angle> | <zero> ] )
 func SkewX(angle interface{}) Type {
-	return "skewX(" + internal.Stringify(angle, "deg") + ")"
+	return Type("skewX(" + internal.Stringify(angle, "deg") + ")")
 }
 
 //<skewY()> = skewY( [ <angle> | <zero> ] )
 func SkewY(angle interface{}) Type {
-	return "skewY(" + internal.Stringify(angle, "deg") + ")"
+	return Type("skewY(" + internal.Stringify(angle, "deg") + ")")
 }
 
 //<rotate()> = rotate( [ <angle> | <zero> ] )
 func Rotate(angle interface{}) Type {
-	return "rotate(" + internal.Stringify(angle, "deg") + ")"
+	return Type("rotate(" + internal.Stringify(angle, "deg") + ")")
 }
 
 //<rotateX()> = rotateX( [ <angle> | <zero> ] )
 func RotateX(angle interface{}) Type {
-	return "rotateX(" + internal.Stringify(angle, "deg") + ")"
+	return Type("rotateX(" + internal.Stringify(angle, "deg") + ")")
 }
 
 //<rotateY()> = rotateY( [ <angle> | <zero> ] )
 func RotateY(angle interface{}) Type {
-	return "rotateY(" + internal.Stringify(angle, "deg") + ")"
+	return Type("rotateY(" + internal.Stringify(angle, "deg") + ")")
 }
 
 //<rotateZ()> = rotateZ( [ <angle> | <zero> ] )
 func RotateZ(angle interface{}) Type {
-	return "rotateZ(" + internal.Stringify(angle, "deg") + ")"
+	return Type("rotateZ(" + internal.Stringify(angle, "deg") + ")")
 }
 
 //<rotate3d()> = rotate3d( <number> , <number> , <number> , [ <angle> | <zero> ] )
 func Rotate3d(numberX, numberY, numberZ, angle interface{}) Type {
-	return "rotate3d(" + internal.Stringify(numberX, "") + "," + internal.Stringify(numberY, "") + "," + internal.Stringify(numberZ, "") + "," + internal.Stringify(angle, "deg") + ")"
+	return Type("rotate3d(" + internal.Stringify(numberX, "") + "," + internal.Stringify(numberY, "") + "," + internal.Stringify(numberZ, "") + "," + internal.Stringify(angle, "deg") + ")")
 }
 
 //<perspective()> = perspective( <length> )
 func Perspective(length interface{}) Type {
-	return "perspective(" + internal.Stringify(length, "px") + ")"
+	return Type("perspective(" + internal.Stringify(length, "px") + ")")
 }
