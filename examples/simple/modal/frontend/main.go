@@ -113,7 +113,7 @@ func (b *Body) Render() vecty.ComponentOrHTML {
 			Padding:    style.Padding(10),
 			Border:     style.Border(1, borderStyle.Solid, "black"),
 			Click: func(i *vecty.Event) {
-				exampleModal.Show()
+				exampleModal.ShowDiv()
 			},
 		},
 		&button.Simple{
@@ -123,7 +123,7 @@ func (b *Body) Render() vecty.ComponentOrHTML {
 			Padding:    style.Padding(10),
 			Border:     style.Border(1, borderStyle.Solid, "black"),
 			Click: func(i *vecty.Event) {
-				exampleModal2.Show()
+				exampleModal2.ShowDiv()
 			},
 		},
 		&button.Simple{
@@ -133,7 +133,7 @@ func (b *Body) Render() vecty.ComponentOrHTML {
 			Padding:    style.Padding(10),
 			Border:     style.Border(1, borderStyle.Solid, "black"),
 			Click: func(i *vecty.Event) {
-				exampleModal3.Show()
+				exampleModal3.ShowDiv()
 
 			},
 		},
