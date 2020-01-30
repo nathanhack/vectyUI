@@ -32,7 +32,7 @@ var divModalCount = 0
 
 //modal.Div
 //Notes
-// 1) GrabFocus is a component's string ID, if specified upon show it will try and have it grab focus.
+// 1) GrabFocus is a component's string ID, if specified upon ShowDiv() it will try and have it grab focus.
 // 2) Dismissible if true will set click and keydown listeners on the background to hide them if ESC is pressed or the background is clicked
 // 3) ID must be globally unique, if not provided one will be created.
 type Div struct {
@@ -44,12 +44,12 @@ type Div struct {
 	Extras             []vecty.Applyer                        `vecty:"prop"`
 	Dismissible        bool                                   `vecty:"prop"`
 	GrabFocus          string                                 `vecty:"prop"`
-	show               bool
+	Show               bool                                   `vecty:"prop"`
 	hiddenID           string
 }
 
-func (div *Div) Show() {
-	div.show = true
+func (div *Div) ShowDiv() {
+	div.Show = true
 	vecty.Rerender(div)
 	if div.GrabFocus != "" {
 		go func() { internal.RequestFocusEvent(div.GrabFocus) }()
@@ -57,7 +57,7 @@ func (div *Div) Show() {
 }
 
 func (div *Div) Hide() {
-	div.show = false
+	div.Show = false
 	vecty.Rerender(div)
 }
 
@@ -72,7 +72,7 @@ func (div *Div) Render() vecty.ComponentOrHTML {
 
 	vis := visibility.Hidden
 	op := opacity.Number(0)
-	if div.show {
+	if div.Show {
 		vis = visibility.Visible
 		op = opacity.Number(1)
 	}
