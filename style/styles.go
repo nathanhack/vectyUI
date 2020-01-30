@@ -55,6 +55,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/right"
 	"github.com/nathanhack/vectyUI/style/textAlign"
 	"github.com/nathanhack/vectyUI/style/top"
+	"github.com/nathanhack/vectyUI/style/transform"
 	"github.com/nathanhack/vectyUI/style/transition"
 	"github.com/nathanhack/vectyUI/style/transitionDelay"
 	"github.com/nathanhack/vectyUI/style/transitionDuration"
@@ -485,6 +486,27 @@ func TextAlign(value textAlign.Type) textAlign.Value {
 
 func Top(length interface{}) top.Value {
 	return top.Value(internal.Stringify(length, "px"))
+}
+
+func Transform(trans interface{}) transform.Value {
+	switch trans.(type) {
+	case transform.Type:
+		return transform.Value(trans.(transform.Type))
+	case string:
+		return transform.Value(trans.(string))
+	default:
+		panic(fmt.Sprintf("unsupported transform type %T with value: %v", trans, trans))
+	}
+}
+
+func Transforms(transforms ...transform.Value) transform.Value {
+	sb := strings.Builder{}
+	for _, ts := range transforms {
+		sb.WriteString(string(ts))
+		sb.WriteString(" ")
+
+	}
+	return transform.Value(sb.String())
 }
 
 //Background is used for weird case not handled by Background.
