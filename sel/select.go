@@ -136,10 +136,14 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 		markups = append(markups, g.SelectedOptionStyles...)
 	}
 
-	ph := &g.Placeholder
-	if (ph == nil && g.SelectedPos > 0) ||
-		g.SelectedPos > 0 && len(g.Options) >= g.SelectedPos {
-		ph = g.Options[g.SelectedPos-1]
+	var ph vecty.ComponentOrHTML
+	switch {
+	case g.SelectedPos > 0 && len(g.Options) >= g.SelectedPos:
+		ph = g.Options[g.SelectedPos-1].Option(g.Disabled, false, true)
+	case g.Placeholder.Option != nil:
+		ph = g.Placeholder.Option(g.Disabled, false, true)
+	default:
+		ph = elem.Div()
 	}
 
 	if !g.Disabled {
@@ -204,7 +208,7 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 			vecty.Markup(optionButtonAlignment...),
 			elem.Div(
 				vecty.Markup(position.Relative),
-				vecty.If(ph != nil, ph.Option(g.Disabled, false, true)),
+				ph,
 			),
 
 			elem.Div(
