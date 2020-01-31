@@ -204,7 +204,7 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 			vecty.Markup(optionButtonAlignment...),
 			elem.Div(
 				vecty.Markup(position.Relative),
-				ph.Option(g.Disabled, false, true),
+				vecty.If(ph != nil, ph.Option(g.Disabled, false, true)),
 			),
 
 			elem.Div(
