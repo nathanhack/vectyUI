@@ -1,7 +1,6 @@
 package keyframes
 
 import (
-	"fmt"
 	"github.com/nathanhack/vectyUI/internal"
 	"github.com/nathanhack/vectyUI/style/animationName"
 	"strconv"
@@ -47,7 +46,6 @@ type Keyframes struct {
 }
 
 func (k *Keyframes) Mount() {
-	fmt.Println("Keyframes Mount")
 	//instead of styles we load the keyframes!
 	if k.Name == "" {
 		k.generateName()
@@ -64,7 +62,6 @@ func (k *Keyframes) generateName() {
 }
 
 func (k *Keyframes) generateKeyframes() {
-	fmt.Println("keyframes generateKeyframes")
 	//we don't recreate the keyframes
 	// if the have already been created
 	if len(k.genKeyframes) != 0 {
@@ -104,7 +101,6 @@ func (k *Keyframes) addKeyframesRules() {
 	// styleSheets = doc.Get("styleSheets")
 
 	for _, keyframe := range k.genKeyframes {
-		fmt.Println("checking keyframe: ", keyframe)
 		//for each keyframe we check our history
 		// if it's new we add it
 		// this could occur if a component containing Keyframes{} was remounted
@@ -118,7 +114,6 @@ func (k *Keyframes) addKeyframesRules() {
 		if _, has := keyframeHistory[k.Name][keyframe]; !has {
 			s := doc.Call("createElement", "style")
 			s.Set("innerHTML", keyframe)
-			fmt.Println("Adding Keyframe: ", keyframe)
 			doc.Call("getElementsByTagName", "head").Index(0).Call("appendChild", s)
 		}
 		// instead of always inserting like above
