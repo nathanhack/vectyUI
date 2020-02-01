@@ -47,6 +47,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/marginLeft"
 	"github.com/nathanhack/vectyUI/style/marginRight"
 	"github.com/nathanhack/vectyUI/style/marginTop"
+	"github.com/nathanhack/vectyUI/style/maxHeight"
 	"github.com/nathanhack/vectyUI/style/opacity"
 	"github.com/nathanhack/vectyUI/style/outlineColor"
 	"github.com/nathanhack/vectyUI/style/overflow"
@@ -443,6 +444,10 @@ func MarginRight(length interface{}) marginRight.Value {
 //MarginTop defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func MarginTop(length interface{}) marginTop.Value {
 	return marginTop.Value(internal.Stringify(length, "px"))
+}
+
+func MaxHeight(value maxHeight.Type) maxHeight.Value {
+	return maxHeight.Value(value)
 }
 
 func Opacity(value interface{}) opacity.Value {
