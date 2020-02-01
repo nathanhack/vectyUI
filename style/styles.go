@@ -446,8 +446,8 @@ func MarginTop(length interface{}) marginTop.Value {
 	return marginTop.Value(internal.Stringify(length, "px"))
 }
 
-func MaxHeight(value maxHeight.Type) maxHeight.Value {
-	return maxHeight.Value(value)
+func MaxHeight(value interface{}) maxHeight.Value {
+	return maxHeight.Value(internal.Stringify(value, "px"))
 }
 
 func Opacity(value interface{}) opacity.Value {
