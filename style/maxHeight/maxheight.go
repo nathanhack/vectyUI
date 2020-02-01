@@ -8,11 +8,13 @@ import (
 type Type string
 
 const (
-	Auto          Type = "auto"
+	None          Type = "none"
 	MaxContent    Type = "max-content"
 	MinContent    Type = "min-content"
 	FitContent    Type = "fit-content"
 	FillAvailable Type = "fill-available"
+	Initial       Type = "initial"
+	Inherit       Type = "inherit"
 
 	styleName = "max-height"
 )
