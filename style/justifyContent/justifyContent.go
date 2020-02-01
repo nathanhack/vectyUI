@@ -7,13 +7,23 @@ import (
 type Type string
 
 const (
+	Center       Type = "center"
+	Start        Type = "start"
+	End          Type = "end"
 	FlexStart    Type = "flex-start"
 	FlexEnd      Type = "flex-end"
-	Center       Type = "center"
+	Left         Type = "left"
+	Right        Type = "right"
+	Normal       Type = "normal"
 	SpaceBetween Type = "space-between"
 	SpaceAround  Type = "space-around"
+	SpaceEvenly  Type = "space-evenly"
+	Stretch      Type = "stretch"
+	SafeCenter   Type = "safe center"
+	UnsafeCenter Type = "unsafe center"
 	Initial      Type = "initial"
 	Inherit      Type = "inherit"
+	Unset        Type = "unset"
 
 	styleName = "justify-content"
 )
