@@ -4,19 +4,15 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/event"
-	"github.com/gopherjs/vecty/prop"
-	"github.com/nathanhack/vectyUI/internal"
 	"github.com/nathanhack/vectyUI/style"
 	"github.com/nathanhack/vectyUI/style/alignItems"
 	"github.com/nathanhack/vectyUI/style/display"
 	"github.com/nathanhack/vectyUI/style/flexWrap"
 	"github.com/nathanhack/vectyUI/style/justifyContent"
+	"github.com/nathanhack/vectyUI/style/outlineStyle"
 	"github.com/nathanhack/vectyUI/style/position"
 	"github.com/nathanhack/vectyUI/style/visibility"
 	"github.com/nathanhack/vectyUI/style/zIndex"
-	"strconv"
-	"syscall/js"
-	"time"
 )
 
 //GenericOption is effectively a div container for the option
@@ -38,6 +34,11 @@ func (g *GenericOption) Render() vecty.ComponentOrHTML {
 const genericSelectID = "GenericSelectID"
 
 var genericSelectCount = 0
+
+var DefaultStyles = []vecty.Applyer{
+	vecty.Attribute("tabindex", 0),
+	style.OutlineStyle(outlineStyle.None),
+}
 
 var DefaultSelectedOptionFocusedStyles = []vecty.Applyer{
 	style.BoxShadow(0, 0, 4, 2, "#a8d1ff"),
@@ -63,13 +64,11 @@ var DefaultSelectedOptionButtonAlignmentStyles = []vecty.Applyer{
 // Notes:
 // 1) User should NOT create the following events (applies to everything): MouseEnter,MouseLeave and Click.
 // 2) If a *Styles is specified it will replace default styles. (The defaults are public for user to build from)
-// 3) The ID must be globally unique, if not assigned a unique ID will be generated.
-// 4) The following should be avoided in styles or components: position, display and justifyContent.
-// 5) To create without a button, set the Button to and empty Div.
+// 3) The following should be avoided in styles or components: position, display and justifyContent.
+// 4) To create without a button, set the Button to and empty Div.
 // 5) Normally disabled options are unselectable, at startup this can be overridden by setting .SelectPos (use carefully).
 type Generic struct {
 	vecty.Core
-	ID                                  string                                                                  `vecty:"prop"`
 	Options                             []*GenericOption                                                        `vecty:"prop"`
 	Placeholder                         GenericOption                                                           `vecty:"prop"`
 	Styles                              []vecty.Applyer                                                         `vecty:"prop"`
@@ -83,37 +82,143 @@ type Generic struct {
 	MouseEnter                          func(v *vecty.Event)                                                    `vecty:"prop"`
 	MouseLeave                          func(v *vecty.Event)                                                    `vecty:"prop"`
 	Disabled                            bool                                                                    `vecty:"prop"` //disables all interactions
+	hightlightPos                       int                                                                     // pos of highlighting
 	expanded                            bool                                                                    // will render option list visible
-	blurRerender                        bool                                                                    // internal state used to help communicate events
 	focused                             bool                                                                    // will render component as focused
-	selectID                            string                                                                  // used to identify the hidden select
 	mouseOver                           bool                                                                    // used to identify when mouse is over placeholder/selected or button
 }
 
 func (g *Generic) Render() vecty.ComponentOrHTML {
-	//since this is effectively a custom component
-	// it means we lose all the niceties line focus
-	// and cursor key interaction
-	// to remedy this we create a hidden
-	// select and connect up all the focus events
-	// between our custom one and the hidden one
-	if g.ID == "" {
-		g.ID = genericSelectID + strconv.Itoa(genericSelectCount)
-		genericSelectCount++
-	}
-	if g.selectID == "" {
-		g.selectID = g.ID + "SelectHidden"
-	}
-
 	markups := make([]vecty.Applyer, 0)
+	markups = append(markups,
+		event.FocusIn(func(v *vecty.Event) {
+			g.focused = true
+			if g.SelectedPos == 0 {
+				for i := 0; i < len(g.Options); i++ {
+					if !g.Options[i].Disabled {
+						g.SelectedPos = i + 1
+						if g.expanded {
+							g.hightlightPos = g.SelectedPos
+						}
+						vecty.Rerender(g)
+						g.SelectedEvent(i, g)
+						break
+					}
+				}
+			}
+			vecty.Rerender(g)
+		}),
+		event.FocusOut(func(v *vecty.Event) {
+			g.focused = false
+			g.expanded = false
 
-	markups = append(markups, prop.ID(g.ID))
+			vecty.Rerender(g)
+		}),
+		event.KeyDown(func(v *vecty.Event) {
+			switch v.Get("code").String() {
+			case "Escape":
+				g.expanded = false
+				vecty.Rerender(g)
+				v.Value.Call("stopPropagation")
+				v.Value.Call("preventDefault")
+			case "Enter":
+				if !g.expanded {
+					g.hightlightPos = g.SelectedPos
+				}
+				g.expanded = !g.expanded
+				vecty.Rerender(g)
+				v.Value.Call("stopPropagation")
+				v.Value.Call("preventDefault")
+			case "Space":
+				if !g.expanded {
+					g.hightlightPos = g.SelectedPos
+				}
+				g.expanded = true
+				vecty.Rerender(g)
+				v.Value.Call("stopPropagation")
+				v.Value.Call("preventDefault")
+			case "Tab":
+				if g.expanded {
+					//here we just want it to close the list
+					// but stay on this item
+					g.expanded = false
+					vecty.Rerender(g)
+					v.Value.Call("stopPropagation")
+					v.Value.Call("preventDefault")
+				}
+			case "ArrowDown":
+				for i := 0; i < len(g.Options); i++ {
+					if i+1 > g.SelectedPos && !g.Options[i].Disabled {
+						g.SelectedPos = i + 1
+						if g.expanded {
+							g.hightlightPos = g.SelectedPos
+						}
+						vecty.Rerender(g)
+						g.SelectedEvent(i, g)
+						break
+					}
+				}
 
-	markups = append(markups, g.Styles...)
+				v.Value.Call("stopPropagation")
+				v.Value.Call("preventDefault")
+			case "ArrowUp":
+				for i := len(g.Options) - 1; i >= 0; i-- {
+					if i+1 < g.SelectedPos && !g.Options[i].Disabled {
+						g.SelectedPos = i + 1
+						if g.expanded {
+							g.hightlightPos = g.SelectedPos
+						}
+						vecty.Rerender(g)
+						g.SelectedEvent(i, g)
+						break
+					}
+				}
+
+				v.Value.Call("stopPropagation")
+				v.Value.Call("preventDefault")
+			case "Home":
+				for i := 0; i < len(g.Options); i++ {
+					if !g.Options[i].Disabled {
+						g.SelectedPos = i + 1
+						if g.expanded {
+							g.hightlightPos = g.SelectedPos
+						}
+						vecty.Rerender(g)
+						g.SelectedEvent(i, g)
+						break
+					}
+				}
+
+				v.Value.Call("stopPropagation")
+				v.Value.Call("preventDefault")
+			case "End":
+				for i := len(g.Options) - 1; i >= 0; i-- {
+					if !g.Options[i].Disabled {
+						g.SelectedPos = i + 1
+						if g.expanded {
+							g.hightlightPos = g.SelectedPos
+						}
+						vecty.Rerender(g)
+						g.SelectedEvent(i, g)
+						break
+					}
+				}
+
+				v.Value.Call("stopPropagation")
+				v.Value.Call("preventDefault")
+
+			}
+
+		}),
+	)
+	if len(g.Styles) == 0 {
+		markups = append(markups, DefaultStyles...)
+	} else {
+		markups = append(markups, g.Styles...)
+	}
 
 	return elem.Div(
 		vecty.Markup(markups...),
-		g.makeHiddenSelect(),
 		g.makeSelectedOptionOrPlaceholder(),
 	)
 }
@@ -147,31 +252,17 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 	}
 
 	if !g.Disabled {
-
 		markups = append(markups,
 			//we always take care of clicks not the user
 			event.Click(func(v *vecty.Event) {
 				//as soon as we
-				if g.SelectedPos == 0 && len(g.Options) >= 1 {
-					g.SelectedPos++
-					g.Options[0].Highlight = true
+				if g.hightlightPos == 0 && len(g.Options) >= 1 {
+					g.hightlightPos++
 				}
-
-				// We use a hidden select to help with focus awareness
-				// and user input. But this (click) action will take the focus away from the
-				// hidden select and will cause a blur event on the hidden select.
-				// Any time blur events occurs to the hidden select it sets blurRerender
-				// true. Then after some small amount of time it will rerender
-				// (effectively loosing focus for this component). To disable that
-				//from occurring we just set blurRerender to false.
-				g.blurRerender = false
 
 				//when we click we always want to toggle showing the options
 				g.expanded = !g.expanded
 				g.focused = true
-				go func() {
-					internal.RequestFocusEvent(g.selectID)
-				}()
 				vecty.Rerender(g)
 			}).StopPropagation(),
 
@@ -220,97 +311,6 @@ func (g *Generic) makeSelectedOptionOrPlaceholder() vecty.ComponentOrHTML {
 	)
 }
 
-func (g *Generic) makeHiddenSelect() vecty.ComponentOrHTML {
-	hiddenOptions := make([]vecty.ComponentOrHTML, 0)
-	for i, o := range g.Options {
-		option := o
-		index := i
-
-		//for every option we make a hidden one
-		hiddenOptions = append(hiddenOptions,
-			elem.Option(
-				vecty.Markup(
-					vecty.Property("disabled", option.Disabled),
-					vecty.Property("value", index),
-				),
-			),
-		)
-	}
-
-	return elem.Select(
-		vecty.Markup(
-			position.Absolute,
-			style.Opacity(0),
-			style.Height(1),
-			style.Top(0),
-			prop.ID(g.selectID),
-			vecty.Property("disabled", g.Disabled),
-			vecty.Property("size", strconv.Itoa(len(g.Options))),
-			vecty.MarkupIf(!g.Disabled,
-				event.FocusIn(func(v *vecty.Event) {
-					g.focused = true
-					vecty.Rerender(g)
-				}),
-				event.Change(func(v *vecty.Event) {
-					x, _ := strconv.Atoi(v.Target.Get("value").String())
-					u := -1
-					for i := 0; i < len(g.Options); i++ {
-						if g.Options[i].Highlight != false {
-							u = i
-							break
-						}
-					}
-
-					if x != u && !g.Options[x].Disabled {
-						if u >= 0 {
-							g.Options[u].Highlight = false
-						}
-						g.Options[x].Highlight = true
-						g.SelectedPos = x + 1
-						vecty.Rerender(g)
-					}
-				}),
-				event.Blur(func(v *vecty.Event) {
-					//we're loosing focus time to collapse the
-					g.blurRerender = true
-					go func() {
-						time.Sleep(100 * time.Millisecond)
-						if g.blurRerender {
-							g.expanded = false
-							g.focused = false
-							vecty.Rerender(g)
-						}
-					}()
-				}),
-				event.KeyDown(func(v *vecty.Event) {
-					switch v.Get("code").String() {
-					case "Enter":
-						g.expanded = !g.expanded
-						vecty.Rerender(g)
-					case "Space":
-						g.expanded = true
-						vecty.Rerender(g)
-					case "Tab":
-						if g.expanded {
-							//here we just want it to close the list
-							// but stay on this item
-							g.expanded = false
-							g.focused = true
-							go func() {
-								time.Sleep(100 * time.Millisecond)
-								internal.RequestFocusEvent(g.selectID)
-							}()
-
-						}
-						vecty.Rerender(g)
-					}
-				}),
-			),
-		),
-		vecty.List(hiddenOptions),
-	)
-}
-
 func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 	optionsHolder := make([]vecty.MarkupOrChild, 0)
 	optionsHolderMarkups := make([]vecty.Applyer, 0)
@@ -338,6 +338,11 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 		option := o
 		index := i
 
+		if g.hightlightPos == i+1 {
+			option.Highlight = true
+		} else {
+			option.Highlight = false
+		}
 		// and now to make a visible one
 		optionMarkups := make([]vecty.Applyer, 0)
 
@@ -352,19 +357,9 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 					return
 				}
 				//we need to clear previous highlight
-				if index != g.SelectedPos-1 {
-					if g.SelectedPos > 0 && len(g.Options) >= g.SelectedPos {
-						g.Options[g.SelectedPos-1].Highlight = false
-					}
-
-					option.Highlight = true
-					g.SelectedPos = index + 1
+				if index != g.hightlightPos-1 {
+					g.hightlightPos = index + 1
 					vecty.Rerender(g)
-
-					//lets update the hidden select too
-					go func() {
-						g.setSelectIndex(g.selectID, index)
-					}()
 				}
 				if option.MouseMove != nil {
 					option.MouseMove(v)
@@ -375,16 +370,12 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 					return
 				}
 
-				option.Highlight = false
 				g.SelectedPos = index + 1
 				if g.SelectedEvent != nil {
 					g.SelectedEvent(index, g)
 				}
 				g.expanded = false
 				vecty.Rerender(g)
-				go func() {
-					internal.RequestFocusEvent(g.selectID)
-				}()
 
 			}).StopPropagation(),
 		)
@@ -395,14 +386,4 @@ func (g *Generic) makeOptionList() vecty.ComponentOrHTML {
 	}
 
 	return elem.Div(optionsHolder...)
-}
-
-func (g *Generic) setSelectIndex(id string, index int) {
-	for i := 0; i < 6; i++ {
-		d := js.Global().Get("document").Call("getElementById", id)
-		if js.Null() != d.JSValue() {
-			d.Get("options").Index(index).Set("selected", true)
-		}
-		time.Sleep(10 * time.Duration(i) * time.Millisecond)
-	}
 }

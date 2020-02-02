@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
+	"github.com/gopherjs/vecty/event"
 	"github.com/nathanhack/vectyUI/fontawesome"
 	"github.com/nathanhack/vectyUI/materialdesign"
 	"github.com/nathanhack/vectyUI/sel"
@@ -37,6 +38,11 @@ func (b Body) Render() vecty.ComponentOrHTML {
 			style.Width("100%"),
 		),
 		elem.Select(
+			vecty.Markup(
+				event.Change(func(v *vecty.Event) {
+					fmt.Println("select change", v.Target.Get("value").String())
+				}),
+			),
 			elem.Option(
 				vecty.Markup(vecty.Property("value", 0)),
 				vecty.Text("op 0"),
@@ -94,11 +100,10 @@ func (b Body) Render() vecty.ComponentOrHTML {
 					style.BorderRadius("4px"),
 					style.Border(1, borderStyle.Solid, "black"),
 				},
-
-				SelectedEvent: func(index int, g *sel.Generic) {
-					fmt.Println("selected ", index)
-				},
 				Button: button,
+				SelectedEvent: func(index int, g *sel.Generic) {
+					fmt.Println("Selected Index: ", index, " and g.SelectedPos: ", g.SelectedPos)
+				},
 			},
 		),
 
