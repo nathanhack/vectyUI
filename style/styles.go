@@ -50,6 +50,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/maxHeight"
 	"github.com/nathanhack/vectyUI/style/opacity"
 	"github.com/nathanhack/vectyUI/style/outlineColor"
+	"github.com/nathanhack/vectyUI/style/outlineStyle"
 	"github.com/nathanhack/vectyUI/style/overflow"
 	"github.com/nathanhack/vectyUI/style/padding"
 	"github.com/nathanhack/vectyUI/style/position"
@@ -465,6 +466,10 @@ func OutlineColor(outColor interface{}) outlineColor.Value {
 	default:
 		panic(fmt.Sprintf("unsupported color type %T with value: %v", outColor, outColor))
 	}
+}
+
+func OutlineStyle(value outlineStyle.Type) outlineStyle.Value {
+	return outlineStyle.Value(value)
 }
 
 func Overflow(p overflow.Type) overflow.Value {
