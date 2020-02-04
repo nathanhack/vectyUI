@@ -11,24 +11,10 @@ import (
 	"github.com/nathanhack/vectyUI/style/margin"
 	"github.com/nathanhack/vectyUI/style/padding"
 	"github.com/nathanhack/vectyUI/style/userSelect"
-	"strconv"
-)
-
-const (
-	defaultSimpleButtonID  = "simpleButtonID"
-	defaultDivButtonID     = "divButtonID"
-	defaultGenericButtonID = "genericButtonID"
-)
-
-var (
-	simpleButtonCount  = 0
-	divButtonCount     = 0
-	genericButtonCount = 0
 )
 
 type Simple struct {
 	vecty.Core
-	ID                 string               `vecty:"prop"`
 	Text               string               `vecty:"prop"`
 	Color              color.Value          `vecty:"prop"`
 	Background         background.Value     `vecty:"prop"`
@@ -64,11 +50,6 @@ func (s *Simple) mouseLeave(i *vecty.Event) {
 }
 
 func (s *Simple) Render() vecty.ComponentOrHTML {
-	if s.ID == "" {
-		s.ID = defaultSimpleButtonID + strconv.Itoa(simpleButtonCount)
-		simpleButtonCount++
-	}
-
 	bg := s.Background
 	switch {
 	case s.Disabled && s.DisabledBackground != "":
@@ -86,7 +67,6 @@ func (s *Simple) Render() vecty.ComponentOrHTML {
 	}
 
 	markups := []vecty.Applyer{
-		prop.ID(s.ID),
 		s.Padding,
 		s.Margin,
 		s.Border,
@@ -110,7 +90,6 @@ func (s *Simple) Render() vecty.ComponentOrHTML {
 
 type Div struct {
 	vecty.Core
-	ID                 string               `vecty:"prop"`
 	Text               string               `vecty:"prop"`
 	Color              color.Value          `vecty:"prop"`
 	Background         background.Value     `vecty:"prop"`
@@ -126,6 +105,7 @@ type Div struct {
 	MouseLeave         func(i *vecty.Event) `vecty:"prop"`
 	Extra              []vecty.Applyer      `vecty:"prop"`
 	Disabled           bool                 `vecty:"prop"`
+	Focusable          bool                 `vecty:"prop"`
 	hovering           bool
 }
 
@@ -146,11 +126,6 @@ func (d *Div) mouseLeave(i *vecty.Event) {
 }
 
 func (d *Div) Render() vecty.ComponentOrHTML {
-	if d.ID == "" {
-		d.ID = defaultDivButtonID + strconv.Itoa(divButtonCount)
-		divButtonCount++
-	}
-
 	bg := d.Background
 	switch {
 	case d.Disabled && d.DisabledBackground != "":
@@ -176,6 +151,7 @@ func (d *Div) Render() vecty.ComponentOrHTML {
 		event.MouseEnter(d.mouseEnter),
 		event.MouseLeave(d.mouseLeave),
 		vecty.MarkupIf(!d.Disabled && d.Click != nil, event.Click(d.Click)),
+		vecty.MarkupIf(d.Focusable, vecty.Attribute("tabindex", 0)),
 	}
 	markups = append(markups, d.Extra...)
 
@@ -189,15 +165,15 @@ func (d *Div) Render() vecty.ComponentOrHTML {
 
 type Generic struct {
 	vecty.Core
-	ID          string                                `vecty:"prop"`
-	Div         vecty.ComponentOrHTML                 `vecty:"prop"`
-	HoverDiv    vecty.ComponentOrHTML                 `vecty:"prop"`
-	DisabledDiv vecty.ComponentOrHTML                 `vecty:"prop"`
+	Div         func() vecty.ComponentOrHTML          `vecty:"prop"`
+	HoverDiv    func() vecty.ComponentOrHTML          `vecty:"prop"`
+	DisabledDiv func() vecty.ComponentOrHTML          `vecty:"prop"`
 	Click       func(i *vecty.Event, button *Generic) `vecty:"prop"`
 	MouseEnter  func(i *vecty.Event, button *Generic) `vecty:"prop"`
 	MouseLeave  func(i *vecty.Event, button *Generic) `vecty:"prop"`
 	Extra       []vecty.Applyer                       `vecty:"prop"`
 	Disabled    bool                                  `vecty:"prop"`
+	Focusable   bool                                  `vecty:"prop"`
 	hovering    bool
 }
 
@@ -234,16 +210,13 @@ func (g *Generic) SetHover(hovering bool) {
 }
 
 func (g *Generic) Render() vecty.ComponentOrHTML {
-	if g.ID == "" {
-		g.ID = defaultGenericButtonID + strconv.Itoa(genericButtonCount)
-		genericButtonCount++
-	}
-
 	markups := []vecty.Applyer{
-		prop.ID(g.ID),
-		vecty.MarkupIf(!g.Disabled, event.MouseEnter(g.mouseEnter)),
-		vecty.MarkupIf(!g.Disabled, event.MouseLeave(g.mouseLeave)),
-		vecty.MarkupIf(!g.Disabled, event.Click(g.click)),
+		vecty.MarkupIf(!g.Disabled,
+			event.MouseEnter(g.mouseEnter),
+			event.MouseLeave(g.mouseLeave),
+			event.Click(g.click),
+		),
+		vecty.MarkupIf(g.Focusable, vecty.Attribute("tabindex", 0)),
 	}
 	markups = append(markups, g.Extra...)
 
@@ -253,21 +226,21 @@ func (g *Generic) Render() vecty.ComponentOrHTML {
 			vecty.Markup(
 				markups...,
 			),
-			g.DisabledDiv,
+			g.DisabledDiv(),
 		)
 	case g.hovering && g.HoverDiv != nil:
 		return elem.Div(
 			vecty.Markup(
 				markups...,
 			),
-			g.HoverDiv,
+			g.HoverDiv(),
 		)
 	case g.Div != nil:
 		return elem.Div(
 			vecty.Markup(
 				markups...,
 			),
-			g.Div,
+			g.Div(),
 		)
 	}
 

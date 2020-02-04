@@ -94,53 +94,61 @@ func (b Body) Render() vecty.ComponentOrHTML {
 
 		elem.Div(
 			&button.Generic{
-				Div: elem.Div(
-					vecty.Markup(
-						style.Color(color.RGB(0, 0, 0)),
-						style.Background(color.RGB(123, 44, 180)),
-						style.Padding(10),
-						style.Margin(20),
-						style.Border(1, borderStyle.Solid, "red"),
-					),
-					vecty.Text("Button.Generic"),
-				),
-				HoverDiv: elem.Div(
-					vecty.Markup(
-						style.Color(color.RGB(0, 0, 0)),
-						style.Background(color.RGB(143, 64, 200)),
-						style.Padding(10),
-						style.Margin(20),
-						style.Border(1, borderStyle.Solid, "red"),
-					),
-					vecty.Text("Button.Generic"),
-				),
+				Div: func() vecty.ComponentOrHTML {
+					return elem.Div(
+						vecty.Markup(
+							style.Color(color.RGB(0, 0, 0)),
+							style.Background(color.RGB(123, 44, 180)),
+							style.Padding(10),
+							style.Margin(20),
+							style.Border(1, borderStyle.Solid, "red"),
+						),
+						vecty.Text("Button.Generic"),
+					)
+				},
+				HoverDiv: func() vecty.ComponentOrHTML {
+					return elem.Div(
+						vecty.Markup(
+							style.Color(color.RGB(0, 0, 0)),
+							style.Background(color.RGB(143, 64, 200)),
+							style.Padding(10),
+							style.Margin(20),
+							style.Border(1, borderStyle.Solid, "red"),
+						),
+						vecty.Text("Button.Generic"),
+					)
+				},
 				Click: func(i *vecty.Event, g *button.Generic) {
 					js.Global().Get("alert").Invoke("Button.Generic Click")
 				},
 			},
 			&button.Generic{
-				Div: elem.Div(
-					vecty.Markup(
-						style.Color(color.RGB(0, 0, 0)),
-						style.Background(color.RGB(123, 44, 180)),
-						style.Padding(10),
-						style.Margin(20),
-						style.Border(1, borderStyle.Solid, "red"),
-						userSelect.None,
-					),
-					vecty.Text("Button.Generic"),
-				),
-				HoverDiv: elem.Div(
-					vecty.Markup(
-						style.Color(color.RGB(0, 0, 0)),
-						style.Background(color.RGB(143, 64, 200)),
-						style.Padding(10),
-						style.Margin(20),
-						style.Border(1, borderStyle.Solid, "red"),
-						userSelect.None,
-					),
-					vecty.Text("Button.Generic"),
-				),
+				Div: func() vecty.ComponentOrHTML {
+					return elem.Div(
+						vecty.Markup(
+							style.Color(color.RGB(0, 0, 0)),
+							style.Background(color.RGB(123, 44, 180)),
+							style.Padding(10),
+							style.Margin(20),
+							style.Border(1, borderStyle.Solid, "red"),
+							userSelect.None,
+						),
+						vecty.Text("Button.Generic"),
+					)
+				},
+				HoverDiv: func() vecty.ComponentOrHTML {
+					return elem.Div(
+						vecty.Markup(
+							style.Color(color.RGB(0, 0, 0)),
+							style.Background(color.RGB(143, 64, 200)),
+							style.Padding(10),
+							style.Margin(20),
+							style.Border(1, borderStyle.Solid, "red"),
+							userSelect.None,
+						),
+						vecty.Text("Button.Generic"),
+					)
+				},
 				Click: func(i *vecty.Event, g *button.Generic) {
 					js.Global().Get("alert").Invoke("Button.Generic Click")
 				},
