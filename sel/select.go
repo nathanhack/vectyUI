@@ -31,12 +31,12 @@ func (g *GenericOption) Render() vecty.ComponentOrHTML {
 	return g.Option(g.Disabled, g.Highlight, false)
 }
 
-const genericSelectID = "GenericSelectID"
-
-var genericSelectCount = 0
-
 var DefaultStyles = []vecty.Applyer{
 	vecty.Attribute("tabindex", 0),
+	style.OutlineStyle(outlineStyle.None),
+}
+
+var DefaultDisabledStyles = []vecty.Applyer{
 	style.OutlineStyle(outlineStyle.None),
 }
 
@@ -72,6 +72,7 @@ type Generic struct {
 	Options                             []*GenericOption                                                        `vecty:"prop"`
 	Placeholder                         GenericOption                                                           `vecty:"prop"`
 	Styles                              []vecty.Applyer                                                         `vecty:"prop"`
+	DisabledStyles                      []vecty.Applyer                                                         `vecty:"prop"`
 	SelectedOptionStyles                []vecty.Applyer                                                         `vecty:"prop"`
 	SelectedOptionButtonAlignmentStyles []vecty.Applyer                                                         `vecty:"prop"`
 	SelectedOptionFocusedStyles         []vecty.Applyer                                                         `vecty:"prop"`
@@ -211,10 +212,16 @@ func (g *Generic) Render() vecty.ComponentOrHTML {
 
 		}),
 	)
-	if len(g.Styles) == 0 {
-		markups = append(markups, DefaultStyles...)
-	} else {
+
+	switch {
+	case g.Disabled && len(g.DisabledStyles) != 0:
+		markups = append(markups, g.DisabledStyles...)
+	case g.Disabled:
+		markups = append(markups, DefaultDisabledStyles...)
+	case len(g.Styles) != 0:
 		markups = append(markups, g.Styles...)
+	default:
+		markups = append(markups, DefaultStyles...)
 	}
 
 	return elem.Div(
