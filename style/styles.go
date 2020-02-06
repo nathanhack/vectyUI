@@ -48,6 +48,9 @@ import (
 	"github.com/nathanhack/vectyUI/style/marginRight"
 	"github.com/nathanhack/vectyUI/style/marginTop"
 	"github.com/nathanhack/vectyUI/style/maxHeight"
+	"github.com/nathanhack/vectyUI/style/maxWidth"
+	"github.com/nathanhack/vectyUI/style/minHeight"
+	"github.com/nathanhack/vectyUI/style/minWidth"
 	"github.com/nathanhack/vectyUI/style/opacity"
 	"github.com/nathanhack/vectyUI/style/outlineColor"
 	"github.com/nathanhack/vectyUI/style/outlineStyle"
@@ -449,6 +452,16 @@ func MarginTop(length interface{}) marginTop.Value {
 
 func MaxHeight(value interface{}) maxHeight.Value {
 	return maxHeight.Value(internal.Stringify(value, "px"))
+}
+func MaxWidth(value interface{}) maxWidth.Value {
+	return maxWidth.Value(internal.Stringify(value, "px"))
+}
+
+func MinHeight(value interface{}) minHeight.Value {
+	return minHeight.Value(internal.Stringify(value, "px"))
+}
+func MinWidth(value interface{}) minWidth.Value {
+	return minWidth.Value(internal.Stringify(value, "px"))
 }
 
 func Opacity(value interface{}) opacity.Value {

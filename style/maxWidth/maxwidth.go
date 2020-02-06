@@ -1,4 +1,4 @@
-package maxHeight
+package maxWidth
 
 import (
 	"github.com/gopherjs/vecty"
@@ -15,7 +15,7 @@ const (
 	Initial    Type = "initial"
 	Inherit    Type = "inherit"
 
-	styleName = "max-height"
+	styleName = "max-width"
 )
 
 func (t Type) Apply(h *vecty.HTML) {

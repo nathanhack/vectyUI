@@ -1,4 +1,4 @@
-package maxHeight
+package minWidth
 
 import (
 	"github.com/gopherjs/vecty"
@@ -8,14 +8,14 @@ import (
 type Type string
 
 const (
-	None       Type = "none"
 	MaxContent Type = "max-content"
 	MinContent Type = "min-content"
 	FitContent Type = "fit-content"
 	Initial    Type = "initial"
 	Inherit    Type = "inherit"
+	Unset      Type = "unset"
 
-	styleName = "max-height"
+	styleName = "min-width"
 )
 
 func (t Type) Apply(h *vecty.HTML) {
