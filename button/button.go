@@ -62,7 +62,7 @@ func (s *Simple) Render() vecty.ComponentOrHTML {
 	switch {
 	case s.Disabled && s.DisabledColor != "":
 		col = s.DisabledColor
-	case !s.Disabled && s.hovering && s.HoverBackground != "":
+	case !s.Disabled && s.hovering && s.HoverColor != "":
 		col = s.HoverColor
 	}
 
@@ -138,7 +138,7 @@ func (d *Div) Render() vecty.ComponentOrHTML {
 	switch {
 	case d.Disabled && d.DisabledColor != "":
 		col = d.DisabledColor
-	case !d.Disabled && d.hovering && d.HoverBackground != "":
+	case !d.Disabled && d.hovering && d.HoverColor != "":
 		col = d.HoverColor
 	}
 	markups := []vecty.Applyer{
