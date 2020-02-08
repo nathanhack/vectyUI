@@ -38,6 +38,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/fontFamily"
 	"github.com/nathanhack/vectyUI/style/fontSize"
 	"github.com/nathanhack/vectyUI/style/fontWeight"
+	"github.com/nathanhack/vectyUI/style/gridTemplateColumns"
 	"github.com/nathanhack/vectyUI/style/height"
 	"github.com/nathanhack/vectyUI/style/justifyContent"
 	"github.com/nathanhack/vectyUI/style/left"
@@ -407,6 +408,10 @@ func FontSize(size interface{}) fontSize.Value {
 
 func FontWeight(value fontWeight.Type) fontWeight.Value {
 	return fontWeight.Value(value)
+}
+
+func GridTemplateColumns(values ...interface{}) gridTemplateColumns.Value {
+	return gridTemplateColumns.Value(strings.Join(internal.StringifyList("px", values...), " "))
 }
 
 //Height defaults to pixels if a numbers are passed in, otherwise it accepts as is
