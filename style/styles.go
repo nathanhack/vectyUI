@@ -57,6 +57,7 @@ import (
 	"github.com/nathanhack/vectyUI/style/outlineStyle"
 	"github.com/nathanhack/vectyUI/style/overflow"
 	"github.com/nathanhack/vectyUI/style/padding"
+	"github.com/nathanhack/vectyUI/style/paddingLeft"
 	"github.com/nathanhack/vectyUI/style/position"
 	"github.com/nathanhack/vectyUI/style/right"
 	"github.com/nathanhack/vectyUI/style/textAlign"
@@ -497,6 +498,10 @@ func Overflow(p overflow.Type) overflow.Value {
 //Padding defaults to pixels if a numbers are passed in, otherwise it accepts as is
 func Padding(lengths ...interface{}) padding.Value {
 	return internal.StringifyList("px", lengths...)
+}
+
+func PaddingLeft(length interface{}) paddingLeft.Value {
+	return paddingLeft.Value(internal.Stringify(length, "px"))
 }
 
 func Position(pos position.Type) position.Value {
