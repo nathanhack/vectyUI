@@ -57,7 +57,10 @@ import (
 	"github.com/nathanhack/vectyUI/style/outlineStyle"
 	"github.com/nathanhack/vectyUI/style/overflow"
 	"github.com/nathanhack/vectyUI/style/padding"
+	"github.com/nathanhack/vectyUI/style/paddingBottom"
 	"github.com/nathanhack/vectyUI/style/paddingLeft"
+	"github.com/nathanhack/vectyUI/style/paddingRight"
+	"github.com/nathanhack/vectyUI/style/paddingTop"
 	"github.com/nathanhack/vectyUI/style/position"
 	"github.com/nathanhack/vectyUI/style/right"
 	"github.com/nathanhack/vectyUI/style/textAlign"
@@ -500,8 +503,20 @@ func Padding(lengths ...interface{}) padding.Value {
 	return internal.StringifyList("px", lengths...)
 }
 
+func PaddingBottom(length interface{}) paddingBottom.Value {
+	return paddingBottom.Value(internal.Stringify(length, "px"))
+}
+
 func PaddingLeft(length interface{}) paddingLeft.Value {
 	return paddingLeft.Value(internal.Stringify(length, "px"))
+}
+
+func PaddingRight(length interface{}) paddingRight.Value {
+	return paddingRight.Value(internal.Stringify(length, "px"))
+}
+
+func PaddingTop(length interface{}) paddingTop.Value {
+	return paddingTop.Value(internal.Stringify(length, "px"))
 }
 
 func Position(pos position.Type) position.Value {
