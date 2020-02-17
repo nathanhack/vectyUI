@@ -142,6 +142,7 @@ const (
 	Teal                 Type = "#008080"
 	Thistle              Type = "#D8BFD8"
 	Tomato               Type = "#FF6347"
+	Transparent          Type = "#00000000"
 	Turquoise            Type = "#40E0D0"
 	Violet               Type = "#EE82EE"
 	Wheat                Type = "#F5DEB3"
