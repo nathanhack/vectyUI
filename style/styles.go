@@ -33,6 +33,8 @@ import (
 	"github.com/nathanhack/vectyUI/style/cursor"
 	"github.com/nathanhack/vectyUI/style/display"
 	"github.com/nathanhack/vectyUI/style/flexDirection"
+	"github.com/nathanhack/vectyUI/style/flexGrow"
+	"github.com/nathanhack/vectyUI/style/flexShrink"
 	"github.com/nathanhack/vectyUI/style/flexWrap"
 	"github.com/nathanhack/vectyUI/style/float"
 	"github.com/nathanhack/vectyUI/style/fontFamily"
@@ -391,6 +393,14 @@ func Display(value display.Type) display.Value {
 
 func FlexDirection(dir flexDirection.Type) flexDirection.Value {
 	return flexDirection.Value(dir)
+}
+
+func FlexGrow(number interface{}) flexGrow.Value {
+	return flexGrow.Value(internal.Stringify(number, ""))
+}
+
+func FlexShrink(number interface{}) flexShrink.Value {
+	return flexShrink.Value(internal.Stringify(number, ""))
 }
 
 func FlexWrap(wrap flexWrap.Type) flexWrap.Value {
