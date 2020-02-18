@@ -14,7 +14,7 @@ type Generic struct {
 	HoverOff    func() vecty.ComponentOrHTML          `vecty:"prop"`
 	DisabledOn  func() vecty.ComponentOrHTML          `vecty:"prop"`
 	DisabledOff func() vecty.ComponentOrHTML          `vecty:"prop"`
-	Click       func(i *vecty.Event, toggle *Generic) `vecty:"prop"`
+	OnChange    func(i *vecty.Event, toggle *Generic) `vecty:"prop"`
 	MouseEnter  func(i *vecty.Event, toggle *Generic) `vecty:"prop"`
 	MouseLeave  func(i *vecty.Event, toggle *Generic) `vecty:"prop"`
 	State       bool                                  `vecty:"prop"`
@@ -28,8 +28,8 @@ func (g *Generic) click(i *vecty.Event) {
 	g.State = !g.State
 	vecty.Rerender(g)
 
-	if g.Click != nil {
-		g.Click(i, g)
+	if g.OnChange != nil {
+		g.OnChange(i, g)
 	}
 }
 
