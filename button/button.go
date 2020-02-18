@@ -210,43 +210,26 @@ func (g *Generic) SetHover(hovering bool) {
 }
 
 func (g *Generic) Render() vecty.ComponentOrHTML {
-	markups := []vecty.Applyer{
-		vecty.MarkupIf(!g.Disabled,
-			event.MouseEnter(g.mouseEnter),
-			event.MouseLeave(g.mouseLeave),
-			event.Click(g.click),
+	items := []vecty.MarkupOrChild{
+		vecty.Markup(
+			vecty.MarkupIf(!g.Disabled,
+				event.MouseEnter(g.mouseEnter),
+				event.MouseLeave(g.mouseLeave),
+				event.Click(g.click),
+			),
+			vecty.MarkupIf(g.Focusable, vecty.Attribute("tabindex", 0)),
+			vecty.Markup(g.Extra...),
 		),
-		vecty.MarkupIf(g.Focusable, vecty.Attribute("tabindex", 0)),
 	}
-	markups = append(markups, g.Extra...)
 
 	switch {
 	case g.Disabled && g.DisabledDiv != nil:
-		return elem.Div(
-			vecty.Markup(
-				markups...,
-			),
-			g.DisabledDiv(),
-		)
+		items = append(items, g.DisabledDiv())
 	case g.hovering && g.HoverDiv != nil:
-		return elem.Div(
-			vecty.Markup(
-				markups...,
-			),
-			g.HoverDiv(),
-		)
+		items = append(items, g.HoverDiv())
 	case g.Div != nil:
-		return elem.Div(
-			vecty.Markup(
-				markups...,
-			),
-			g.Div(),
-		)
+		items = append(items, g.Div())
 	}
 
-	return elem.Div(
-		vecty.Markup(
-			markups...,
-		),
-	)
+	return elem.Div(items...)
 }
