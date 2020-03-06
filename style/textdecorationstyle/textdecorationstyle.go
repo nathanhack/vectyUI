@@ -1,20 +1,20 @@
-package fontstyle
+package textdecorationstyle
 
-import (
-	"github.com/gopherjs/vecty"
-)
+import "github.com/gopherjs/vecty"
 
 type Type string
 
 const (
-	Normal  Type = "normal"
-	Italic  Type = "italic"
-	Oblique Type = "oblique"
+	Solid   Type = "solid"
+	Double  Type = "double"
+	Dotted  Type = "dotted"
+	Dashed  Type = "dashed"
+	Wavy    Type = "wavy"
 	Initial Type = "initial"
 	Inherit Type = "inherit"
 	Unset   Type = "unset"
 
-	styleName = "font-style"
+	styleName = "text-decoration"
 )
 
 func (t Type) Apply(h *vecty.HTML) {
