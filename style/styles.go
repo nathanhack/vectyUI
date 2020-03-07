@@ -377,8 +377,15 @@ func BoxShadows(boxes ...boxShadow.Value) boxShadow.Value {
 	return s
 }
 
-func Color(c color.Type) color.Value {
-	return color.Value(c)
+func Color(c interface{}) color.Value {
+	switch c.(type) {
+	case color.Type:
+		return color.Value(c.(color.Type))
+	case string:
+		return color.Value(c.(string))
+	default:
+		panic(fmt.Sprintf("unsupported color type %T with value: %v", c, c))
+	}
 }
 
 //Cursor sets mouse cursor
