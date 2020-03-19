@@ -13,7 +13,6 @@ import (
 	"github.com/nathanhack/vectyUI/style/height"
 	"github.com/nathanhack/vectyUI/style/margin"
 	"github.com/nathanhack/vectyUI/style/width"
-	"syscall/js"
 )
 
 //go:generate env GOARCH=wasm GOOS=js go build -o ../static/main.wasm
@@ -79,7 +78,7 @@ var exampleModal3 = modal.Div{
 				event.KeyUp(
 					func(v *vecty.Event) {
 						fmt.Println(v.Value.Get("code"))
-						if v.Value != js.Null() && v.Value.Get("code").String() == "Escape" {
+						if !v.Value.IsNull() && v.Value.Get("code").String() == "Escape" {
 							m.Hide()
 						}
 					},

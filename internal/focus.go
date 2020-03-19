@@ -10,11 +10,11 @@ func RequestFocusEvent(id string) {
 	for i := 0; i < 15; i++ {
 		time.Sleep(10 * time.Duration(i) * time.Millisecond)
 		d := js.Global().Get("document").Call("getElementById", id)
-		if js.Null() != d.JSValue() {
+		if !d.IsNull() {
 			d.Call("focus")
 		}
 		active := js.Global().Get("document").Get("activeElement")
-		if active != js.Null() && d == active {
+		if !active.IsNull() && d.Equal(active) {
 			break
 		}
 	}

@@ -129,28 +129,28 @@ func (k *Keyframes) addKeyframesRules() {
 //	//we need to find the keyframes in the styles and remove it
 //	styleSheets := js.Global().Get("document").Get("styleSheets")
 //
-//	if js.Null() != styleSheets {
+//	if !styleSheets.IsNull() {
 //		for i := 0; i < styleSheets.Length(); i++ {
 //			styleSheet := styleSheets.Index(i)
-//			if js.Null() == styleSheet {
+//			if styleSheet.IsNull() {
 //				continue
 //			}
 //			rules := styleSheet.Get("cssRules")
-//			if js.Null() == rules {
+//			if  rules.IsNull() {
 //				continue
 //			}
 //			for j := 0; j < rules.Length(); j++ {
 //				rule := rules.Index(j)
-//				if js.Null() == rule {
+//				if rule.IsNull() {
 //					continue
 //				}
 //				cssType := rule.Get("type")
-//				if js.Null() == cssType || cssType.Int() != 7 {
+//				if  cssType.IsNull() || cssType.Int() != 7 {
 //					continue
 //				}
 //
 //				name := rule.Get("name")
-//				if js.Null() == name || name.String() != string(k.Name) {
+//				if name.IsNull() || name.String() != string(k.Name) {
 //					continue
 //				}
 //

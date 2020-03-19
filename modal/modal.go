@@ -21,7 +21,6 @@ import (
 	"github.com/nathanhack/vectyUI/style/width"
 	"github.com/nathanhack/vectyUI/style/zIndex"
 	"strconv"
-	"syscall/js"
 )
 
 const (
@@ -98,7 +97,7 @@ func (div *Div) Render() vecty.ComponentOrHTML {
 		vecty.MarkupIf(div.Dismissible,
 			event.Click(func(v *vecty.Event) { div.Hide() }),
 			event.KeyUp(func(v *vecty.Event) {
-				if v.Value != js.Null() &&
+				if !v.Value.IsNull() &&
 					v.Value.Get("code").String() == "Escape" {
 					div.Hide()
 				}
