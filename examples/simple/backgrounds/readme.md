@@ -1,7 +1,7 @@
 #Example Simple
 ### Deps
 Golang 1.14+
-##Running
+## Running
 #### 1. Frontend 
 On the commandline navigate into the directory `./frontend` and run `go generate`, that will create `main.wasm` file in `./static`.
 
